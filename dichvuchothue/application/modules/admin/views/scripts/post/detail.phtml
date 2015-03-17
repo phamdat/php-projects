@@ -1,0 +1,145 @@
+<div class="post-form">
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('content');
+            var opertationUrl;
+        });
+        
+        function swap(el, a, b){
+            var ela = $(el).parents('tr').find('img');
+            var elb = $(el).parents('tr').prev().find('img');
+            
+            var a = ela.attr('src');
+            var b = elb.attr('src');
+            
+            ela.attr('src', b);
+            elb.attr('src', a);
+            
+            var v = $('#media').val();
+            v = v.replace(a, 'xxxxxxxx');
+            v = v.replace(b, a);
+            v = v.replace('xxxxxxxx', b);
+            $('#media').val(v);
+        }
+
+        function destroy(el, a){
+            var a = $(el).parents('tr').find('img').attr('src');
+            
+            $(el).parents('tr').remove();
+            
+            var v = $('#media').val();
+            v = v.replace(a, '');
+            $('#media').val(v);
+        }
+    </script>
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?></p>
+    <?php endif; ?>
+    <div role="tabpanel">
+        <ul class="nav nav-tabs">
+            <li role="presentation" class="active">
+                <a href="#info" aria-controls="profile" role="tab" data-toggle="tab">Common Info</a>
+            </li>
+            <li role="presentation">
+                <a href="#html" aria-controls="profile" role="tab" data-toggle="tab">Content</a>
+            </li>
+            <li role="presentation">
+                <a href="#mediatab" aria-controls="profile" role="tab" data-toggle="tab">Media</a>
+            </li>
+            <li role="presentation">
+                <a href="#seo" aria-controls="profile" role="tab" data-toggle="tab">SEO</a>
+            </li>
+            <li role="presentation">
+                <a href="#advanced" aria-controls="profile" role="tab" data-toggle="tab">Advanced setting</a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <form enctype="multipart/form-data" action="<?php echo $this->postForm->getAction(); ?>" method="<?php echo $this->postForm->getMethod(); ?>">            
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="info">
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('id'); ?>
+                        <?php echo $this->postForm->getElement('language'); ?>
+                        <?php echo $this->postForm->getElement('category'); ?>
+                        <?php echo $this->postForm->getElement('thumbnail'); ?>
+                        <?php echo $this->postForm->getElement('file'); ?>
+                        <img class="img-responsive" src="<?php echo $this->postForm->getElement('thumbnail')->getValue(); ?>">
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('title'); ?>
+                        <?php echo $this->postForm->getElement('description'); ?>
+                        <?php echo $this->postForm->getElement('price'); ?>
+                        <?php echo $this->postForm->getElement('old_price'); ?>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="html">
+                    <div class="col-md-12">
+                        <?php echo $this->postForm->getElement('content'); ?>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="mediatab">
+                    <div class="col-md-12">
+                        <?php echo $this->postForm->getElement('media'); ?>
+                        <?php echo $this->postForm->getElement('filemedia'); ?>
+                        <table class="table table-hover">
+                            <tbody>
+                                <?php $ms = explode(';', preg_replace('/;+/', ';', trim($this->postForm->getElement('media')->getValue(), ';'))); ?>
+                                <?php foreach($ms as $i => $value): ?>
+                                <tr>
+                                    <td>
+                                        <img class="img-responsive" src="<?php echo $value; ?>" style="max-width: 200px;">
+                                    </td>
+                                    <td>
+                                        <?php if($i>0):?>
+                                        <a href="javascript:void(0);" onclick="swap(this, '<?php echo $value; ?>', '<?php echo $ms[$i-1]; ?>')" data-toggle="tooltip" data-placement="top" title="Up">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </a>
+                                        <?php endif;?>
+                                        <a href="javascript:void(0);" onclick="destroy(this, '<?php echo $value; ?>')" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="seo">
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('seo_url'); ?>
+                        <?php echo $this->postForm->getElement('seo_title'); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('seo_description'); ?>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="advanced">
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('has_slide'); ?>
+                        <?php echo $this->postForm->getElement('has_right_sidebar'); ?>
+                        <?php echo $this->postForm->getElement('has_top_sidebar'); ?>
+                        <?php echo $this->postForm->getElement('has_breadcrumb'); ?>
+                        <?php echo $this->postForm->getElement('has_title'); ?>
+                        <?php echo $this->postForm->getElement('has_description'); ?>
+                        <?php echo $this->postForm->getElement('has_content'); ?>
+                        <?php echo $this->postForm->getElement('has_similar_post'); ?>
+                        <?php echo $this->postForm->getElement('has_most_of_post'); ?>
+                        <?php echo $this->postForm->getElement('has_comment'); ?>
+                        <?php echo $this->postForm->getElement('has_like_share'); ?>
+                        <?php echo $this->postForm->getElement('has_advertisment'); ?>
+                    </div>
+                    <div class="col-md-6">
+                        <?php echo $this->postForm->getElement('is_front_page'); ?>
+                        <?php echo $this->postForm->getElement('is_filter_page'); ?>
+                        <?php echo $this->postForm->getElement('link_id'); ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <?php echo $this->postForm->getElement('submit'); ?>
+            </div>
+        </form>
+    </div>
+</div>

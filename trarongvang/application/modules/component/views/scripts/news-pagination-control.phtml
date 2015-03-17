@@ -1,0 +1,21 @@
+<?php if ($this->pageCount): ?>
+	<div class="new-pagination-control">
+		<!-- Previous page link -->
+		<?php if (isset($this->previous)): ?>
+			<a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+				&lt;&lt; Xem trước
+			</a> 
+		<?php endif; ?>
+		 
+		<?php if (isset($this->next) && isset($this->previous)): ?>
+		  |
+		<?php endif; ?>
+		
+		<!-- Next page link -->
+		<?php if (isset($this->next)): ?>
+			<a href="<?php echo $this->url(array('page' => $this->next)); ?>">
+				Xem tiếp &gt;&gt;
+			</a>
+		<?php endif; ?>
+	</div>
+<?php endif; ?>

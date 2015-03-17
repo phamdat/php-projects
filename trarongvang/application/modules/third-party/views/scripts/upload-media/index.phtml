@@ -1,0 +1,53 @@
+
+<script>
+	$(document).ready(function(){
+		$('input:file').change(function(){
+			$(this).parents("form").submit();
+		});
+	});
+</script>
+<div>
+	<form enctype="multipart/form-data" action="/admin/upload-media/upload" method="POST" >
+		<input name="file" type="file" style="float: right;" />
+	</form>
+</div>
+<table class="grid-data">
+	<tr>
+		<th>
+			Hình thu nhỏ
+		</th>
+		<th>
+			Url
+		</th>
+		<th>
+			Ngày tạo
+		</th>
+		<th>
+			Người tạo
+		</th>
+		<th>
+			Hành động
+		</th>
+	</tr>
+	<?php foreach($this->paginator as $value):?>
+	<tr>
+		<td>
+			<img src="<?php echo MEDIA_PATH . $value['path'];?>" width="100px"/>
+		</td>
+		<td>
+			<?php echo MEDIA_PATH . $value['path'];?>
+		</td>
+		<td>
+			<?php echo $value['created_datetime'];?>
+		</td>
+		<td>
+			<?php echo $value['name'];?>
+		</td>
+		<td>
+			<a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'upload-media', 'action'=> 'delete', 'id' => $value['id'] )) ?>"><input type="button" value="Xóa"></a>
+		</td>
+	</tr>
+	<?php endforeach;?>
+</table>
+<?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination-control.phtml');?>
+<div class="clearfix"></div>

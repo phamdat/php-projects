@@ -1,0 +1,17 @@
+<div class="configuration-form">
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('value_FOOTER_INFO_CONF')
+            
+            CKEDITOR.replace('value_PLUGIN_FOR_ALL_PAGE_CONF')
+            
+            CKEDITOR.replace('value_POST_ADVERTISMENT_CONF')            
+        });
+    </script>
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?>
+    </p>
+    <?php endif; ?>
+     <?php echo $this->configurationForm; ?>
+</div>

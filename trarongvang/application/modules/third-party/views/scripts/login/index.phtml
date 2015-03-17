@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Login</title>
+		<link href="/public/css/third-party/960.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="/public/css/third-party/reset.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="/public/css/third-party/text.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="/public/css/third-party/login.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+	<body>
+		<div class="container_16">
+			<div class="grid_6 prefix_5 suffix_5">
+				<h1>Login</h1>
+				<div id="login">
+					<?php if($this->errorMessage != ""): ?>
+					<p class="error"><?php echo $this->errorMessage; ?></p>
+					<?php endif; ?>
+					
+					<?php echo $this->loginForm; ?>
+					<br clear="all" />
+				</div>
+				<div id="forgot">
+					<a href="#" class="forgotlink"><span>Quên username hoặc password</span></a>
+				</div>
+			</div>
+		</div>
+		<br clear="all" />
+	</body>
+</html>
+

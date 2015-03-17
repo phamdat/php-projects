@@ -1,0 +1,30 @@
+<!-- Page Heading -->
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+            Menu <small>Add/Edit menu item</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li class="active">
+                <i class="fa fa-dashboard"></i> Menu
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="menu-form">
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?></p>
+    <?php endif; ?>
+
+    <form action="<?php echo $this->menuForm->getAction(); ?>" method="<?php echo $this->menuForm->getMethod(); ?>">            
+        <?php echo $this->menuForm->getElement('id'); ?>
+        <?php echo $this->menuForm->getElement('name'); ?>
+        <?php echo $this->menuForm->getElement('link_id'); ?>
+        <?php echo $this->menuForm->getElement('post_id'); ?>        
+
+        <?php echo $this->menuForm->getElement('submit'); ?>
+    </form>
+</div>

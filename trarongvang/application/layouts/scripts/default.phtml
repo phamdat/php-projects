@@ -1,0 +1,188 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->layout()->configurations[META_HEADER_CONF]['value'] ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink()?>
+    <?php echo $this->headScript()?>
+</head>
+
+<body class="main-page <?php echo $this->layout()->mainClassesOfPage ?>">
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <img src="<?php echo $this->layout()->configurations[LOGO_IMG_CONF]['value'] ?>" class="img-responsive">                    
+            </div>
+            <div class="banner-container">
+                <img src="<?php echo $this->layout()->configurations[LOGO_IMG_2_CONF]['value'] ?>" class="img-responsive">                    
+            </div>
+            <div class="language-container">
+                <a class="en">English</a>
+                <a class="vi">Vietnam</a>
+            </div>
+            <div class="clearfix hidden-xs"></div>
+            <div class="row">
+                <div class="navbar navbar-default no-border no-background">                        
+                    <div class="navbar-header">
+                        <a type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <?php foreach($this->layout()->menu[HEADER_MENU_CONF] as $menu):?>                                
+                                <?php if(count($menu['submenu']) > 0): ?>
+                                    <li class="dropdown" role="presentation">
+                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($menu['post']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                            <?php echo $menu['post'][ 'title'] ?> <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <?php foreach($menu['submenu'] as $submenu):?>
+                                                <li role="presentation">
+                                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($submenu['post']) ?>">
+                                                        <?php echo mb_strtolower($submenu['post'][ 'title'], 'utf8') ?>
+                                                    </a>
+                                                </li>
+                                            <?php endforeach;?>
+                                        </ul>
+                                    </li>
+                                <?php else:?>
+                                    <li role="presentation">
+                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($menu['post']) ?>">
+                                            <?php echo Utils_StringUtils::getTextFromPost($menu['post'], 'title') ?>
+                                        </a>
+                                    </li>
+                                <?php endif;?>                                
+                            <?php endforeach;?>
+                        </ul>                            
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </header>
+    
+    <?php if($this->layout()->hasSlide):?>
+        <section id="main-slide">
+            <div class="container">
+                <div class="row">                
+                    <div class="slide">
+                        <div class="carousel" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <?php foreach($this->layout()->slide[MAIN_SLIDE_CONF] as $key => $slide):?>
+                                    <div class="item <?php echo $key==0?'active':'' ?>">
+                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($slide['post']) ?>">
+                                            <img src="<?php echo $slide['slide']['value'] ?>" class="center-block img-responsive">
+                                        </a>
+                                    </div>
+                                <?php endforeach;?>
+                            </div>
+                            <ol class="carousel-indicators">
+                                <?php foreach($this->layout()->slide[MAIN_SLIDE_CONF] as $key => $slide):?>
+                                    <li data-target="#main-slide .carousel" data-slide-to="<?php echo $key?>" class="<?php echo $key==0?'active':'' ?>"></li>
+                                <?php endforeach;?>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </section>
+    <?php endif;?>
+    
+    <?php if($this->layout()->hasTopSidebar && isset($this->layout()->sidebar[TOP_SIDEBAR_CONF])):?>
+    <section id="top-sidebar">
+        <div class="container">
+            <div class="row">
+                <?php foreach($this->layout()->sidebar[TOP_SIDEBAR_CONF] as $i => $sidebar):?>
+                    <?php if($i % 3 == 2):?>
+                        <div class="col-sm-6 top-sidebar">                        
+                            <?php echo $sidebar['post']['content'] ?>                            
+                        </div>                    
+                    <?php else:?>
+                        <div class="col-sm-3 top-sidebar">
+                            <?php echo $sidebar['post']['content'] ?>
+                        </div>
+                    <?php endif;?>
+                <?php endforeach;?>
+            </div>
+        </div>
+    </section>
+    <?php endif;?>
+    <section id="main-content">
+        <div class="container">
+            <div class="row">
+                <?php echo $this->layout()->content ?>
+                
+                <!--<div class="pull-right <?php echo $this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF]) ?'col-sm-9':'col-sm-12' ?>">
+                    <?php echo $this->layout()->content ?>
+                </div>
+                <div class="clearfix visible-xs"></div>
+                <?php if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF])):?>
+                    <div class="col-sm-3">
+                        <div class="row">
+                            <?php foreach($this->layout()->sidebar[RIGHT_SIDEBAR_CONF] as $i => $sidebar):?>
+                                <?php if($i != 0):?>
+                                    <div class="col-sm-12">
+                                        <div class="right-sidebar panel panel-danger">
+                                            <?php if($sidebar['post']['has_title']):?>
+                                                <div class="panel-heading">
+                                                    <?php echo Utils_StringUtils::getTextFromPost($sidebar['post'], 'title') ?>
+                                                </div>
+                                            <?php endif;?>
+                                            <div class="panel-body">
+                                                <?php echo $sidebar['post']['content'] ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endif;?>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                <?php endif;?>-->
+            </div>
+        </div>
+    </section>
+    <footer>
+        <!--<div style="background-image: url('/public/images/bot-bg.png');background-size: auto 100%;color: #3c663d;">
+            <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
+                <div class="row">
+                    <div class="col-sm-6 no-padding-left" style="font-size: 18px;">
+                        <strong style="font-size: 20px;">CÔNG TY CỔ PHẦN TRÀ RỒNG VÀNG</strong><br>
+                        280A Trần Phú - tp Bảo Lộc - Lâm Đồng<br>
+                        Điện thoại: 84.63.3863746 - 3740741<br>
+                        Fax: 84.63.3862237<br>
+                        Email: trarongvang@vnn.vn<br>
+                    </div>
+                    <div class="col-sm-6 no-padding-right" style="font-size: 20px;font-weight: bold;margin-top: 30px;">
+                        HỖ TRỢ TRỰC TUYẾN <a href="#"><img src="/public/images/yahoo.png"></a> <a href="#"><img src="/public/images/skype.png"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #000106;color: #fff;">
+            <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
+                <div class="row">
+                    <div class="col-sm-6 no-padding-left">
+                        <a href="#" style="margin-right: 25px;"><img src="/public/images/home-icon.png"></a>
+                        <a href="#" style="margin-right: 25px;"><img src="/public/images/face-icon.png"></a>
+                        <a href="#" style="margin-right: 25px;"><img src="/public/images/google-icon.png"></a>
+                        <a href="#"><img src="/public/images/youtube-icon.png"></a>
+                    </div>
+                    <div class="col-sm-6 no-padding-right text-right" style="margin-top: 10px;">
+                        Copyright by Bappro 2015
+                    </div>                    
+                </div>
+            </div>
+        </div>-->
+        <?php echo $this->layout()->configurations[FOOTER_INFO_CONF]['value'] ?>
+    </footer>
+    
+    <?php echo $this->layout()->configurations[PLUGIN_FOR_ALL_PAGE_CONF]['value'] ?>
+    
+</body>
+
+</html>

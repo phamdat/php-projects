@@ -1,0 +1,17 @@
+<div class="slide-form">
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?></p>
+    <?php endif; ?>
+
+    <form enctype="multipart/form-data" action="<?php echo $this->slideForm->getAction(); ?>" method="<?php echo $this->slideForm->getMethod(); ?>">            
+        <?php echo $this->slideForm->getElement('id'); ?>
+        <?php echo $this->slideForm->getElement('name'); ?>
+        <?php echo $this->slideForm->getElement('value'); ?>
+        <?php echo $this->slideForm->getElement('file'); ?>
+        <img class="img-responsive" src="<?php echo $this->slideForm->getElement('value')->getValue(); ?>">
+        <?php echo $this->slideForm->getElement('post_id'); ?>        
+
+        <?php echo $this->slideForm->getElement('submit'); ?>
+    </form>
+</div>

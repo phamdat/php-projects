@@ -1,0 +1,18 @@
+<div class="panel panel-primary no-border">
+    <div class="panel-heading">
+        <?php echo $this->category; ?>
+    </div>
+</div>
+<?php foreach($this->posts as $value):?>
+    <div class="item-by-list-content-wrapper">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="<?php echo $value['thumbnail'];?>" class="img-responsive">
+            </div>
+            <div class="col-sm-8">
+                <p><?php echo $value['description'];?></p>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<?php endforeach;?>

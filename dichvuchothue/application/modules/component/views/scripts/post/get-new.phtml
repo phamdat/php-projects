@@ -1,0 +1,26 @@
+<div class="panel panel-primary no-border no-background">
+    <div class="panel-heading category">
+        <?php echo $this->category; ?>
+    </div>
+    <div class="panel-body">
+        <div class="list-content-wrapper">
+            <?php foreach($this->posts as $value):?>
+                <div class="col-sm-6 col-md-4">
+                    <div class="item-content-wrapper">
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                            <h5><strong><?php echo $value['title'];?></strong></h5>
+                        </a>
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                            <div class="thumbnail">
+                                <img src="<?php echo $value['thumbnail'];?>" class="img-responsive">
+                            </div>
+                        </a>
+                        <br>
+                        <p><?php echo $value['description'];?></p>
+                        <strong class="price"><?php echo $value['price'];?></strong>
+                    </div>
+                </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,191 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink()?>
+    <?php echo $this->headScript()?>
+</head>
+
+<body class="admin-page <?php echo $this->layout()->mainClassesOfPage ?>">
+    
+    <?php if ($this->layout()->admin_username): ?>
+        <div id="wrapper">
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">Bappro Admin Panel</a>
+                </div>
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <!--<li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu message-dropdown">
+                            <li class="message-preview">
+                                <a href="#">
+                                    <div class="media">
+                                        <span class="pull-left">
+                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        </span>
+                                        <div class="media-body">
+                                            <h5 class="media-heading"><strong><?php echo $this->layout()->admin_username; ?></strong>
+                                            </h5>
+                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
+                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="message-footer">
+                                <a href="#">Read All New Messages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
+                        <ul class="dropdown-menu alert-dropdown">
+                            <li>
+                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
+                            </li>
+                            <li>
+                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">View All</a>
+                            </li>
+                        </ul>
+                    </li>-->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $this->layout()->admin_username; ?> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <!--<li>
+                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                            </li>
+                            <li class="divider"></li>-->
+                            <li>
+                                <a href="/admin/login/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav side-nav">
+                        <li>
+                            <a href="/admin/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void();" data-toggle="collapse" data-target="#post"><i class="fa fa-fw fa-file-text"></i> Post <i class="fa fa-fw fa-caret-down pull-right"></i></a>
+                            <ul id="post" class="collapse">
+                                <li>
+                                    <a href="/admin/post/index">All</a>
+                                </li>
+                                <?php foreach($this->layout()->allCategory as $category):?>
+                                    <li>
+                                        <a href="/admin/post/index/category/<?php echo $category['name'] ?>"><?php echo $category[ 'display_name']?></a>
+                                    </li>
+                                <?php endforeach;?>
+                                <li>
+                                    <a href="/admin/post/detail">Add Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void();" data-toggle="collapse" data-target="#menu"><i class="fa fa-fw fa-file-text"></i> Menu <i class="fa fa-fw fa-caret-down pull-right"></i></a>
+                            <ul id="menu" class="collapse">
+                                <li>
+                                    <a href="/admin/menu/index/name/<?php echo HEADER_MENU_CONF ?>">Header Menu</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void();" data-toggle="collapse" data-target="#slide"><i class="fa fa-fw fa-file-text"></i> Slide <i class="fa fa-fw fa-caret-down pull-right"></i></a>
+                            <ul id="slide" class="collapse">
+                                <li>
+                                    <a href="/admin/slide/index/name/<?php echo MAIN_SLIDE_CONF ?>">Main Slide</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void();" data-toggle="collapse" data-target="#sidebar"><i class="fa fa-fw fa-file-text"></i> Sidebar <i class="fa fa-fw fa-caret-down pull-right"></i></a>
+                            <ul id="sidebar" class="collapse">
+                                <li>
+                                    <a href="/admin/sidebar/index/name/<?php echo RIGHT_SIDEBAR_CONF ?>">Right Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/sidebar/index/name/<?php echo TOP_SIDEBAR_CONF ?>">Top Sidebar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/admin/configuration/index"><i class="fa fa-fw fa-table"></i> Configuration</a>                            
+                        </li>
+                        <li>
+                            <a href="/admin/media/index"><i class="fa fa-fw fa-table"></i> Media</a>                            
+                        </li>
+                        <li>
+                            <a href="/admin/category/index"><i class="fa fa-fw fa-table"></i> Category</a>                            
+                        </li>                    
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </nav>
+
+            <div id="page-wrapper">
+                <div class="container-fluid">
+                    <?php echo $this->layout()->content ?>
+                </div>
+            </div>
+
+        </div>
+    <?php else: ?>
+        <?php echo $this->layout()->content ?>
+    <?php endif; ?>
+    
+    <div id="confirm-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="yes-button">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

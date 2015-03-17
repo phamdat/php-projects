@@ -1,0 +1,31 @@
+<div class="filter-post">
+    <div class="panel panel-primary mb-10 no-border">
+        <div class="panel-heading">
+            Tìm kiếm với từ khóa: "<?php echo $this->keyword; ?>"
+        </div>
+    </div>
+    <?php foreach($this->paginator as $value):?>
+        <div class="item-by-list-content-wrapper">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                        <div class="thumbnail">
+                            <img src="<?php echo $value['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-sm-8">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                        <h4><strong><?php echo Utils_StringUtils::getTextFromPost($value, 'title');?></strong></h4>
+                    </a>
+                    <p><?php echo Utils_StringUtils::subText(Utils_StringUtils::getTextFromPost($value, 'description'), 120);?></p>
+                    <strong class="old-price"><?php echo $value['old_price'];?></strong>
+                    <div class="clearfix"></div>
+                    <strong class="price"><?php echo $value['price'];?></strong>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    <?php endforeach;?>
+    <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination-control.phtml');?>
+</div>

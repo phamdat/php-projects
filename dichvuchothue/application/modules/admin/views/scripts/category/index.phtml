@@ -1,0 +1,60 @@
+<a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail')) ?>" class="btn btn-primary">
+    <i class="fa fa-plus"></i> Add Category
+</a>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Display name
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->category as $key => $value):?>
+            <tr>
+                <td>
+                    <?php echo $value['name'];?>
+                </td>
+                <td>
+                    <?php echo $value['displayName'];?>
+                </td>
+                <td>
+                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'link_id' => $value['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Add Child">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'id' => $value['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'delete', 'id' => $value['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
+                        <i class="fa fa-times"></i>
+                    </a>
+                </td>
+            </tr>
+            <?php foreach($value['subCategory'] as $value1):?>
+                <tr>
+                    <td>
+                        -------<?php echo $value1['name'];?>
+                    </td>
+                    <td>
+                        <?php echo $value1['displayName'];?>
+                    </td>
+                    <td>
+                        <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'id' => $value1['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'delete', 'id' => $value1['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+        <?php endforeach;?>
+    </tbody>
+</table>
+<div class="clearfix"></div>

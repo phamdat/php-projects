@@ -1,0 +1,114 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <?php echo $this->headMeta() ?>
+    <?php echo $this->headTitle() ?>
+    <?php echo $this->headLink()?>
+    <?php echo $this->headScript()?>
+</head>
+
+<body class="admin-page <?php echo $this->layout()->mainClassesOfPage ?>">
+    <?php if($this->layout()->admin_username):?>
+    <header>
+        <div class="navbar navbar-default navbar-static-top navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <a type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="navbar-brand" href="#">Admin Panel</a>
+                </div>
+                <div class="collapse navbar-collapse navbar-ex1-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="/admin/post" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Post <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/admin/post/index">All</a>
+                                </li>
+                                <li class="divider"></li>
+                                <?php foreach($this->layout()->allCategory as $category):?>
+                                    <li>
+                                        <a href="/admin/post/index/category/<?php echo $category['name'] ?>"><?php echo $category[ 'display_name']?></a>
+                                    </li>
+                                <?php endforeach;?>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="/admin/post/detail">Add Post</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/admin/menu" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Menu <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/admin/menu/index/name/<?php echo HEADER_MENU_CONF ?>">Header Menu</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/admin/slide" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Slide <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/admin/slide/index/name/<?php echo MAIN_SLIDE_CONF ?>">Main Slide</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/admin/sidebar" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Sidebar <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="/admin/sidebar/index/name/<?php echo RIGHT_SIDEBAR_CONF ?>">Right Sidebar</a>
+                                </li>
+                                <li>
+                                    <a href="/admin/sidebar/index/name/<?php echo TOP_SIDEBAR_CONF ?>">Top Sidebar</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/admin/configuration/index">Configuration</a>                            
+                        </li>
+                        <li>
+                            <a href="/admin/media/index">Media</a>                            
+                        </li>
+                        <li>
+                            <a href="/admin/category/index">Category</a>                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <?php endif;?>
+    <section id="main-content">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <?php echo $this->layout()->content ?>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div id="confirm-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" id="mySmallModalLabel">Confirm</h4>
+                </div>
+                <div class="modal-body">
+                    Are you sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-danger" id="yes-button">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

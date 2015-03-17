@@ -1,0 +1,25 @@
+<script>
+	$(document).ready(function(){
+		$('#iview').iView({
+			pauseTime: 7000,
+			directionNav: false,
+			controlNav: true,
+			tooltipY: -15
+		});
+	});
+</script>
+<div id="slide">
+	<div id="iview">
+		<div data-iview:image="/public/images/slide-1.jpg" data-iview:transition="slice-top-fade,slice-right-fade">
+			<div class="iview-caption" data-x="80" data-y="275" data-transition="wipeRight">Khám phá sự hoàn hảo</div>
+		</div>
+		<div data-iview:image="/public/images/slide-2.jpg">
+			<div class="iview-caption blackcaption" data-x="50" data-y="135" data-transition="wipeLeft" data-easing="easeInOutElastic">Maximark đem đến sự hoàn hảo cho mọi nhà</div>
+			<div class="iview-caption blackcaption" data-x="50" data-y="172" data-transition="wipeLeft" data-easing="easeInOutElastic">Hãy đến với chúng tôi khi các bạn cần</div>						
+		</div>
+		<div data-iview:image="/public/images/slide-1.jpg">
+		</div>
+		<div data-iview:image="/public/images/slide-2.jpg">
+		</div>
+	</div>
+</div>

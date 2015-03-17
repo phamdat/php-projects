@@ -1,0 +1,15 @@
+<div class="category-form">
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?></p>
+    <?php endif; ?>
+
+    <form action="<?php echo $this->categoryForm->getAction(); ?>" method="<?php echo $this->categoryForm->getMethod(); ?>">            
+        <?php echo $this->categoryForm->getElement('id'); ?>
+        <?php echo $this->categoryForm->getElement('name'); ?>
+        <?php echo $this->categoryForm->getElement('display_name'); ?>
+        <?php echo $this->categoryForm->getElement('link_id'); ?>        
+
+        <?php echo $this->categoryForm->getElement('submit'); ?>
+    </form>
+</div>

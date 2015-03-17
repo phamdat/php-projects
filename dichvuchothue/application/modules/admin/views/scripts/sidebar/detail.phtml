@@ -1,0 +1,22 @@
+<div class="sidebar-form">
+    <script>
+        $(document).ready(function () {
+            CKEDITOR.replace('content')
+        });
+    </script>
+    <?php if($this->errorMessage != ""): ?>
+    <p class="error">
+        <?php echo $this->errorMessage; ?></p>
+    <?php endif; ?>
+
+    <form action="<?php echo $this->sidebarForm->getAction(); ?>" method="<?php echo $this->sidebarForm->getMethod(); ?>">            
+        <?php echo $this->sidebarForm->getElement('id'); ?>
+        <?php echo $this->sidebarForm->getElement('name'); ?>
+        <?php echo $this->sidebarForm->getElement('post_id'); ?>
+        <?php echo $this->sidebarForm->getElement('title'); ?>
+        <?php echo $this->sidebarForm->getElement('content'); ?>
+        <?php echo $this->sidebarForm->getElement('has_title'); ?>
+
+        <?php echo $this->sidebarForm->getElement('submit'); ?>
+    </form>
+</div>
