@@ -1,0 +1,21 @@
+<style>
+    
+</style>
+<div clas="list-container">
+    <?php foreach($this->paramPosts as $index => $post):?>
+        <div class="item-container">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post);?>">
+                <div class="thumbnail">
+                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                </div>
+            </a>
+
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post);?>">
+                <div class="title"><?php echo Utils_StringUtils::getTextFromPost($post, 'title');?></div>
+            </a>
+            <p class="description"><?php echo Utils_StringUtils::subText($post['description'], 120);?></p>
+            <div class="clearfix"></div>
+        </div>
+    <?php endforeach;?>
+    <?php echo $this->paginationControl($this->paramPosts, 'Sliding', 'pagination-control.phtml');?>
+</div>

@@ -10,15 +10,8 @@
     <?php endif;?>
 
 
-    <?php if($this->post['has_title']): ?>
-        <!--<h3 class="title-post">
-            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title'); ?>
-        </h3>-->
-        <div class="panel panel-primary mb-10 no-border">
-            <div class="panel-heading">
-                <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title'); ?>
-            </div>
-        </div>
+    <?php if($this->post['has_title']): ?>        
+        <?php echo $this->render('post/title.phtml');?>
     <?php endif;?>
 
 
@@ -90,51 +83,41 @@
 
     <?php if($this->post['is_filter_page']): ?>
         <div class="filter-post">
-            <?php foreach($this->posts as $value):?>
-                <?php if($value['is_filter_page']): ?>
+            <?php if (count($this->categories) > 1):?>
+                <?php foreach($this->categories as $value):?>
             
-                    <?php $this->p = $value; ?>
-            
-                    <?php if($value['category'] == 'GIOI_THIEU'): ?>
+                    <?php $this->paramCategory = $value['category']; ?>
+                    <?php $this->paramPosts = $value['posts']; ?>
+
+                    <?php if($value['category']['name'] == 'GIOI_THIEU'): ?>
                         <?php echo $this->render('post/gioi-thieu-s.phtml');?>
                     <?php endif;?>
 
-                    <?php if($value['category'] == 'SAN_PHAM'): ?>
+                    <?php if($value['category']['name'] == 'SAN_PHAM'): ?>
                         <?php echo $this->render('post/san-pham-s.phtml');?>
                     <?php endif;?>
 
-                    <?php if($value['category'] == 'SAN_PHAM_MOI'): ?>
+                    <?php if($value['category']['name'] == 'SAN_PHAM_MOI'): ?>
                         <?php echo $this->render('post/san-pham-moi-s.phtml');?>
                     <?php endif;?>
 
-                    <?php if($value['category'] == 'TIN_TUC'): ?>
+                    <?php if($value['category']['name'] == 'TIN_TUC'): ?>
                         <?php echo $this->render('post/tin-tuc-s.phtml');?>
                     <?php endif;?>
-                <?php else:?>
-                    <div class="item-by-list-content-wrapper">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
-                                    <div class="thumbnail">
-                                        <img src="<?php echo $value['thumbnail'];?>" class="img-responsive">
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col-sm-8">
-                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
-                                    <h4><strong><?php echo Utils_StringUtils::getTextFromPost($value, 'title');?></strong></h4>
-                                </a>
-                                <p><?php echo Utils_StringUtils::subText($value['description'], 120);?></p>
-                                <strong class="old-price"><?php echo $value['old_price'];?></strong>
-                                <div class="clearfix"></div>
-                                <strong class="price"><?php echo $value['price'];?></strong>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                <?php endif;?>
-            <?php endforeach;?>
-            <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination-control.phtml');?>
+            
+                <?php endforeach;?>
+            <?php elseif(count($this->categories) == 1):?>
+                
+                <?php $value = $this->categories[0]; ?>
+                
+                <?php $this->paramCategory = $value['category']; ?>
+                <?php $this->paramPosts = $value['posts']; ?>
+            
+                <?php if($value['category']['name'] == 'TIN_TUC'): ?>
+                    <?php echo $this->render('post/tin-tuc.phtml');?>
+                <?php endif;?>                
+            <?php endif;?>
+            
         </div>
     <?php endif;?>
 

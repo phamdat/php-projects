@@ -27,11 +27,11 @@ class PostController extends Zend_Controller_Action
                     ->query()                        
                     ->fetchAll()[0];
         
-        // increase view
+        //-------------------------------------------------------------------------------increase view
         $post['num_of_view']++;
         $db->update('post', array('num_of_view' => $post['num_of_view']), array('id = ?' => $post['id']));
         
-        // breadcrumb
+        //-------------------------------------------------------------------------------breadcrumb
         $breadcrumb = array();
         $parent = array($post);
         while(count($parent) > 0)
@@ -52,7 +52,7 @@ class PostController extends Zend_Controller_Action
 						->fetchAll();
         }
         
-        //similar post
+        //-------------------------------------------------------------------------------similar post
         $similarPosts = $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
@@ -64,7 +64,7 @@ class PostController extends Zend_Controller_Action
                             ->query()
                             ->fetchAll();
         
-        //most of view post
+        //-------------------------------------------------------------------------------most of view post
         $mostOfViewPosts = $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
@@ -76,7 +76,7 @@ class PostController extends Zend_Controller_Action
                             ->query()
                             ->fetchAll();                        
         
-        // seo
+        //-------------------------------------------------------------------------------seo
         if(isset($post['seo_title']) && !empty($post['seo_title']))
         {
             $this->view->headTitle()->set($post['seo_title']);
@@ -86,61 +86,51 @@ class PostController extends Zend_Controller_Action
             $this->view->headMeta()->setName('description', $post['seo_description']);
         }
         
+        //-------------------------------------------------------------------------------category to list
+        $categories = array();
+        foreach(explode(',', $post['category_to_list']) as $ca)
+        {
+            foreach(Zend_Registry::get('allCategory') as $category)
+            {
+                if($ca == $category['name'])
+                {
+                    $adapter = new Zend_Paginator_Adapter_DbSelect(
+                        $db->select()
+                            ->from(array('p' => 'post'))
+                            ->columns('*', 'p')
+                            ->where('p.category like ?', '%,'.$ca.',%')                        
+                            ->order('p.order_id DESC')
+                    );
+                    
+                    $adapter->setRowCount(
+                        $db->select()
+                            ->from(array('p' => 'post'))
+                            ->columns('*', 'p')
+                            ->where('p.category like ?', '%,'.$ca.',%')                        
+                            ->order('p.order_id DESC')
+                            ->reset( Zend_Db_Select::COLUMNS )
+                            ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
+                    );
+                    
+                    $paginator = new Zend_Paginator($adapter);
+
+                    $paginator->setCurrentPageNumber($this->_request->getParam('page'));
+
+                    array_push($categories, array('category' => $category, 'posts' => $paginator));
+                }
+            }
+        }
+        
+        //-------------------------------------------------------------------------------
         Zend_Layout::getMvcInstance()->assign('hasSlide', $post['has_slide']);
         Zend_Layout::getMvcInstance()->assign('hasRightSidebar', $post['has_right_sidebar']);
         Zend_Layout::getMvcInstance()->assign('hasTopSidebar', $post['has_top_sidebar']);
 		
         $this->view->breadcrumb = array_reverse($breadcrumb);
 		$this->view->post = $post;
+        $this->view->categories = $categories;
         $this->view->similarPosts = $similarPosts;
         $this->view->mostOfViewPosts = $mostOfViewPosts;
-        
-        
-        //filter page         
-        $adapter = new Zend_Paginator_Adapter_DbSelect(
-            $db->select()
-                ->from(array('p' => 'post'))
-                ->columns('*', 'p')
-                ->where('p.link_id = ?', $post['id'])                            
-                ->order('p.order_id DESC')
-        );
-
-        $adapter->setRowCount(
-            $db->select()
-                ->from(array('p' => 'post'))
-                ->columns('*', 'p')
-                ->where('p.link_id = ?', $post['id'])                            
-                ->order('p.order_id DESC')
-                ->reset( Zend_Db_Select::COLUMNS )
-                ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
-        );
-
-        $paginator = new Zend_Paginator($adapter);
-
-        $paginator->setCurrentPageNumber($this->_request->getParam('page'));
-
-        $posts = array();
-
-        foreach($paginator as $p)
-        {
-            if(isset($p['is_filter_page']) && $p['is_filter_page'])
-            {
-                $ps = $db->select()
-                        ->from(array('p' => 'post'))
-                        ->columns('*', 'p')
-                        ->where('p.link_id = ?', $p['id'])                            
-                        ->order('p.order_id DESC')
-                        ->query()
-                        ->fetchAll();
-
-                $p['subPost'] = $ps;
-            }
-            array_push($posts, $p);
-        }
-
-        $this->view->posts = $posts;
-        $this->view->paginator = $paginator;
-        
     }
     
     public function searchAction()

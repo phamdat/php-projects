@@ -76,21 +76,21 @@
 <div class="spmoi-container">
     <div class="fg-title">
         <div class="fg-title-text">
-            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
         </div>
     </div>
     <div class="spmoi-content">
-        <?php foreach($this->p['subPost'] as $index => $subValue):?>
+        <?php foreach($this->paramPosts as $index => $post):?>
         <div class="spmoi-content-1">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                 <div class="spmoi-thumbnail-1">
-                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
                 </div>
             </a>
             <div class="clearfix"></div>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                 <div class="spmoi-title-1">
-                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                    <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
                 </div>
             </a>
         </div>

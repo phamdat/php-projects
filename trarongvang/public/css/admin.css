@@ -233,3 +233,8 @@ ul.alert-dropdown {
     color: #a94442;
     padding-left: 20px;
 }
+
+select[multiple] {
+  overflow: hidden;
+  padding: 10px 0px 25px 15px;
+}

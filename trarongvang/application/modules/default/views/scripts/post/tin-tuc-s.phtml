@@ -75,26 +75,26 @@
 <div class="tintuc-container">
     <div class="fg-title">
         <div class="fg-title-text">
-            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
         </div>
     </div>
     <div class="tintuc-content">
-        <?php foreach($this->p['subPost'] as $index => $subValue):?>
+        <?php foreach($this->paramPosts as $index => $post):?>
         <div class="tintuc-content-1">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                 <div class="tintuc-thumbnail-1">
-                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
                 </div>
             </a>
             <div class="tintuc-date-1">
-                <?php echo $subValue[ 'created_date'];?>
+                <?php echo $post[ 'created_date'];?>
             </div>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                 <div class="tintuc-title-1">
-                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                    <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
                 </div>
             </a>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                 <div class="tintuc-more-1">
                     xem thêm &gt;&gt;
                 </div>

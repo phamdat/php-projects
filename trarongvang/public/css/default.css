@@ -135,7 +135,6 @@ body.main-page {
 }
 
 .main-page #main-slide .slide {
-    margin-bottom: 20px;
     border-style: solid;
     border-width: 10px;
     border-color: #ffffff;
@@ -189,10 +188,6 @@ body.main-page {
     padding: 8px 0px;
     margin-bottom: 10px;
     background-color: transparent;
-}
-
-.main-page #main-content .title-post {
-    margin-top: 10px;
 }
 
 .main-page #main-content .description-post {
@@ -491,10 +486,6 @@ body.main-page {
     background-color: #fc7c74;
     border-color: #fc7c74;
     color: #fff;
-}
-
-.main-page #main-content .title-post {
-    color: #44a6cc;
 }
 
 .main-page #main-content .price {

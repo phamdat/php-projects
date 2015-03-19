@@ -1,4 +1,8 @@
 <style>
+    .sp-container {
+        margin-top: 20px;
+    }
+    
     .sp-container .sp-content {
         width: 840px;
         float: left;
@@ -52,7 +56,7 @@
 <div class="sp-container">
     <div class="fg-title">
         <div class="fg-title-text">
-            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
         </div>
         <div class="fg-title-line">
             <div></div>
@@ -61,17 +65,17 @@
     <div class="fg-sidebar-container">
         <div class="fg-sidebar">
             <div class="fg-sidebar-title">
-                <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+                <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
             </div>
             <div class="fg-sidebar-title-re">
             </div>
             <div class="fg-sidebar-list">
-                <?php foreach($this->p['subPost'] as $index => $subValue):?>
-                <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <?php foreach($this->paramPosts as $index => $post):?>
+                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                     <div class="fg-sidebar-list-item">
                         <?php if($index==8 ): ?> Sản phẩm khác
                         <?php elseif($index < 8): ?>
-                        <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                        <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
                         <?php endif;?>
                     </div>
                 </a>
@@ -80,10 +84,10 @@
         </div>
     </div>
     <div class="sp-content">
-        <?php foreach($this->p['subPost'] as $index => $subValue):?>
+        <?php foreach($this->paramPosts as $index => $post):?>
         <div class="sp-content-1">
             <div class="sp-thumbnail-1">
-                <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
             </div>
         </div>
         <?php endforeach;?>

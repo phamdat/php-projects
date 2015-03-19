@@ -37,8 +37,12 @@
     <tbody>
         <?php foreach($this->paginator as $key => $value):?>
             <tr>
-                <td>
-                    <?php echo $value['display_name'];?>
+                <td>|
+                    <?php foreach($this->layout()->allCategory as $ca):?>
+                        <?php if(strpos($value['category'], ','.$ca['name'].',') > -1):?>
+                            <?php echo $ca['display_name'];?> |
+                        <?php endif;?>
+                    <?php endforeach;?>
                 </td>
                 <td>
                     <img src="<?php echo $value['thumbnail'];?>" clas="img-responsive" style="max-width: 100px;"/>

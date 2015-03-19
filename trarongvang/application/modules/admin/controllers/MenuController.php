@@ -170,7 +170,7 @@ class Admin_MenuController extends Zend_Controller_Action
         $postList = $db->select()
 					->from(array('p' => 'post'))
                     ->where('p.type = ?', PAGE)
-                    ->where('p.category = ?', 'MAIN_PAGE')
+                    ->where('p.category like ?', '%,MAIN_PAGE,%')
 					->columns('*', 'p')
 					->query()
 					->fetchAll();

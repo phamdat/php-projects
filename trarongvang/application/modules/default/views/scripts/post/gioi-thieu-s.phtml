@@ -1,6 +1,6 @@
 <style>
     .gt-container {
-        margin-bottom: 20px;
+        margin-top: 20px;
     }
     
     .gt-container .gt-content {
@@ -169,76 +169,76 @@
 <div class="gt-container">
     <div class="fg-title">
         <div class="fg-title-text">
-            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
         </div>
         <div class="fg-title-line">
             <div></div>
         </div>
     </div>
     <div class="gt-content">
-        <?php foreach($this->p['subPost'] as $index => $subValue):?>
-        <?php if($index==0 ): ?>
-        <div class="gt-content-1">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-thumbnail-1">
-                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+        <?php foreach($this->paramPosts as $index => $post):?>
+            <?php if($index==0 ): ?>            
+                <div class="gt-content-1">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-thumbnail-1">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-title-1">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        </div>
+                    </a>
+                    <div class="gt-description-1">
+                        <?php echo Utils_StringUtils::getTextFromPost($post, 'description');?>
+                    </div>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-more-1">
+                            Xem thêm
+                        </div>
+                    </a>
+                    <div class="clearfix"></div>
                 </div>
-            </a>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-title-1">
-                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                </div>
-            </a>
-            <div class="gt-description-1">
-                <?php echo Utils_StringUtils::getTextFromPost($subValue, 'description');?>
-            </div>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-more-1">
-                    Xem thêm
-                </div>
-            </a>
-            <div class="clearfix"></div>
-        </div>
 
-        <?php elseif($index < 4): ?>
-        <div class="gt-content-2">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-title-2">
-                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                <?php elseif($index < 4): ?>
+                <div class="gt-content-2">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-title-2">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        </div>
+                    </a>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-thumbnail-2">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="gt-more-2">
+                            Xem
+                        </div>
+                    </a>
                 </div>
-            </a>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-thumbnail-2">
-                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                </div>
-            </a>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                <div class="gt-more-2">
-                    Xem
-                </div>
-            </a>
-        </div>
-        <?php endif;?>
+            <?php endif;?>
         <?php endforeach;?>
         <div class="clearfix"></div>
     </div>
     <div class="fg-sidebar-container">
         <div class="fg-sidebar">
             <div class="fg-sidebar-title">
-                <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+                <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
             </div>
             <div class="fg-sidebar-title-re">
             </div>
             <div class="fg-sidebar-list">
-                <?php foreach($this->p['subPost'] as $index => $subValue):?>
-                <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                    <div class="fg-sidebar-list-item">
-                        <?php if($index==0 ): ?> Tổng Quan
-                        <?php else: ?>
-                        <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                        <?php endif;?>
-                    </div>
-                </a>
+                <?php foreach($this->paramPosts as $index => $post):?>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="fg-sidebar-list-item">
+                            <?php if($index==0 ): ?> Tổng Quan
+                            <?php else: ?>
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            <?php endif;?>
+                        </div>
+                    </a>
                 <?php endforeach;?>
             </div>
         </div>
