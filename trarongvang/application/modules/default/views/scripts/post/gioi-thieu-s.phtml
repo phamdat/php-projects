@@ -1,0 +1,258 @@
+<style>
+    .gt-container {
+        margin-bottom: 20px;
+    }
+    
+    .gt-container .gt-content {
+        width: 840px;
+        float: left;
+        margin-right: 20px;
+    }
+    
+    .gt-container .gt-content .gt-content-1 {
+        position: relative;
+    }
+    
+    .gt-container .gt-content .gt-content-1 .gt-thumbnail-1 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #ffffff;
+        float: left;
+        width: 350px;
+        margin-right: 25px;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .gt-container .gt-content .gt-content-1 .gt-title-1 {
+        color: #3c663d;
+        font-size: 24px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    
+    .gt-container .gt-content .gt-content-1 .gt-more-1 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #7bbb91;
+        background-color: #7bbb91;
+        border-radius: 60px;
+        position: absolute;
+        font-size: 20px;
+        color: white;
+        line-height: 30px;
+        bottom: 10px;
+        right: 10px;
+        width: 80px;
+        text-align: center;
+    }
+    
+    .gt-container .gt-content .gt-content-2 {
+        float: left;
+        width: 255px;
+        margin-right: 25px;
+        position: relative;
+        margin-top: 60px;
+    }
+    
+    .gt-container .gt-content .gt-content-2:nth-child(4n+4) {
+        margin-right: 0px;
+    }
+    
+    .gt-container .gt-content .gt-content-2 .gt-title-2 {
+        color: #3c663d;
+        font-size: 20px;
+        text-transform: uppercase;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    
+    .gt-container .gt-content .gt-content-2 .gt-thumbnail-2 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #ffffff;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
+        border-radius: 210px;
+        overflow: hidden;
+    }
+    
+    .gt-container .gt-content .gt-content-2 .gt-more-2 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #3c663d;
+        background-color: #3c663d;
+        border-radius: 60px;
+        position: absolute;
+        font-size: 20px;
+        color: white;
+        line-height: 41px;
+        top: 50px;
+        text-align: center;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .gt-container .gt-content {
+            width: 690px;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-thumbnail-1 {
+            width: 250px;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-title-1 {
+            font-size: 20px;
+        }
+        .gt-container .gt-content .gt-content-2 {
+            width: 210px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        .gt-container .gt-content {
+            width: 530px;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-thumbnail-1 {
+            width: 200px;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-title-1 {
+            font-size: 18px;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-more-1 {
+            font-size: 14px;
+            line-height: 17px;
+            width: 54px;
+        }
+        .gt-container .gt-content .gt-content-2 {
+            width: 160px;
+        }
+        .gt-container .gt-content .gt-content-2 .gt-title-2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .gt-container .gt-content .gt-content-2 .gt-more-2 {
+            font-size: 14px;
+            line-height: 29px;
+            top: 30px;
+        }
+    }
+    
+    @media (max-width: 767px) {        
+        .gt-container .gt-content {
+            width: 100%;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-thumbnail-1 {
+            width: 50%;
+        }
+        .gt-container .gt-content .gt-content-1 .gt-title-1 {
+            font-size: 18px;
+        }        
+        .gt-container .gt-content .gt-content-1 .gt-more-1 {
+            font-size: 14px;
+            line-height: 17px;
+            width: 54px;
+        }
+        .gt-container .gt-content .gt-content-2 {
+            width: 50%;
+            margin-right: 0px;
+            padding: 0px 15px;
+            margin-top: 30px;
+        }
+        .gt-container .gt-content .gt-content-2 .gt-title-2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .gt-container .gt-content .gt-content-2 .gt-more-2 {
+            font-size: 14px;
+            line-height: 29px;
+            top: 30px;
+        }
+    }
+</style>
+<div class="gt-container">
+    <div class="fg-title">
+        <div class="fg-title-text">
+            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+        </div>
+        <div class="fg-title-line">
+            <div></div>
+        </div>
+    </div>
+    <div class="gt-content">
+        <?php foreach($this->p['subPost'] as $index => $subValue):?>
+        <?php if($index==0 ): ?>
+        <div class="gt-content-1">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-thumbnail-1">
+                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                </div>
+            </a>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-title-1">
+                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                </div>
+            </a>
+            <div class="gt-description-1">
+                <?php echo Utils_StringUtils::getTextFromPost($subValue, 'description');?>
+            </div>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-more-1">
+                    Xem thêm
+                </div>
+            </a>
+            <div class="clearfix"></div>
+        </div>
+
+        <?php elseif($index < 4): ?>
+        <div class="gt-content-2">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-title-2">
+                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                </div>
+            </a>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-thumbnail-2">
+                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                </div>
+            </a>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="gt-more-2">
+                    Xem
+                </div>
+            </a>
+        </div>
+        <?php endif;?>
+        <?php endforeach;?>
+        <div class="clearfix"></div>
+    </div>
+    <div class="fg-sidebar-container">
+        <div class="fg-sidebar">
+            <div class="fg-sidebar-title">
+                <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+            </div>
+            <div class="fg-sidebar-title-re">
+            </div>
+            <div class="fg-sidebar-list">
+                <?php foreach($this->p['subPost'] as $index => $subValue):?>
+                <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                    <div class="fg-sidebar-list-item">
+                        <?php if($index==0 ): ?> Tổng Quan
+                        <?php else: ?>
+                        <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                        <?php endif;?>
+                    </div>
+                </a>
+                <?php endforeach;?>
+            </div>
+        </div>
+        <div class="fg-sidebar">
+            <div class="fg-sidebar-title">
+                Tài chính & thời tiết
+            </div>
+            <div class="fg-sidebar-title-re">
+            </div>
+            <div>
+                <span style="display: block !important; width: 180px; text-align: center; font-family: sans-serif; font-size: 12px;"><a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:94114.1.99999&bannertypeclick=wu_travel_map1" title="San Francisco, California Weather Forecast" target="_blank"><img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_travel_map1_metric&airportcode=KSFO&ForcedCity=San Francisco&ForcedState=CA&zip=94114&language=EN" alt="Find more about Weather in San Francisco, CA" width="160" /></a><br><a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:94114.1.99999&bannertypeclick=wu_travel_map1" title="Get latest Weather Forecast updates" style="font-family: sans-serif; font-size: 12px" target="_blank">Click for weather forecast</a></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>

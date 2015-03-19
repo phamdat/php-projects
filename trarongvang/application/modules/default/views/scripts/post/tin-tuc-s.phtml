@@ -1,0 +1,107 @@
+<style>
+    .tintuc-container {
+        float: left;
+        width: 390px;
+    }
+    
+    .tintuc-container .fg-title {
+        border-bottom-style: dotted;
+        border-bottom-width: 2px;
+        border-bottom-color: #3c663d;
+    }
+    
+    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
+        border-style: solid;
+        border-width: 5px;
+        border-color: #ffffff;
+        float: left;
+        width: 100px;
+        margin-bottom: 20px;
+        margin-right: 20px;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
+        color: #e39444;
+        font-size: 20px;
+    }
+    
+    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
+        font-size: 16px;
+        color: #51524c;
+    }
+    
+    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-more-1 {
+        text-align: right;
+        color: #51524c;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .tintuc-container {
+            width: 310px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        .tintuc-container {
+            width: 210px;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
+            font-size: 16px;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
+            width: 70px;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
+            font-size: 14px;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .tintuc-container {
+            width: 100%;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
+            font-size: 16px;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
+            width: 30%;
+        }
+        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
+            font-size: 14px;
+        }
+    }
+</style>
+<div class="tintuc-container">
+    <div class="fg-title">
+        <div class="fg-title-text">
+            <?php echo Utils_StringUtils::getTextFromPost($this->p, 'title')?>
+        </div>
+    </div>
+    <div class="tintuc-content">
+        <?php foreach($this->p['subPost'] as $index => $subValue):?>
+        <div class="tintuc-content-1">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="tintuc-thumbnail-1">
+                    <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
+                </div>
+            </a>
+            <div class="tintuc-date-1">
+                <?php echo $subValue[ 'created_date'];?>
+            </div>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="tintuc-title-1">
+                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
+                </div>
+            </a>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
+                <div class="tintuc-more-1">
+                    xem thêm &gt;&gt;
+                </div>
+            </a>
+        </div>
+        <div class="clearfix"></div>
+        <?php endforeach;?>
+    </div>
+    <div class="clearfix"></div>
+</div>

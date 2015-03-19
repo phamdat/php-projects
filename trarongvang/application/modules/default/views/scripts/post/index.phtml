@@ -88,249 +88,28 @@
     <?php endif;?>
 
 
-    <?php if($this->post['is_front_page']): ?>
-        <div class="front-page-content">
-            <?php foreach($this->posts as $value):?>
-                <?php if(isset($value['is_filter_page']) && $value['is_filter_page'] && $value['category'] == 'GIOI_THIEU'): ?>
-                    <div class="gt-container">
-                        <div class="fg-title">
-                            <div class="fg-title-text">
-                                <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                            </div>
-                            <div class="fg-title-line">
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="gt-content">
-                            <?php foreach($value['subPost'] as $index => $subValue):?>
-                                <?php if($index == 0): ?>
-                                    <div class="gt-content-1">
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-thumbnail-1">
-                                                <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                            </div>
-                                        </a>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-title-1">
-                                                <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                            </div>
-                                        </a>
-                                        <div class="gt-description-1">
-                                            <?php echo Utils_StringUtils::getTextFromPost($subValue, 'description');?>
-                                        </div>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-more-1">
-                                                Xem thêm
-                                            </div>
-                                        </a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    
-                                <?php elseif($index < 4): ?>
-                                    <div class="gt-content-2">
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-title-2">
-                                                <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                            </div>
-                                        </a>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-thumbnail-2">
-                                                <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                            </div>
-                                        </a>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-more-2">
-                                                Xem
-                                            </div>
-                                        </a>
-                                    </div>
-                                <?php endif;?>
-                            <?php endforeach;?>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="gt-sidebar">
-                            <div class="gt-sidebar-1">
-                                <div class="gt-title-1">
-                                    <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                                </div>
-                                <div class="gt-title-re-1">
-                                </div>
-                                <div class="gt-list">
-                                    <?php foreach($value['subPost'] as $index => $subValue):?>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="gt-list-item">
-                                                <?php if($index == 0): ?>
-                                                    Tổng Quan
-                                                <?php else: ?>
-                                                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                                <?php endif;?>                                            
-                                            </div>
-                                        </a>
-                                    <?php endforeach;?>
-                                </div>
-                            </div>
-                            <div class="gt-sidebar-1">
-                                <div class="gt-title-1">
-                                    Tài chính & thời tiết
-                                </div>
-                                <div class="gt-title-re-1">
-                                </div>
-                                <div>
-                                    <span style="display: block !important; width: 180px; text-align: center; font-family: sans-serif; font-size: 12px;"><a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:94114.1.99999&bannertypeclick=wu_travel_map1" title="San Francisco, California Weather Forecast" target="_blank"><img src="http://weathersticker.wunderground.com/weathersticker/cgi-bin/banner/ban/wxBanner?bannertype=wu_travel_map1_metric&airportcode=KSFO&ForcedCity=San Francisco&ForcedState=CA&zip=94114&language=EN" alt="Find more about Weather in San Francisco, CA" width="160" /></a><br><a href="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:94114.1.99999&bannertypeclick=wu_travel_map1" title="Get latest Weather Forecast updates" style="font-family: sans-serif; font-size: 12px" target="_blank">Click for weather forecast</a></span>
-                                </div>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                <?php endif;?>
-            
-                <?php if(isset($value['is_filter_page']) && $value['is_filter_page'] && $value['category'] == 'SAN_PHAM'): ?>
-                    <div class="sp-container">
-                        <div class="fg-title">
-                            <div class="fg-title-text">
-                                <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                            </div>
-                            <div class="fg-title-line">
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="sp-sidebar">
-                            <div class="sp-sidebar-1">
-                                <div class="sp-title-1">
-                                    <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                                </div>
-                                <div class="sp-title-re-1">
-                                </div>
-                                <div class="sp-list">
-                                    <?php foreach($value['subPost'] as $index => $subValue):?>
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                            <div class="sp-list-item">
-                                                <?php if($index == 8): ?>
-                                                    Sản phẩm khác
-                                                <?php elseif($index < 8): ?>
-                                                    <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                                <?php endif;?>                                            
-                                            </div>
-                                        </a>
-                                    <?php endforeach;?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sp-content">
-                            <?php foreach($value['subPost'] as $index => $subValue):?>
-                                <div class="sp-content-1">
-                                    <div class="sp-thumbnail-1">
-                                        <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                    </div>
-                                </div>
-                            <?php endforeach;?>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                <?php endif;?>
-            
-                <?php if(isset($value['is_filter_page']) && $value['is_filter_page'] && $value['category'] == 'SAN_PHAM_MOI'): ?>
-                    <div class="spmoi-container">
-                        <div class="fg-title">
-                            <div class="fg-title-text">
-                                <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                            </div>
-                        </div>
-                        <div class="spmoi-content">
-                            <?php foreach($value['subPost'] as $index => $subValue):?>
-                                <div class="spmoi-content-1">
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                        <div class="spmoi-thumbnail-1">
-                                            <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                        </div>
-                                    </a>
-                                    <div class="clearfix"></div>
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                        <div class="spmoi-title-1">
-                                            <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                        </div>
-                                    </a>
-                                </div>
-                            <?php endforeach;?>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                <?php endif;?>
-            
-                <?php if(isset($value['is_filter_page']) && $value['is_filter_page'] && $value['category'] == 'TIN_TUC'): ?>
-                    <div class="tintuc-container">
-                        <div class="fg-title">
-                            <div class="fg-title-text">
-                                <?php echo Utils_StringUtils::getTextFromPost($value, 'title')?>
-                            </div>
-                        </div>
-                        <div class="tintuc-content">
-                            <?php foreach($value['subPost'] as $index => $subValue):?>
-                                <div class="tintuc-content-1">
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                        <div class="tintuc-thumbnail-1">
-                                            <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                        </div>
-                                    </a>
-                                    <div class="tintuc-date-1">
-                                        <?php echo $subValue['created_date'];?>
-                                    </div>
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                        <div class="tintuc-title-1">
-                                            <?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?>
-                                        </div>
-                                    </a>
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue) ?>">
-                                        <div class="tintuc-more-1">
-                                            xem thêm &gt;&gt;
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="clearfix"></div>
-                            <?php endforeach;?>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                <?php endif;?>
-            <?php endforeach;?>
-            <div class="clearfix"></div>
-        </div>
-    <?php endif;?>
-
-
     <?php if($this->post['is_filter_page']): ?>
         <div class="filter-post">
             <?php foreach($this->posts as $value):?>
                 <?php if($value['is_filter_page']): ?>
-                    <div class="panel panel-primary mb-10 no-border">
-                        <div class="panel-heading">
-                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>" class="white-color">
-                                <?php echo Utils_StringUtils::getTextFromPost($value, 'title');?>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <?php foreach($value['subPost'] as $subValue):?>
-                            <div class="col-sm-6 col-md-4">
-                                <div class="item-content-wrapper">
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue);?>">
-                                        <h5><strong><?php echo Utils_StringUtils::getTextFromPost($subValue, 'title');?></strong></h5>
-                                    </a>
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($subValue);?>">
-                                        <div class="thumbnail">
-                                            <img src="<?php echo $subValue['thumbnail'];?>" class="img-responsive">
-                                        </div>
-                                    </a>
-                                    <br>
-                                    <p><?php echo Utils_StringUtils::subText($subValue['description'], 60);?></p>
-                                    <strong class="old-price"><?php echo $value['old_price'];?></strong>
-                                    <div class="clearfix"></div>
-                                    <strong class="price"><?php echo $subValue['price'];?></strong>
-                                </div>
-                            </div>
-                        <?php endforeach;?>
-                    </div>
+            
+                    <?php $this->p = $value; ?>
+            
+                    <?php if($value['category'] == 'GIOI_THIEU'): ?>
+                        <?php echo $this->render('post/gioi-thieu-s.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category'] == 'SAN_PHAM'): ?>
+                        <?php echo $this->render('post/san-pham-s.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category'] == 'SAN_PHAM_MOI'): ?>
+                        <?php echo $this->render('post/san-pham-moi-s.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category'] == 'TIN_TUC'): ?>
+                        <?php echo $this->render('post/tin-tuc-s.phtml');?>
+                    <?php endif;?>
                 <?php else:?>
                     <div class="item-by-list-content-wrapper">
                         <div class="row">
