@@ -494,7 +494,7 @@ body.main-page {
 /* end fucking UI*/
 /************************************************************************************************************************************************* front page */
 
-.fg-title {
+.fg-title-1 {
     color: #3c663d;
     font-size: 34px;
     text-transform: uppercase;
@@ -504,21 +504,33 @@ body.main-page {
     margin-bottom: 10px;
 }
 
-.fg-title .fg-title-text {
+.fg-title-1 .fg-title-text {
     display: table-cell;
     width: 186px;
 }
 
-.fg-title .fg-title-line {
+.fg-title-1 .fg-title-line {
     display: table-cell;
 }
 
-.fg-title .fg-title-line div {
+.fg-title-1 .fg-title-line div {
     margin-left: 20px;
     margin-bottom: 1px;
     border-bottom-style: solid;
     border-bottom-width: 2px;
     border-bottom-color: #878787;
+}
+
+.fg-title-2 {
+    color: #3c663d;
+    font-size: 34px;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 10px;
+    border-bottom-style: dotted;
+    border-bottom-width: 2px;
+    border-bottom-color: #3c663d;
 }
 /*************************************sidebar*/
 
@@ -659,10 +671,10 @@ body.main-page {
     .main-page #main-slide .slide .carousel {
         height: 340px;
     }
-    .fg-title {
+    .fg-title-1, .fg-title-2 {
         font-size: 28px;
     }
-    .fg-title .fg-title-text {
+    .fg-title-1 .fg-title-text {
         width: 155px;
     }
     .fg-sidebar-container .fg-sidebar {
@@ -739,10 +751,10 @@ body.main-page {
         margin-right: 0px;
         margin-left: 0px;
     }
-    .fg-title {
+    .fg-title-1, .fg-title-2 {
         font-size: 28px;
     }
-    .fg-title .fg-title-text {
+    .fg-title-1 .fg-title-text {
         width: 155px;
     }
     .fg-sidebar-container {

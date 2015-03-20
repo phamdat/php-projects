@@ -5,12 +5,6 @@
         margin-right: 40px;
     }
     
-    .spmoi-container .fg-title {
-        border-bottom-style: dotted;
-        border-bottom-width: 2px;
-        border-bottom-color: #3c663d;
-    }
-    
     .spmoi-container .spmoi-content .spmoi-content-1 {
         float: left;
         margin-right: 40px;
@@ -64,7 +58,7 @@
     
     @media (max-width: 767px) {
         .spmoi-container {
-            width: 500px;
+            width: 100%;
         }
         .spmoi-container .spmoi-content .spmoi-content-1 {
             margin-right: 0px;
@@ -74,7 +68,7 @@
     }
 </style>
 <div class="spmoi-container">
-    <div class="fg-title">
+    <div class="fg-title-2">
         <div class="fg-title-text">
             <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
         </div>

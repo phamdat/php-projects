@@ -110,6 +110,7 @@ class Admin_PostController extends Zend_Controller_Action
                     'has_title'        => $postForm->getValue('has_title'),
                     'has_description'  => $postForm->getValue('has_description'),
                     'has_content'      => $postForm->getValue('has_content'),
+                    'has_media'      => $postForm->getValue('has_media'),
                     'has_similar_post' => $postForm->getValue('has_similar_post'),
                     'has_comment'      => $postForm->getValue('has_comment'),
                     'has_like_share'   => $postForm->getValue('has_like_share'),
@@ -226,6 +227,7 @@ class Admin_PostController extends Zend_Controller_Action
         foreach(Zend_Registry::get('allCategory') as $categoryItem){
 			$category->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
 		}
+        $category->setAttrib('size', count(Zend_Registry::get('allCategory')));
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
@@ -397,7 +399,7 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
-                ->setValue(false);
+                ->setValue(true);
         
         //-------------------------------------------------------------------------------------------------------------------------
         
@@ -421,6 +423,15 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasContent = new Zend_Form_Element_Checkbox('has_content');
         $hasContent->setLabel('Show content')
+				->setRequired(false)
+                ->setCheckedValue(true)
+                ->setUncheckedValue(false)
+                ->setValue(true);
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $hasMedia = new Zend_Form_Element_Checkbox('has_media');
+        $hasMedia->setLabel('Show images')
 				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
@@ -460,7 +471,7 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
-                ->setValue(false);
+                ->setValue(true);
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
@@ -498,6 +509,7 @@ class Admin_PostController extends Zend_Controller_Action
         foreach(Zend_Registry::get('allCategory') as $categoryItem){
 			$category2List->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
 		}
+        $category2List->setAttrib('size', count(Zend_Registry::get('allCategory')));
         
         //-------------------------------------------------------------------------------------------------------------------------
         
@@ -569,6 +581,7 @@ class Admin_PostController extends Zend_Controller_Action
             $hasTitle->setValue($post['has_title']);
             $hasDescription->setValue($post['has_description']);
             $hasContent->setValue($post['has_content']);
+            $hasMedia->setValue($post['has_media']);
             $hasSimilarPost->setValue($post['has_similar_post']);            
             $hasMostOfViewPost->setValue($post['has_most_of_view_post']);
             $hasComment->setValue($post['has_comment']);
@@ -614,6 +627,7 @@ class Admin_PostController extends Zend_Controller_Action
                     ->addElement($hasTitle)
                     ->addElement($hasDescription)
                     ->addElement($hasContent)
+                    ->addElement($hasMedia)
                     ->addElement($hasSimilarPost)
                     ->addElement($hasMostOfViewPost)
                     ->addElement($hasComment)
