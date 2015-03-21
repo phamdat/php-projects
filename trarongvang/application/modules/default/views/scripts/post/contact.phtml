@@ -1,23 +1,36 @@
 <style>
     .post-container {
         margin-top: 20px;
+        position: relative;
     }
     
     .post-media {
-        float: left;
-        width: 570px;
-        margin-right: 30px;
+        width: 100%;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #3c663d;
     }
     
     .post-content {
-        float: left;
-        width: 570px;
-        margin-right: 30px;
+        float: right;
+        width: 570px;        
+        margin-top: 20px;
+        font-size: 18px;
+    }
+    
+    .post-map {
+        width: 100%;
+        margin-top: 20px;
     }
     
     .post-title {
         font-size: 24px;
-        color: #3c663d;
+        color: #ffffff;
+        position: absolute;
+        top: 240px;
+        text-transform: uppercase;
+        background-color: #3c663d;
+        padding: 5px 45px;
     }
     
     .post-like-share {
@@ -25,8 +38,10 @@
     }
     
     .contact-form {
-        float: left;
+        float: right;
         width: 570px;
+        margin-top: 20px;
+        margin-left: 30px;
     }
     
     .contact-form input,
@@ -43,36 +58,43 @@
     }
     
     @media (min-width: 992px) and (max-width: 1199px) {
-        .post-media {
+        .post-title {
+            top: 195px;
+        }
+        .post-content {
             width: 470px;
         }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 290px;
+        .contact-form {
+            width: 470px;
         }
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        .post-media {
+        .post-title {
+            top: 150px;
+            font-size: 20px;
+        }
+        .post-content {
             width: 360px;
         }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 240px;
+        .contact-form {
+            width: 360px;
         }
     }
     
     @media (max-width: 767px) {
-        .post-media {
+        .post-content {
             width: 100%;
         }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 240px;
+        .contact-form {
+            width: 100%;
         }
     }
 </style>
 <div class="post-container">
 
     <?php if($this->post['has_media']): ?>
-    <div id="preview-post" class="carousel post-media" data-ride="carousel">
+    <div class="carousel post-media hidden-xs" data-ride="carousel">
         <div class="carousel-inner">
             <?php $ms=explode( ';', preg_replace( '/;+/', ';', trim($this->post['media'], ';'))); ?>
             <?php foreach($ms as $key=> $media):?>
@@ -81,19 +103,11 @@
             </div>
             <?php endforeach;?>
         </div>
-        <a class="left carousel-control" href="#preview-post" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#preview-post" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
     <?php endif;?>
 
     <?php if($this->post['has_title']): ?>
-    <div class="post-title">
+    <div class="post-title hidden-xs">
         <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
     </div>
     <?php endif;?>
@@ -110,43 +124,41 @@
     </div>
     <?php endif;?>
 
-    <?php if($this->post['has_content']): ?>
-    <div class="post-content">
-        <?php echo $this->post['content'] ?>
-        <div>CTY CP CHÈ RỒNG VÀNG</div>
-        <div>Địa chỉ giao dịch:</div>
-        <div>280A Trần Phú - tp Bảo Lộc - tỉnh Lâm Đồng</div>
-        <div>Điện thoại: </div>
-        <div>Fax: </div>
-        <div>Email: </div>
-        <div>Website: </div>
-    </div>
-    <?php endif;?>
-
+    <script>
+        function sendContact(){
+            if($('#name').val() != '' && $('#email').val() != '' && $('#comment').val() != ''){
+                $.ajax({
+                    url: '/mail/send-contact',
+                    data: $('#contact-form').serializeArray(),
+                    method: 'POST',
+                    success: function(){
+                        alert('Cảm ơn bạn đã đóng góp ý kiến cho chúng tôi!');
+                        window.location.href = '/';
+                    }
+                });        
+            }else{
+                alert('Vui lòng nhập đủ thông tin!');
+            }
+        }
+    </script>
     <div class="contact-form">
-        <input type="text" class="form-control" placeholder="Họ và tên">
-        <input type="text" class="form-control" placeholder="Email">
-        <textarea class="form-control" rows="5" placeholder="Nội dung"></textarea>
-        <button class="btn btn-default pull-right">Gửi</button>
+        <form id="contact-form">
+            <input id="name" name="name" type="text" class="form-control" placeholder="Họ và tên">
+            <input id="email" name="email" type="text" class="form-control" placeholder="Email">
+            <textarea id="comment" name="comment" class="form-control" rows="5" placeholder="Nội dung"></textarea>
+            <button type="button" class="btn btn-default pull-right" onclick="sendContact()">Gửi</button>
+        </form>
     </div>
+    
+    <?php if($this->post['has_content']): ?>
+        <?php echo $this->post['content'] ?>        
+    <?php endif;?>
 
     <?php if($this->post['has_advertisment']): ?>
     <div class="post-advertisment">
         <?php echo $this->layout()->configurations[POST_ADVERTISMENT_CONF]['value'] ?>
     </div>
     <?php endif;?>
-
-
-    <?php if($this->post['has_similar_post']): ?>
-    <div class="similar-post">
-
-        <?php $this->paramCategory = array('display_name' => 'Sản phẩm khác'); ?>
-        <?php $this->paramPosts = $this->similarPosts; ?>
-
-        <?php echo $this->render('post/san-pham-short.phtml');?>
-    </div>
-    <?php endif;?>
-
 
     <?php if($this->post['has_comment']): ?>
     <div class="comment">

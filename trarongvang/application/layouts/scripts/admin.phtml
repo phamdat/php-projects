@@ -104,19 +104,29 @@
                         <li>
                             <a href="javascript:void();" data-toggle="collapse" data-target="#post"><i class="fa fa-fw fa-file-text"></i> Post <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
                             <ul id="post" class="collapse">
+                                <?php if($this->layout()->admin_issuper): ?>
                                 <li>
                                     <a href="/admin/post/index">All</a>
                                 </li>
+                                <?php endif;?>
+                                
                                 <?php foreach($this->layout()->allCategory as $category):?>
+                                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$category['name']])): ?>
                                     <li>
                                         <a href="/admin/post/index/category/<?php echo $category['name'] ?>"><?php echo $category[ 'display_name']?></a>
                                     </li>
+                                    <?php endif;?>
                                 <?php endforeach;?>
+                                
+                                <?php if($this->layout()->admin_issuper): ?>
                                 <li>
                                     <a href="/admin/post/detail">Add Post</a>
                                 </li>
+                                <?php endif;?>
                             </ul>
                         </li>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
                         <li>
                             <a href="javascript:void();" data-toggle="collapse" data-target="#menu"><i class="fa fa-fw fa-sitemap"></i> Menu <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
                             <ul id="menu" class="collapse">
@@ -125,6 +135,9 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
                         <li>
                             <a href="javascript:void();" data-toggle="collapse" data-target="#slide"><i class="fa fa-fw fa-indent"></i> Slide <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
                             <ul id="slide" class="collapse">
@@ -133,6 +146,9 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
                         <li>
                             <a href="javascript:void();" data-toggle="collapse" data-target="#sidebar"><i class="fa fa-fw fa-th-list"></i> Sidebar <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
                             <ul id="sidebar" class="collapse">
@@ -144,15 +160,31 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
                         <li>
                             <a href="/admin/configuration/index"><i class="fa fa-fw fa-cog"></i> Configuration</a>                            
                         </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
                         <li>
                             <a href="/admin/media/index"><i class="fa fa-fw fa-picture-o"></i> Media</a>                            
                         </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
                         <li>
                             <a href="/admin/category/index"><i class="fa fa-fw fa-list-ol"></i> Category</a>                            
-                        </li>                    
+                        </li>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
+                        <li>
+                            <a href="/admin/user/index"><i class="fa fa-fw fa-list-ol"></i> User</a>                            
+                        </li> 
+                        <?php endif;?>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->

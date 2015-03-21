@@ -396,14 +396,14 @@ a.white-color:hover {
     width: 100% !important;
 }
 
-.google-maps {
+.post-map {
     position: relative;
-    padding-bottom: 75%;
+    padding-bottom: 30%;
     height: 0;
     overflow: hidden;
 }
 
-.google-maps iframe {
+.post-map iframe {
     position: absolute;
     top: 0;
     left: 0;

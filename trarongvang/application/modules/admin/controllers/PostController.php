@@ -99,18 +99,22 @@ class Admin_PostController extends Zend_Controller_Action
                     'seo_url'          => $postForm->getValue('seo_url'),
                     'seo_title'        => $postForm->getValue('seo_title'),
                     'seo_description'  => $postForm->getValue('seo_description'),
+                    'seo_template'     => $postForm->getValue('seo_template'),
                     'en_seo_url'       => $postForm->getValue('en_seo_url'),
                     'en_seo_title'     => $postForm->getValue('en_seo_title'),
                     'en_seo_description'  => $postForm->getValue('en_seo_description'),
+                    'en_seo_template'  => $postForm->getValue('en_seo_template'),
                     'has_slide'        => $postForm->getValue('has_slide'),
                     'has_left_sidebar' => $postForm->getValue('has_left_sidebar'),
                     'has_right_sidebar'   => $postForm->getValue('has_right_sidebar'),
                     'has_top_sidebar'     => $postForm->getValue('has_top_sidebar'),
                     'has_breadcrumb'      => $postForm->getValue('has_breadcrumb'),
                     'has_title'        => $postForm->getValue('has_title'),
+                    'has_created_date' => $postForm->getValue('has_created_date'),
                     'has_description'  => $postForm->getValue('has_description'),
                     'has_content'      => $postForm->getValue('has_content'),
-                    'has_media'      => $postForm->getValue('has_media'),
+                    'has_media'        => $postForm->getValue('has_media'),
+                    'has_creator'      => $postForm->getValue('has_creator'),
                     'has_similar_post' => $postForm->getValue('has_similar_post'),
                     'has_comment'      => $postForm->getValue('has_comment'),
                     'has_like_share'   => $postForm->getValue('has_like_share'),
@@ -337,6 +341,13 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false)
                 ->setAttrib('rows', '3');
         
+        //-------------------------------------------------------------------------------------------------------------------------        
+        
+        $seoTemplate = new Zend_Form_Element_Textarea('seo_template');
+        $seoTemplate->setLabel('SEO template')
+				->setRequired(false)
+                ->setAttrib('rows', '3');
+        
         //-------------------------------------------------------------------------------------------------------------------------
         
         $enSeoUrl = new Zend_Form_Element_Text('en_seo_url');
@@ -353,6 +364,13 @@ class Admin_PostController extends Zend_Controller_Action
         
         $enSeoDescription = new Zend_Form_Element_Textarea('en_seo_description');
         $enSeoDescription->setLabel('English SEO description')
+				->setRequired(false)
+                ->setAttrib('rows', '3');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+        
+        $enSeoTemplate = new Zend_Form_Element_Textarea('en_seo_template');
+        $enSeoTemplate->setLabel('English SEO template')
 				->setRequired(false)
                 ->setAttrib('rows', '3');
         
@@ -412,6 +430,15 @@ class Admin_PostController extends Zend_Controller_Action
         
         //-------------------------------------------------------------------------------------------------------------------------
         
+        $hasCreatedDate = new Zend_Form_Element_Checkbox('has_created_date');
+        $hasCreatedDate->setLabel('Show created date')
+				->setRequired(false)
+                ->setCheckedValue(true)
+                ->setUncheckedValue(false)
+                ->setValue(false);
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
         $hasDescription = new Zend_Form_Element_Checkbox('has_description');
         $hasDescription->setLabel('Show description')
 				->setRequired(false)
@@ -435,7 +462,16 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
-                ->setValue(true);
+                ->setValue(false);
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $hasCreator = new Zend_Form_Element_Checkbox('has_creator');
+        $hasCreator->setLabel('Show creator')
+				->setRequired(false)
+                ->setCheckedValue(true)
+                ->setUncheckedValue(false)
+                ->setValue(false);
         
         //-------------------------------------------------------------------------------------------------------------------------
         
@@ -570,18 +606,22 @@ class Admin_PostController extends Zend_Controller_Action
             $seoUrl->setValue($post['seo_url']);
             $seoTitle->setValue($post['seo_title']);
             $seoDescription->setValue($post['seo_description']);
+            $seoTemplate->setValue($post['seo_template']);
             $enSeoUrl->setValue($post['en_seo_url']);
             $enSeoTitle->setValue($post['en_seo_title']);
             $enSeoDescription->setValue($post['en_seo_description']);
+            $enSeoTemplate->setValue($post['en_seo_template']);
             $hasSlide->setValue($post['has_slide']);
             $hasLeftSidebar->setValue($post['has_left_sidebar']);
             $hasRightSidebar->setValue($post['has_right_sidebar']);
             $hasTopSidebar->setValue($post['has_top_sidebar']);
             $hasBreadcrumb->setValue($post['has_breadcrumb']);
             $hasTitle->setValue($post['has_title']);
+            $hasCreatedDate->setValue($post['has_created_date']);
             $hasDescription->setValue($post['has_description']);
             $hasContent->setValue($post['has_content']);
             $hasMedia->setValue($post['has_media']);
+            $hasCreator->setValue($post['has_creator']);
             $hasSimilarPost->setValue($post['has_similar_post']);            
             $hasMostOfViewPost->setValue($post['has_most_of_view_post']);
             $hasComment->setValue($post['has_comment']);
@@ -616,18 +656,22 @@ class Admin_PostController extends Zend_Controller_Action
                     ->addElement($seoUrl)
                     ->addElement($seoTitle)
                     ->addElement($seoDescription)
+                    ->addElement($seoTemplate)
                     ->addElement($enSeoUrl)
                     ->addElement($enSeoTitle)
                     ->addElement($enSeoDescription)
+                    ->addElement($enSeoTemplate)
                     ->addElement($hasSlide)
                     ->addElement($hasLeftSidebar)
                     ->addElement($hasRightSidebar)
                     ->addElement($hasTopSidebar)
                     ->addElement($hasBreadcrumb)
                     ->addElement($hasTitle)
+                    ->addElement($hasCreatedDate)
                     ->addElement($hasDescription)
                     ->addElement($hasContent)
                     ->addElement($hasMedia)
+                    ->addElement($hasCreator)
                     ->addElement($hasSimilarPost)
                     ->addElement($hasMostOfViewPost)
                     ->addElement($hasComment)

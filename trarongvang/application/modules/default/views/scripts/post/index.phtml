@@ -4,10 +4,11 @@
     <?php endif;?>
     
     <?php if(strpos($this->post['category'], 'SAN_PHAM') > -1): ?>
-        <?php echo $this->render('post/san-pham-detail.phtml');?>
+        <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
     <?php elseif(strpos($this->post['category'], 'CONTACT') > -1): ?>
         <?php echo $this->render('post/contact.phtml');?>
     <?php else: ?>
+        <?php echo $this->render('post/content.phtml');?>
     <?php endif;?>    
 
     <?php if($this->post['is_filter_page']): ?>
@@ -19,19 +20,19 @@
                     <?php $this->paramPosts = $value['posts']; ?>
 
                     <?php if($value['category']['name'] == 'GIOI_THIEU'): ?>
-                        <?php echo $this->render('post/gioi-thieu-short.phtml');?>
+                        <?php echo $this->render('post/custom/gioi-thieu-short.phtml');?>
                     <?php endif;?>
 
                     <?php if($value['category']['name'] == 'SAN_PHAM'): ?>
-                        <?php echo $this->render('post/san-pham-short.phtml');?>
+                        <?php echo $this->render('post/custom/san-pham-short.phtml');?>
                     <?php endif;?>
 
                     <?php if($value['category']['name'] == 'SAN_PHAM_MOI'): ?>
-                        <?php echo $this->render('post/san-pham-moi-short.phtml');?>
+                        <?php echo $this->render('post/custom/san-pham-moi-short.phtml');?>
                     <?php endif;?>
 
                     <?php if($value['category']['name'] == 'TIN_TUC'): ?>
-                        <?php echo $this->render('post/tin-tuc-short.phtml');?>
+                        <?php echo $this->render('post/custom/tin-tuc-short.phtml');?>
                     <?php endif;?>
             
                 <?php endforeach;?>
@@ -43,7 +44,7 @@
                 <?php $this->paramPosts = $value['posts']; ?>
             
                 <?php if($value['category']['name'] == 'TIN_TUC'): ?>
-                    <?php echo $this->render('post/tin-tuc-full.phtml');?>
+                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
                 <?php endif;?>                
             <?php endif;?>            
         </div>

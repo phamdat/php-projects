@@ -41,7 +41,7 @@ class Admin_LoginController extends Zend_Controller_Action
 				$authAdapter->setTableName('user')
 					->setIdentityColumn('username')
 					->setCredentialColumn('password')
-					->setCredentialTreatment('PASSWORD(?)')
+					->setCredentialTreatment('MD5(?)')
 					->setIdentity($username)
                     ->setCredential($password);
 

@@ -402,6 +402,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			$this->bootstrap('layout');
 			$layout = $this->getResource('layout');
 			$layout->assign('admin_username', Zend_AdminAuth::getInstance()->getStorage()->read()->username);
+            
+            if(Zend_AdminAuth::getInstance()->getStorage()->read()->role != 'super')
+            {
+                $ro = array();
+                foreach(explode(',', Zend_AdminAuth::getInstance()->getStorage()->read()->role) as $role)
+                {
+                    if(count(explode(':', $role)) > 1)
+                    {
+                        $ro[explode(':', $role)[0]] = intval(explode(':', $role)[1]);
+                    }
+                }
+                $layout->assign('admin_role', $ro);
+            }else{
+                $layout->assign('admin_issuper', true);
+            }            
         }
 	}
     

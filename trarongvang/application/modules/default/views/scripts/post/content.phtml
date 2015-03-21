@@ -3,59 +3,35 @@
         margin-top: 20px;
     }
     
-    .post-media {
-        float: left;
-        width: 570px;
-        margin-right: 30px;
-    }
-    
-    .post-title {
-        font-size: 24px;
-        color: #3c663d;
-    }
-    
-    .post-like-share {
-        margin-top: 10px;
-    }
-    
-    .similar-post .fg-title-1 .fg-title-text {
-        width: 290px;
-    }
-    
     @media (min-width: 992px) and (max-width: 1199px) {
-        .post-media {
-            width: 470px;
-        }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 290px;
-        }
+
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        .post-media {
-            width: 360px;
-        }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 240px;
-        }
+        
     }
     
     @media (max-width: 767px) {
-        .post-media {
-            width: 100%;
-        }
-        .similar-post .fg-title-1 .fg-title-text {
-            width: 240px;
-        }
+
     }
 </style>
 <div class="post-container">
-    <div class="fg-title-2">
+
+    <?php if($this->post['has_title']): ?>
+    <div class="post-title fg-title-2">
         <div class="fg-title-text">
-            Chi tiết sản phẩm
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
         </div>
     </div>
+    <?php endif;?>
 
+
+    <?php if($this->post['has_description']): ?>
+    <div class="post-description">
+        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
+    </div>
+    <?php endif;?>
+    
     <?php if($this->post['has_media']): ?>
     <div id="preview-post" class="carousel post-media" data-ride="carousel">
         <div class="carousel-inner">
@@ -76,21 +52,6 @@
         </a>
     </div>
     <?php endif;?>
-
-    <?php if($this->post['has_title']): ?>
-    <div class="post-title">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
-    </div>
-    <?php endif;?>
-
-
-    <?php if($this->post['has_description']): ?>
-    <div class="post-description">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
-    </div>
-    <?php endif;?>
-
-    <div class="clearfix"></div>
 
     <?php if($this->post['has_like_share']): ?>
     <div class="post-like-share">
@@ -118,7 +79,7 @@
         <?php $this->paramCategory = array('display_name' => 'Sản phẩm khác'); ?>
         <?php $this->paramPosts = $this->similarPosts; ?>
 
-        <?php echo $this->render('post/san-pham-short.phtml');?>
+        <?php echo $this->render('post/custom/san-pham-short.phtml');?>
     </div>
     <?php endif;?>
 
