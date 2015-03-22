@@ -21,8 +21,6 @@ class ThirdParty_ProductController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Danh sách sản phẩm");
-		
 		$db = Zend_Registry::get('db');
 						
 		$adapter = new Zend_Paginator_Adapter_DbSelect(
@@ -55,8 +53,6 @@ class ThirdParty_ProductController extends Zend_Controller_Action
 
 	public function detailAction()
 	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Tạo/Sửa sản phẩm");
-		
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');

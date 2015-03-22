@@ -19,9 +19,7 @@ class Admin_MenuController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Menu");
-		
+    {	
 		if(isset(Zend_Registry::get('menu')[$this->_request->getParam('name')]))
         {
             $this->view->menu = Zend_Registry::get('menu')[$this->_request->getParam('name')];
@@ -34,9 +32,7 @@ class Admin_MenuController extends Zend_Controller_Action
 	
 
 	public function detailAction()
-	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit Menu");
-		
+	{	
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');

@@ -20,8 +20,6 @@ class Admin_UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "User");
-        
         $db = Zend_Registry::get('db');
         
         $this->view->user = $db->select()
@@ -33,8 +31,6 @@ class Admin_UserController extends Zend_Controller_Action
 
 	public function detailAction()
 	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit User");
-		
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -130,21 +126,21 @@ class Admin_UserController extends Zend_Controller_Action
         
         foreach(Zend_Registry::get('allCategory') as $category){
 			$role->addMultiOption($category['name'] . ':1', $category['display_name'] . '(readonly)');
-            $role->addMultiOption($category['name'] . ':2', $category['display_name'] . '(read/edit)');
-            $role->addMultiOption($category['name'] . ':3', $category['display_name'] . '(read/edit/delete)');
+            $role->addMultiOption($category['name'] . ':2', $category['display_name'] . '(read/add/edit)');
+            $role->addMultiOption($category['name'] . ':3', $category['display_name'] . '(read/add/edit/delete)');
 		}
         
         $role->addMultiOption('MENU:1', 'Menu(readonly)');
-        $role->addMultiOption('MENU:2', 'Menu(read/edit)');
-        $role->addMultiOption('MENU:3', 'Menu(read/edit/delete)');
+        $role->addMultiOption('MENU:2', 'Menu(read/add/edit)');
+        $role->addMultiOption('MENU:3', 'Menu(read/add/edit/delete)');
         
         $role->addMultiOption('SIDEBAR:1', 'Sidebar(readonly)');
-        $role->addMultiOption('SIDEBAR:2', 'Sidebar(read/edit)');
-        $role->addMultiOption('SIDEBAR:3', 'Sidebar(read/edit/delete)');
+        $role->addMultiOption('SIDEBAR:2', 'Sidebar(read/add/edit)');
+        $role->addMultiOption('SIDEBAR:3', 'Sidebar(read/add/edit/delete)');
         
         $role->addMultiOption('SLIDE:1', 'Slide(readonly)');
-        $role->addMultiOption('SLIDE:2', 'Slide(read/edit)');
-        $role->addMultiOption('SLIDE:3', 'Slide(read/edit/delete)');
+        $role->addMultiOption('SLIDE:2', 'Slide(read/add/edit)');
+        $role->addMultiOption('SLIDE:3', 'Slide(read/add/edit/delete)');
         
         $role->addMultiOption('CONFIGURATION:1', 'Configuration(readonly)');
         $role->addMultiOption('CONFIGURATION:2', 'Configuration(read/edit)');
@@ -153,12 +149,12 @@ class Admin_UserController extends Zend_Controller_Action
         $role->addMultiOption('MEDIA:3', 'Media(read/delete)');
         
         $role->addMultiOption('CATEGORY:1', 'Category(readonly)');
-        $role->addMultiOption('CATEGORY:2', 'Category(read/edit)');
-        $role->addMultiOption('CATEGORY:3', 'Category(read/edit/delete)');
+        $role->addMultiOption('CATEGORY:2', 'Category(read/add/edit)');
+        $role->addMultiOption('CATEGORY:3', 'Category(read/add/edit/delete)');
         
         $role->addMultiOption('USER:1', 'User(readonly)');
-        $role->addMultiOption('USER:2', 'User(read/edit)');
-        $role->addMultiOption('USER:3', 'User(read/edit/delete)');
+        $role->addMultiOption('USER:2', 'User(read/add/edit)');
+        $role->addMultiOption('USER:3', 'User(read/add/edit/delete)');
         
         $role->setAttrib('size', count(Zend_Registry::get('allCategory')) * 3 + 19);
         

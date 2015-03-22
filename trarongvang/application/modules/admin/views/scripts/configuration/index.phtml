@@ -1,32 +1,45 @@
-<!-- Page Heading -->
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">
-            Configuration <small>Edit configuration</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> Configuration
-            </li>
-        </ol>
-    </div>
-</div>
-<!-- /.row -->
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
+    <style>
+        .form-group {      
+          margin-top: 20px;
+          border-top-style: solid;
+          border-top-width: 2px;
+          border-top-color: #878787;
+          padding-top: 15px;
+        }
+    </style>
 
-<div class="configuration-form">
-    <script>
-        $(document).ready(function () {
-            CKEDITOR.replace('value_FOOTER_INFO_CONF')
-            
-            CKEDITOR.replace('value_PLUGIN_FOR_ALL_PAGE_CONF')
-            
-            CKEDITOR.replace('value_POST_ADVERTISMENT_CONF')            
-        });
-    </script>
-    <?php if($this->errorMessage != ""): ?>
-    <p class="error">
-        <?php echo $this->errorMessage; ?>
-    </p>
-    <?php endif; ?>
-     <?php echo $this->configurationForm; ?>
-</div>
+    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CONFIGURATION'] == 1): ?>
+        <?php echo $this->render('form-disable.phtml');?>
+    <?php endif;?>
+
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Edit Configuration
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="configuration-form">
+        <script>
+            $(document).ready(function () {
+                CKEDITOR.replace('value_FOOTER_INFO_CONF')
+
+                CKEDITOR.replace('value_PLUGIN_FOR_ALL_PAGE_CONF')
+
+                CKEDITOR.replace('value_POST_ADVERTISMENT_CONF')            
+            });
+        </script>
+        <?php if($this->errorMessage != ""): ?>
+        <p class="error">
+            <?php echo $this->errorMessage; ?>
+        </p>
+        <?php endif; ?>
+         <?php echo $this->configurationForm; ?>
+    </div>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

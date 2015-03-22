@@ -19,9 +19,7 @@ class Admin_PostController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Posts");
-		
+    {		
 		$db = Zend_Registry::get('db');
 						
 		$adapter = new Zend_Paginator_Adapter_DbSelect(
@@ -54,13 +52,12 @@ class Admin_PostController extends Zend_Controller_Action
 		$paginator->setCurrentPageNumber($this->_request->getParam('page'));
 		
 		$this->view->paginator = $paginator;
+        $this->view->category = $this->_request->getParam('category');
     }
 	
 
 	public function detailAction()
-	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit Post");
-		
+	{	
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -145,6 +142,7 @@ class Admin_PostController extends Zend_Controller_Action
 		}
 		
 		$this->view->postForm = $postForm;
+        $this->view->category = $this->_request->getParam('category');
 	}
 	
     public function swapAction()

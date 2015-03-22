@@ -1,60 +1,62 @@
-<!-- Page Heading -->
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">
-            Media <small>List of media</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> Media
-            </li>
-        </ol>
-    </div>
-</div>
-<!-- /.row -->
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                List of Media      
+                <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MEDIA'] > 1): ?>
+                    <script>
+                        $(document).ready(function(){
+                            $('input:file').change(function(){
+                                $(this).parents("form").submit();
+                            });
+                        });
+                    </script>
+                    <form enctype="multipart/form-data" action="/admin/media/upload" method="POST" class="pull-right">
+                        <input name="file" type="file"  multiple="" class="btn btn-primary pull-right"/>
+                    </form>
+                <?php endif;?>
+            </h1>
 
-<script>
-	$(document).ready(function(){
-		$('input:file').change(function(){
-			$(this).parents("form").submit();
-		});
-	});
-</script>
-<div>
-	<form enctype="multipart/form-data" action="/admin/media/upload" method="POST" >
-		<input name="file" type="file" style="float: right;"  multiple=""/>
-	</form>
-</div>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                Hình thu nhỏ
-            </th>
-            <th>
-                Url
-            </th>
-            <th>
-                Hành động
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($this->files as $value):?>
-        <tr>
-            <td>
-                <img src="<?php echo MEDIA_PATH . $value;?>" clas="img-responsive" style="max-width: 100px;"/>
-            </td>
-            <td>
-                <?php echo MEDIA_PATH . $value;?>
-            </td>
-            <td>
-                <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'media', 'action'=> 'delete', 'file' => $value )) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
-                    <i class="fa fa-times"></i>
-                </a>
-            </td>
-        </tr>
-        <?php endforeach;?>
-    </tbody>
-</table>
-<div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    File
+                </th>
+                <th>
+                    Url
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->files as $value):?>
+            <tr>
+                <td>
+                    <img src="<?php echo MEDIA_PATH . $value;?>" clas="img-responsive" style="max-width: 100px;"/>
+                </td>
+                <td>
+                    <?php echo MEDIA_PATH . $value;?>
+                </td>
+                <td class="text-right">
+                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MEDIA'] > 2): ?>
+                        <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'media', 'action'=> 'delete', 'file' => $value )) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
+                            <i class="fa fa-times"></i>
+                        </a>
+                    <?php endif;?>
+                </td>
+            </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <div class="clearfix"></div>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

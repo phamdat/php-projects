@@ -20,8 +20,6 @@ class Admin_SidebarController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Sidebar");
-		
 		if(isset(Zend_Registry::get('sidebar')[$this->_request->getParam('name')]))
         {
             $this->view->sidebar = Zend_Registry::get('sidebar')[$this->_request->getParam('name')];
@@ -35,8 +33,6 @@ class Admin_SidebarController extends Zend_Controller_Action
 
 	public function detailAction()
 	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit Sidebar");
-		
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');

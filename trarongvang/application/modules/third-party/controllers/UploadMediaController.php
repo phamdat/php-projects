@@ -11,7 +11,6 @@ class ThirdParty_UploadMediaController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Upload media");
 		
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {

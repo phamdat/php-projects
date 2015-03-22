@@ -12,7 +12,6 @@ class ThirdParty_LoginController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Third Party Login");
 		
 		$this->_helper->layout->disableLayout();
     }

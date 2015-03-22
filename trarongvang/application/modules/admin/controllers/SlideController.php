@@ -20,8 +20,6 @@ class Admin_SlideController extends Zend_Controller_Action
 
     public function indexAction()
     {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Slide");
-		
 		if(isset(Zend_Registry::get('slide')[$this->_request->getParam('name')]))
         {
             $this->view->slide = Zend_Registry::get('slide')[$this->_request->getParam('name')];
@@ -35,8 +33,6 @@ class Admin_SlideController extends Zend_Controller_Action
 
 	public function detailAction()
 	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit Slide");
-		
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -152,15 +148,16 @@ class Admin_SlideController extends Zend_Controller_Action
 		$id = new Zend_Form_Element_Hidden('id');
 		$id->setRequired(false);
 		
+        //---------------------------------------------------------------------------------------------------------------------------
+        
         $name = new Zend_Form_Element_Hidden('name');
         $name->setRequired(false)
 			->setValue($this->_request->getParam('name'));
         
-        
-        
-        
+        //---------------------------------------------------------------------------------------------------------------------------
+                
         $file = new Zend_Form_Element_File('file');
-        $file->setLabel('Hình đại diện')
+        $file->setLabel('Image')
 					->setRequired(false)
                     ->addValidator('Count', false, 1)
 					->addValidator('Size', false, 2097152)
@@ -180,14 +177,13 @@ class Admin_SlideController extends Zend_Controller_Action
 		$value = new Zend_Form_Element_Hidden('value');
 		$value->setRequired(false);
 
-        
-
+        //---------------------------------------------------------------------------------------------------------------------------
         
         $postId = new Zend_Form_Element_Select('post_id');
-        $postId->setLabel('Post')
+        $postId->setLabel('Linked post')
 				->setRequired(true)
 				->addValidator('NotEmpty', true)
-				->addErrorMessage('Vui lòng chọn bài viết.');
+				->addErrorMessage('Please select linked post.');
 
         $postList = $db->select()
 					->from(array('p' => 'post'))
@@ -199,15 +195,13 @@ class Admin_SlideController extends Zend_Controller_Action
 			$postId->addMultiOption($post['id'], $post['title']);
 		}
         
-        
-        
-        
+        //---------------------------------------------------------------------------------------------------------------------------
+                
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
                 ->setAttrib('class', 'btn btn-primary');
 
-        
-        
+        //---------------------------------------------------------------------------------------------------------------------------
         
         if($slide){
             $id->setValue($slide['slide']['id']);

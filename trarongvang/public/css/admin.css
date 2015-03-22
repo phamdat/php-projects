@@ -237,3 +237,21 @@ ul.alert-dropdown {
 select[multiple] {
   overflow: hidden;
 }
+
+.table td {
+    vertical-align: middle!important;
+}
+.table .fa {
+    font-size: 20px;
+    margin-right: 15px;
+}
+.table a:hover {
+    text-decoration: none;
+}
+.table .fa-times {
+    float: right;
+    color: #d9534f;
+}
+.table .fa-times:hover {
+    color: #c9302c;
+}

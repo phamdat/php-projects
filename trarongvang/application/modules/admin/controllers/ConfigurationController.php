@@ -19,9 +19,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Configuration");
-		
+    {		
 		$configurations = Zend_Registry::get('configurations');			
         
         $configurationForm = $this->getConfigurationForm($configurations);

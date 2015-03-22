@@ -1,65 +1,85 @@
-<!-- Page Heading -->
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">
-            Sidebar <small>List of sidebar item</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> Sidebar
-            </li>
-        </ol>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
+    <!-- Page Heading -->
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Sidebar
+                <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['SIDEBAR'] > 1): ?>
+                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'detail')) ?>" class="btn btn-primary pull-right">
+                        <i class="fa fa-plus"></i> Add Sidebar
+                    </a>
+                <?php endif;?>
+            </h1>
+        </div>
     </div>
-</div>
-<!-- /.row -->
+    <!-- /.row -->
 
-<a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'detail')) ?>" class="btn btn-primary">
-    <i class="fa fa-plus"></i> Add Sidebar
-</a>
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th>
-                Tiêu đề
-            </th>
-            <th>
-                Ngày tạo
-            </th>
-            <th>
-                Người tạo
-            </th>
-            <th>
-                Hành động
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach($this->sidebar as $key => $value):?>
+
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
             <tr>
-                <td>
-                    <?php echo $value['post']['title'];?>
-                </td>
-                <td>
-                    <?php echo $value['post']['created_date'];?>
-                </td>
-                <td>
-                    <?php echo $value['post']['name'];?>
-                </td>
-                <td>
-                    <?php if($key>0):?>
-                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'swap', 'post_id' => $value['post']['id'], 'order_id' => $value['post']['order_id'], 'above_post_id' => $this->sidebar[$key-1]['post']['id'], 'above_order_id' => $this->sidebar[$key-1]['post']['order_id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Up">
-                        <i class="fa fa-arrow-up"></i>
-                    </a>
-                    <?php endif;?>
-                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'detail', 'id' => $value['sidebar']['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'delete', 'id' => $value['sidebar']['id'] , 'post_id' => $value['post']['id'])) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
-                        <i class="fa fa-times"></i>
-                    </a>
-                </td>
+                <th>
+                    Title
+                </th>
+                <th>
+                    Created date
+                </th>
+                <th>
+                    Creator
+                </th>
+                <th>
+                    Action
+                </th>
             </tr>
-        <?php endforeach;?>
-    </tbody>
-</table>
-<div class="clearfix"></div>
+        </thead>
+        <tbody>
+            <?php foreach($this->sidebar as $key => $value):?>
+                <tr>
+                    <td>
+                        <?php echo $value['post']['title'];?>
+                    </td>
+                    <td>
+                        <?php echo $value['post']['created_date'];?>
+                    </td>
+                    <td>
+                        <?php echo $value['post']['name'];?>
+                    </td>
+                    <td class="text-right">
+                        <?php if($this->layout()->admin_role['SIDEBAR'] == 1): ?>
+                            <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'detail', 'id' => $value['sidebar']['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="View">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['SIDEBAR'] > 1): ?>
+                            <?php if($key>0):?>
+                                <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'swap', 'post_id' => $value['post']['id'], 'order_id' => $value['post']['order_id'], 'above_post_id' => $this->sidebar[$key-1]['post']['id'], 'above_order_id' => $this->sidebar[$key-1]['post']['order_id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Up">
+                                    <i class="fa fa-arrow-up"></i>
+                                </a>
+                            <?php endif;?>
+                            
+                            <?php if($key < count($this->sidebar) - 1):?>
+                                <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'swap', 'post_id' => $value['post']['id'], 'order_id' => $value['post']['order_id'], 'above_post_id' => $this->sidebar[$key+1]['post']['id'], 'above_order_id' => $this->sidebar[$key+1]['post']['order_id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Down">
+                                    <i class="fa fa-arrow-down"></i>
+                                </a>
+                            <?php endif;?>
+                        
+                            <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'detail', 'id' => $value['sidebar']['id'] )) ?>" data-toggle="tooltip" data-placement="top" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        <?php endif;?>
+                        
+                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['SIDEBAR'] > 2): ?>
+                            <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'sidebar', 'action'=> 'delete', 'id' => $value['sidebar']['id'] , 'post_id' => $value['post']['id'])) ?>" data-toggle="tooltip" data-placement="top" title="Delete" need-confirm>
+                                <i class="fa fa-times"></i>
+                            </a>
+                        <?php endif;?>
+                    </td>
+                </tr>
+            <?php endforeach;?>
+        </tbody>
+    </table>
+    <div class="clearfix"></div>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

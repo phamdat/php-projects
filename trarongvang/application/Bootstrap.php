@@ -402,6 +402,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			$this->bootstrap('layout');
 			$layout = $this->getResource('layout');
 			$layout->assign('admin_username', Zend_AdminAuth::getInstance()->getStorage()->read()->username);
+            $layout->assign('admin_name', Zend_AdminAuth::getInstance()->getStorage()->read()->name);
             
             if(Zend_AdminAuth::getInstance()->getStorage()->read()->role != 'super')
             {

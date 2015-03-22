@@ -12,7 +12,6 @@ class LoginRegisterController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Đăng ký / Đăng nhập");
     }
 
     public function indexAction()

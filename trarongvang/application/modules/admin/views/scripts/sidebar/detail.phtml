@@ -1,37 +1,42 @@
-<!-- Page Heading -->
-<div class="row">
-    <div class="col-lg-12">
-        <h1 class="page-header">
-            Sidebar <small>Add/Edit sidebar item</small>
-        </h1>
-        <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> Sidebar
-            </li>
-        </ol>
-    </div>
-</div>
-<!-- /.row -->
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
+    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['SIDEBAR'] == 1): ?>
+        <?php echo $this->render('form-disable.phtml');?>
+    <?php endif;?>
 
-<div class="sidebar-form">
-    <script>
-        $(document).ready(function () {
-            CKEDITOR.replace('content')
-        });
-    </script>
-    <?php if($this->errorMessage != ""): ?>
-    <p class="error">
-        <?php echo $this->errorMessage; ?></p>
-    <?php endif; ?>
+    <form action="<?php echo $this->sidebarForm->getAction(); ?>" method="<?php echo $this->sidebarForm->getMethod(); ?>">
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Add/Edit Sidebar Item
+                    <div class="pull-right">
+                        <?php echo $this->sidebarForm->getElement('submit'); ?>
+                    </div>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
 
-    <form action="<?php echo $this->sidebarForm->getAction(); ?>" method="<?php echo $this->sidebarForm->getMethod(); ?>">            
-        <?php echo $this->sidebarForm->getElement('id'); ?>
-        <?php echo $this->sidebarForm->getElement('name'); ?>
-        <?php echo $this->sidebarForm->getElement('post_id'); ?>
-        <?php echo $this->sidebarForm->getElement('title'); ?>
-        <?php echo $this->sidebarForm->getElement('content'); ?>
-        <?php echo $this->sidebarForm->getElement('has_title'); ?>
+        <div class="sidebar-form">
+            <script>
+                $(document).ready(function () {
+                    CKEDITOR.replace('content')
+                });
+            </script>
+            <?php if($this->errorMessage != ""): ?>
+            <p class="error">
+                <?php echo $this->errorMessage; ?></p>
+            <?php endif; ?>
 
-        <?php echo $this->sidebarForm->getElement('submit'); ?>
+            <?php echo $this->sidebarForm->getElement('id'); ?>
+            <?php echo $this->sidebarForm->getElement('name'); ?>
+            <?php echo $this->sidebarForm->getElement('post_id'); ?>
+            <?php echo $this->sidebarForm->getElement('title'); ?>
+            <?php echo $this->sidebarForm->getElement('content'); ?>
+            <?php echo $this->sidebarForm->getElement('has_title'); ?>
+
+        </div>
     </form>
-</div>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

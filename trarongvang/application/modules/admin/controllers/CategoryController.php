@@ -19,16 +19,12 @@ class Admin_CategoryController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Category");
-		
+    {	
         $this->view->category = Zend_Registry::get('postCategory');
     }
 
 	public function detailAction()
-	{
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Add/Edit Category");
-		
+	{	
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');

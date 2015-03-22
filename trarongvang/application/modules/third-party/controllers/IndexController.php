@@ -24,7 +24,7 @@ class ThirdParty_IndexController extends Zend_Controller_Action
     {
         // action body
 		//$this->redirect('/third-party/product');
-		Zend_Layout::getMvcInstance()->assign('titleOfPage', "Dashboard");
+		//Zend_Layout::getMvcInstance()->assign('titleOfPage', "Dashboard");
     }
 
 
