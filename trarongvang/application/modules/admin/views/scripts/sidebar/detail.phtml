@@ -1,5 +1,5 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
-    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['SIDEBAR'] == 1): ?>
+    <?php if($this->layout()->admin_role['SIDEBAR'] == 1): ?>
         <?php echo $this->render('form-disable.phtml');?>
     <?php endif;?>
 

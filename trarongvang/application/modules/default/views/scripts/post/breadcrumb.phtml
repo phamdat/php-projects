@@ -53,14 +53,16 @@
         }
     }
 </style>
-<div class="title-post-container">
-    <div class="title-post-wrapper">
-        <div class="title-post">
-            <?php if(count($this->breadcrumb) > 1):?>
-                <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 2], 'title'); ?>
-            <?php else:?>
-                <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 1], 'title'); ?>
-            <?php endif;?>
+<?php if($this->post['has_breadcrumb']): ?>
+    <div class="title-post-container">
+        <div class="title-post-wrapper">
+            <div class="title-post">
+                <?php if(count($this->breadcrumb) > 1):?>
+                    <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 2], 'title'); ?>
+                <?php else:?>
+                    <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 1], 'title'); ?>
+                <?php endif;?>
+            </div>
         </div>
     </div>
-</div>
+<?php endif;?>

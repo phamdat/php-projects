@@ -1,0 +1,5 @@
+<?php if($this->post['has_description']): ?>
+    <div class="post-description">
+        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
+    </div>
+<?php endif;?>

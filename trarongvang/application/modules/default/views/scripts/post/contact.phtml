@@ -4,13 +4,6 @@
         position: relative;
     }
     
-    .post-media {
-        width: 100%;
-        border-style: solid;
-        border-width: 2px;
-        border-color: #3c663d;
-    }
-    
     .post-content {
         float: right;
         width: 570px;        
@@ -21,16 +14,6 @@
     .post-map {
         width: 100%;
         margin-top: 20px;
-    }
-    
-    .post-title {
-        font-size: 24px;
-        color: #ffffff;
-        position: absolute;
-        top: 240px;
-        text-transform: uppercase;
-        background-color: #3c663d;
-        padding: 5px 45px;
     }
     
     .post-like-share {
@@ -58,9 +41,6 @@
     }
     
     @media (min-width: 992px) and (max-width: 1199px) {
-        .post-title {
-            top: 195px;
-        }
         .post-content {
             width: 470px;
         }
@@ -70,10 +50,6 @@
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        .post-title {
-            top: 150px;
-            font-size: 20px;
-        }
         .post-content {
             width: 360px;
         }
@@ -92,31 +68,6 @@
     }
 </style>
 <div class="post-container">
-
-    <?php if($this->post['has_media']): ?>
-    <div class="carousel post-media hidden-xs" data-ride="carousel">
-        <div class="carousel-inner">
-            <?php $ms=explode( ';', preg_replace( '/;+/', ';', trim($this->post['media'], ';'))); ?>
-            <?php foreach($ms as $key=> $media):?>
-            <div class="item <?php echo $key==0?'active':'' ?>">
-                <img src="<?php echo $media ?>" class="center-block img-responsive">
-            </div>
-            <?php endforeach;?>
-        </div>
-    </div>
-    <?php endif;?>
-
-    <?php if($this->post['has_title']): ?>
-    <div class="post-title hidden-xs">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
-    </div>
-    <?php endif;?>
-
-    <?php if($this->post['has_description']): ?>
-    <div class="post-description">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
-    </div>
-    <?php endif;?>
 
     <?php if($this->post['has_like_share']): ?>
     <div class="post-like-share">

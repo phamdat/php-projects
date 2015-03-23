@@ -18,4 +18,9 @@ $(function () {
             opertationUrl = null;
         }
     });
+    
+    $('select[multiple] option').on('mousedown', function (e) {
+        this.selected = !this.selected;
+        e.preventDefault();
+    });
 })

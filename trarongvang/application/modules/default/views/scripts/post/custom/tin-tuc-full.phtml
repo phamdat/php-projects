@@ -1,21 +1,163 @@
 <style>
+    .tintuc-container {
+        margin-top: 20px;
+    }
     
+    .tintuc-container .tintuc-menu {
+        display: table;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .tintuc-container .tintuc-menu-item {
+        display: table-cell;
+        text-align: center;
+        font-size: 18px;
+        vertical-align: middle;
+        background-color: #77ae22;
+        padding: 0px 17px 0px 0px;
+        color: #ffffff;
+        height: 34px;
+    }
+    
+    .tintuc-container .tintuc-menu-item.active {
+        background-color: #3c663d;
+    }
+    
+    .tintuc-container .tintuc-menu-item-ro {
+        display: table-cell;
+        position: relative;
+        width: 36px;
+    }
+    
+    .tintuc-container .tintuc-menu-item-ro:last-child {
+        width: 17px;
+    }
+    
+    .tintuc-container .tintuc-menu-item-ra {
+        border-style: solid;
+        border-width: 17px;
+        border-left-color: transparent;
+        border-top-color: #77ae22;
+        border-bottom-color: #77ae22;
+        border-right-color: #77ae22;
+        position: absolute;
+        right: 0px;
+    }
+    
+    .tintuc-container .tintuc-menu-item-ra.active {
+        border-top-color: #3c663d;
+        border-bottom-color: #3c663d;
+        border-right-color: #3c663d;
+    }
+    
+    .tintuc-container .tintuc-menu-item-ro:last-child .tintuc-menu-item-ra {
+        display: none;
+    }
+    
+    .tintuc-container .tintuc-menu-item-re {
+        border-style: solid;
+        border-width: 17px;
+        border-left-color: #77ae22;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        position: absolute;
+    }
+    
+    .tintuc-container .tintuc-menu-item-re.active {
+        border-left-color: #3c663d;
+    }
+    
+    .tintuc-container .tintuc-content-1 {
+        width: 470px;
+        float: left;
+        padding-right: 20px;
+        border-right-style: solid;
+        border-right-width: 1px;
+        border-right-color: #717374;
+    }
+    
+    .tintuc-container .tintuc-content-1 .tintuc-thumbnail{
+          margin-bottom: 10px;
+    }
+    
+    .tintuc-container .tintuc-content-1 .tintuc-title {
+        text-transform: uppercase;
+        font-size: 18px;
+        font-weight: bold;
+        padding-bottom: 10px;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-bottom-color: #717374;
+    }
+    
+    .tintuc-container .tintuc-content-1 .tintuc-description {
+        padding-top: 10px;
+    }
+    
+    .tintuc-container .tintuc-content-2 {
+        width: 680px;
+        float: left;
+        margin-left: 20px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom-style: solid;
+        border-bottom-width: 1px;
+        border-bottom-color: #717374;
+    }
+    
+    .tintuc-container .tintuc-content-2 .tintuc-thumbnail {
+        width: 170px;
+        float: right;
+    }
+    
+    .tintuc-container .tintuc-content-2 .tintuc-title {
+        font-size: 16px;
+        font-weight: bold;
+        padding-bottom: 10px;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {}
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        .tintuc-container .tintuc-menu-item {
+            font-size: 12px;
+        }
+    }
+    
+    @media (max-width: 767px) {}
 </style>
-<div clas="list-container">
-    <?php foreach($this->paramPosts as $index => $post):?>
-        <div class="item-container">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post);?>">
-                <div class="thumbnail">
-                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
-                </div>
-            </a>
+<div class="tintuc-container">
 
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post);?>">
-                <div class="title"><?php echo Utils_StringUtils::getTextFromPost($post, 'title');?></div>
-            </a>
-            <p class="description"><?php echo Utils_StringUtils::subText($post['description'], 120);?></p>
+    <div class="tintuc-menu hidden-xs">
+        <?php foreach($this->categories as $i => $value):?>
+            <div class="tintuc-menu-item <?php echo $i==0?'active':''?>"><?php echo $value['category']['display_name']?></div>
+            <div class="tintuc-menu-item-ro">
+                <div class="tintuc-menu-item-re <?php echo $i==0?'active':''?>"></div>
+                <div class="tintuc-menu-item-ra"></div>
+            </div>
+        <?php endforeach;?>
+    </div>
+    
+    <?php foreach($this->categories as $value):?>
+        <div class="tintuc-content-<?php echo $value['category']['name']?>">
+            <?php foreach($value['posts'] as $i => $post):?>
+                <?php if($i == 0):?>
+                    <div class="tintuc-content-1">
+                        <div class="tintuc-thumbnail"><img src="<?php echo $post['thumbnail']?>" class="img-responsive"></div>
+                        <div class="tintuc-title"><?php echo $post['title']?></div>
+                        <div class="tintuc-description"><?php echo $post['description']?></div>
+                    </div>
+                <?php else:?>
+                    <div class="tintuc-content-2">
+                        <div class="tintuc-thumbnail"><img src="<?php echo $post['thumbnail']?>" class="img-responsive"></div>
+                        <div class="tintuc-title"><?php echo $post['title']?></div>
+                        <div class="tintuc-description"><?php echo $post['description']?></div>
+                    </div>
+                <?php endif;?>
+            <?php endforeach;?>   
             <div class="clearfix"></div>
         </div>
     <?php endforeach;?>
-    <?php echo $this->paginationControl($this->paramPosts, 'Sliding', 'pagination-control.phtml');?>
 </div>

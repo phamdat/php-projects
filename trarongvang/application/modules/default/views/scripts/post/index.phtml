@@ -1,11 +1,15 @@
 <div>
-    <?php if($this->post['has_breadcrumb']): ?>
-        <?php echo $this->render('post/breadcrumb.phtml');?>
-    <?php endif;?>
+    <?php echo $this->render('post/breadcrumb.phtml');?>
     
-    <?php if(strpos($this->post['category'], 'SAN_PHAM') > -1): ?>
+    <?php if(strpos($this->post['category'], 'SAN_PHAM') == false): ?>
+        <?php echo $this->render('post/media.phtml');?>
+        <?php echo $this->render('post/title.phtml');?>
+        <?php echo $this->render('post/description.phtml');?>
+    <?php endif;?>    
+    
+    <?php if(strpos($this->post['category'], 'SAN_PHAM') != false): ?>
         <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
-    <?php elseif(strpos($this->post['category'], 'CONTACT') > -1): ?>
+    <?php elseif(strpos($this->post['category'], 'CONTACT') != false): ?>
         <?php echo $this->render('post/contact.phtml');?>
     <?php else: ?>
         <?php echo $this->render('post/content.phtml');?>
@@ -36,6 +40,10 @@
                     <?php endif;?>
             
                 <?php endforeach;?>
+            
+                <?php if(strpos($this->post['category'], 'TIN_TUC') != false && strpos($this->post['category'], 'MAIN_PAGE') != false): ?>
+                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
+                <?php endif;?>
             <?php elseif(count($this->categories) == 1):?>
                 
                 <?php $value = $this->categories[0]; ?>

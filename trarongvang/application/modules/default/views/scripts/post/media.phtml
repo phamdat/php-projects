@@ -1,0 +1,33 @@
+<style>
+    .post-media {
+        width: 100%;
+        border-style: solid;
+        border-width: 2px;
+        border-color: #3c663d;
+        margin-top: 20px;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+
+    }
+    
+    @media (max-width: 767px) {
+
+    }
+</style>
+<?php if($this->post['has_media']): ?>
+    <div class="carousel post-media hidden-xs" data-ride="carousel">
+        <div class="carousel-inner">
+            <?php $ms=explode( ';', preg_replace( '/;+/', ';', trim($this->post['media'], ';'))); ?>
+            <?php foreach($ms as $key=> $media):?>
+            <div class="item <?php echo $key==0?'active':'' ?>">
+                <img src="<?php echo $media ?>" class="center-block img-responsive">
+            </div>
+            <?php endforeach;?>
+        </div>
+    </div>
+<?php endif;?>

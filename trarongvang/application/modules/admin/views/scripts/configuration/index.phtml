@@ -9,7 +9,7 @@
         }
     </style>
 
-    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CONFIGURATION'] == 1): ?>
+    <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
         <?php echo $this->render('form-disable.phtml');?>
     <?php endif;?>
 

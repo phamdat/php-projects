@@ -98,7 +98,9 @@ class PostController extends Zend_Controller_Action
                         $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
-                            ->where('p.category like ?', '%,'.$ca.',%')                        
+                            ->where('p.category like ?', '%,'.$ca.',%')
+                            ->where('p.category not like ?', '%,MAIN_PAGE,%')
+                            ->where('p.is_filter_page = ?', false)
                             ->order('p.order_id DESC')
                     );
                     
@@ -106,7 +108,9 @@ class PostController extends Zend_Controller_Action
                         $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
-                            ->where('p.category like ?', '%,'.$ca.',%')                        
+                            ->where('p.category like ?', '%,'.$ca.',%')
+                            ->where('p.category not like ?', '%,MAIN_PAGE,%')
+                            ->where('p.is_filter_page = ?', false)
                             ->order('p.order_id DESC')
                             ->reset( Zend_Db_Select::COLUMNS )
                             ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
