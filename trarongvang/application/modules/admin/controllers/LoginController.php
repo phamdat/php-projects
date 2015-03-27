@@ -62,7 +62,7 @@ class Admin_LoginController extends Zend_Controller_Action
                 }
                 else
                 {
-                    $errorMessage = "Wrong username or password provided. Please try again.";
+                    $errorMessage = "Wrong username or password. Please try again.";
                 }
             }
         }

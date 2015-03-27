@@ -11,7 +11,8 @@ class Admin_MenuController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'sitemap');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -20,6 +21,8 @@ class Admin_MenuController extends Zend_Controller_Action
 
     public function indexAction()
     {	
+        Zend_Layout::getMvcInstance()->assign('title', 'Menu');
+        
 		if(isset(Zend_Registry::get('menu')[$this->_request->getParam('name')]))
         {
             $this->view->menu = Zend_Registry::get('menu')[$this->_request->getParam('name')];
@@ -33,6 +36,8 @@ class Admin_MenuController extends Zend_Controller_Action
 
 	public function detailAction()
 	{	
+        Zend_Layout::getMvcInstance()->assign('title', 'Add/Edit Menu Item');
+        
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -97,33 +102,6 @@ class Admin_MenuController extends Zend_Controller_Action
 		
 		$this->redirect('/admin/menu/index/name/' . $this->_request->getParam('name'));
     }
-    
-    public function swapAction()
-    {
-		$db = Zend_Registry::get('db');
-        
-        $orderId = 1;
-        $aboveOrderId = 2;
-        if($this->_request->getParam('order_id'))
-        {
-            $orderId = $this->_request->getParam('order_id');
-        }
-        if($this->_request->getParam('above_order_id'))
-        {
-            $aboveOrderId = $this->_request->getParam('above_order_id');
-        }
-        if($orderId == $aboveOrderId)
-        {
-            $aboveOrderId++;
-        }
-		
-		$n = $db->update('post', array('order_id' => $aboveOrderId), array('id = ?' => $this->_request->getParam('post_id')));
-        
-        $n = $db->update('post', array('order_id' => $orderId), array('id = ?' => $this->_request->getParam('above_post_id')));
-		
-		$this->redirect('/admin/menu/index/name/' . $this->_request->getParam('name'));
-    }
-    
 	
     protected function getMenuForm($menu=null)
     {
@@ -180,7 +158,7 @@ class Admin_MenuController extends Zend_Controller_Action
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         
         

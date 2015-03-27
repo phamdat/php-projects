@@ -114,15 +114,46 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headLink()->appendStylesheet('/public/css/bootstrap.css');
         $view->headLink()->appendStylesheet('/public/css/font-awesome.css');
         		
-		$view->headScript()->appendFile('/public/js/jquery-1.11.1.js');
+		$view->headScript()->appendFile('/public/js/jquery.js');
 		$view->headScript()->appendFile('/public/js/bootstrap.js');		        
 
         if(preg_match('/admin/', $_SERVER['REQUEST_URI']))
         {
-            $view->headLink()->appendStylesheet('/public/css/admin.css');
-            $view->headLink()->appendStylesheet('/public/css/morris.css');
+            $view->headLink()->appendStylesheet('/public/css/bootstrap.datatables.css');
+            $view->headLink()->appendStylesheet('/public/css/validationEngine.css');
+            $view->headLink()->appendStylesheet('/public/css/tagsinput.css');
+            $view->headLink()->appendStylesheet('/public/css/chosen.css');
+            $view->headLink()->appendStylesheet('/public/css/nestable.css');
+            
+            $view->headLink()->appendStylesheet('/public/css/metis-main.css');
+            $view->headLink()->appendStylesheet('/public/css/metis-menu.css');
+            $view->headLink()->appendStylesheet('/public/css/metis-style-switcher.css');                        
+            
             
             $view->headScript()->appendFile('/public/js/ckeditor/ckeditor.js');
+            $view->headScript()->appendFile('/public/js/ckeditor/adapters/jquery.js');
+            
+            $view->headScript()->appendFile('/public/js/less.js');
+            $view->headScript()->appendFile('/public/js/modernizr.js');
+            
+            $view->headScript()->appendFile('/public/js/jquery.ui.js');
+            $view->headScript()->appendFile('/public/js/jquery.datatables.js');
+            $view->headScript()->appendFile('/public/js/jquery.tablesorter.js');
+            $view->headScript()->appendFile('/public/js/jquery.ui.touchpunch.js');
+            $view->headScript()->appendFile('/public/js/jquery.validationEngine.js');
+            $view->headScript()->appendFile('/public/js/jquery.validationEngine-en.js');
+            $view->headScript()->appendFile('/public/js/jquery.validate.js');
+            $view->headScript()->appendFile('/public/js/jquery.inputlimiter.js');
+            $view->headScript()->appendFile('/public/js/jquery.tagsinput.js');
+            $view->headScript()->appendFile('/public/js/jquery.chosen.js');
+            $view->headScript()->appendFile('/public/js/jquery.nestable.js');
+            
+            $view->headScript()->appendFile('/public/js/bootstrap.datatables.js');
+            
+            $view->headScript()->appendFile('/public/js/metis-core.js');
+            $view->headScript()->appendFile('/public/js/metis-menu.js');
+            $view->headScript()->appendFile('/public/js/metis-style-switcher.js');
+            
             $view->headScript()->appendFile('/public/js/admin.js');
         }
         else

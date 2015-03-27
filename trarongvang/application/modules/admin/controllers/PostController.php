@@ -10,16 +10,19 @@ class Admin_PostController extends Zend_Controller_Action
 	
 	public function preDispatch()
     {
-		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());		
+        Zend_Layout::getMvcInstance()->assign('icon', 'file-text');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
-        }
+        }        
     }
 
     public function indexAction()
-    {		
+    {	
+        Zend_Layout::getMvcInstance()->assign('title', 'List of Posts');
+        
 		$db = Zend_Registry::get('db');
 						
 		$adapter = new Zend_Paginator_Adapter_DbSelect(
@@ -47,17 +50,19 @@ class Admin_PostController extends Zend_Controller_Action
 		
 		$paginator = new Zend_Paginator($adapter);
         
-        $paginator->setItemCountPerPage(30);
+        $paginator->setItemCountPerPage(9999);
 		
 		$paginator->setCurrentPageNumber($this->_request->getParam('page'));
 		
 		$this->view->paginator = $paginator;
-        $this->view->category = $this->_request->getParam('category');
+        $this->view->category = $this->_request->getParam('category');        
     }
 	
 
 	public function detailAction()
 	{	
+        Zend_Layout::getMvcInstance()->assign('title', 'Add/Edit Post');
+        
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -171,6 +176,21 @@ class Admin_PostController extends Zend_Controller_Action
 		$this->redirect('/admin/post/index/category/' . $this->_request->getParam('category'));
     }
     
+    public function orderAction()
+    {
+		$db = Zend_Registry::get('db');
+        
+        $l = json_decode($this->_request->getParam('data'));
+        
+        foreach($l as $i => $v)
+        {            
+            $v = (array) $v;
+            $n = $db->update('post', array('order_id' => $v['order_id']), array('id = ?' => $v['id']));
+        }
+        
+		exit();
+    }
+    
 	public function deleteAction()
     {
 		$db = Zend_Registry::get('db');
@@ -222,6 +242,7 @@ class Admin_PostController extends Zend_Controller_Action
         $category = new Zend_Form_Element_Multiselect('category');
         $category->setLabel('Category')
 				->setRequired(true)
+                ->setAttrib('class', 'form-control input-multiple-select validate[required]')
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Please select category.')
                 ->setValue($this->_request->getParam('category'));
@@ -245,10 +266,8 @@ class Admin_PostController extends Zend_Controller_Action
 		$file->getValidator('Extension')->setMessage('Just allow to upload file has extension: jpg, png, gif.');
 		
 		if(!$this->_request->getParam('thumbnail')){
-			//$file->setRequired(true)->addValidator('Upload', true);
 						
-			$file->getValidator('Upload')->setMessage('Max file size is 2MB.', Zend_Validate_File_Upload::INI_SIZE);
-			//$file->getValidator('Upload')->setMessage('Vui lòng up hình đại diện.', Zend_Validate_File_Upload::NO_FILE);			
+			$file->getValidator('Upload')->setMessage('Max file size is 2MB.', Zend_Validate_File_Upload::INI_SIZE);		
 		}
 		
 		$thumbnail = new Zend_Form_Element_Hidden('thumbnail');
@@ -275,6 +294,7 @@ class Admin_PostController extends Zend_Controller_Action
 		$title = new Zend_Form_Element_Text('title');
         $title->setLabel('Title')
 				->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Please input title.');
         
@@ -282,13 +302,14 @@ class Admin_PostController extends Zend_Controller_Action
 				
 		$description = new Zend_Form_Element_Textarea('description');
         $description->setLabel('Short description')
-                    ->setAttrib('rows', '3');		
+                    ->setAttrib('rows', '3');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
 		$content = new Zend_Form_Element_Textarea('content');
         $content->setLabel('Content')
-				->setRequired(false);
+				->setRequired(false)
+                ->setAttrib('class', 'form-control input-editor');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
@@ -306,7 +327,8 @@ class Admin_PostController extends Zend_Controller_Action
         
 		$enContent = new Zend_Form_Element_Textarea('en_content');
         $enContent->setLabel('English Content')
-				->setRequired(false);
+				->setRequired(false)
+                ->setAttrib('class', 'form-control input-editor');
             
         //-------------------------------------------------------------------------------------------------------------------------
         
@@ -544,6 +566,7 @@ class Admin_PostController extends Zend_Controller_Action
 			$category2List->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
 		}
         $category2List->setAttrib('size', count(Zend_Registry::get('allCategory')));
+        $category2List->setAttrib('class', 'form-control input-multiple-select');
         
         //-------------------------------------------------------------------------------------------------------------------------
         
@@ -584,7 +607,7 @@ class Admin_PostController extends Zend_Controller_Action
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         //-------------------------------------------------------------------------------------------------------------------------        
         

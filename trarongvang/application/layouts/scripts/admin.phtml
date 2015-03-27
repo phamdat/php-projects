@@ -9,194 +9,320 @@
 </head>
 
 <body class="admin-page <?php echo $this->layout()->mainClassesOfPage ?>">
-    
     <?php if ($this->layout()->admin_username): ?>
-        <div id="wrapper">
-            <!-- Navigation -->
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">Bappro Admin Panel</a>
+        <div class="bg-dark dk" id="wrap">
+            <div id="top">
+                <!-- .navbar -->
+                <nav class="navbar navbar-inverse navbar-static-top">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <header class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span> 
+                            <span class="icon-bar"></span> 
+                            <span class="icon-bar"></span> 
+                            <span class="icon-bar"></span> 
+                            </button>
+                            <a href="index.html" class="navbar-brand">
+                                Bappro Admin Panel
+                            </a> 
+                        </header>
+                        <div class="topnav">
+                            <div class="btn-group">
+                                <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default btn-sm" id="toggleFullScreen">
+                                    <i class="glyphicon glyphicon-fullscreen"></i>
+                                </a> 
+                            </div>
+                            <div class="btn-group">
+                                <a data-placement="bottom" data-original-title="E-mail" data-toggle="tooltip" class="btn btn-default btn-sm">
+                                    <i class="fa fa-envelope"></i>
+                                    <span class="label label-warning">0</span> 
+                                </a> 
+                                <a data-placement="bottom" data-original-title="Messages" href="#" data-toggle="tooltip" class="btn btn-default btn-sm">
+                                    <i class="fa fa-comments"></i>
+                                    <span class="label label-danger">0</span> 
+                                </a> 
+                                <a data-toggle="modal" data-original-title="Help" data-placement="bottom" class="btn btn-default btn-sm" href="#helpModal">
+                                    <i class="fa fa-question"></i>
+                                </a> 
+                            </div>
+                            <div class="btn-group">                        
+                                <a href="/admin/login/logout" data-toggle="tooltip" data-original-title="Logout" data-placement="bottom" class="btn btn-metis-1 btn-sm">
+                                    <i class="fa fa-power-off"></i>
+                                </a> 
+                            </div>
+                            <div class="btn-group">
+                                <a data-placement="bottom" data-original-title="Show / Hide Left" data-toggle="tooltip" class="btn btn-primary btn-sm toggle-left" id="menu-toggle">
+                                    <i class="fa fa-bars"></i>
+                                </a> 
+                                <a data-placement="bottom" data-original-title="Show / Hide Right" data-toggle="tooltip" class="btn btn-default btn-sm toggle-right"> 
+                                    <span class="glyphicon glyphicon-comment"></span>  
+                                </a> 
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+                <!-- /.navbar -->
+                <header class="head">
+                    <div class="search-bar">
+                        <form class="main-search" action="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Live Search ...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-primary btn-sm text-muted" type="button">
+                                <i class="fa fa-search"></i>
+                                </button>
+                                </span> 
+                            </div>
+                        </form>
+                        <!-- /.main-search -->
+                    </div>
+                    <!-- /.search-bar -->
+                    <div class="main-bar">
+                        <h3>
+                            <i class="fa fa-<?php echo $this->layout()->icon; ?>"></i>&nbsp; <?php echo $this->layout()->title; ?>
+                        </h3>
+                    </div>
+                    <!-- /.main-bar -->
+                </header>
+                <!-- /.head -->
+            </div>
+            <!-- /#top -->
+            <div id="left">
+                <div class="media user-media bg-dark dker">
+                    <div class="user-media-toggleHover">
+                        <span class="fa fa-user"></span> 
+                    </div>
+                    <div class="user-wrapper bg-dark">
+                        <a class="user-link" href="">
+                        <img class="media-object img-thumbnail user-img" alt="User Picture" src="/public/images/admin-icon.png">
+                        <span class="label label-danger user-label">0</span> 
+                        </a> 
+                        <div class="media-body">
+                            <h5 class="media-heading"><?php echo $this->layout()->admin_name; ?></h5>
+                            <ul class="list-unstyled user-info">
+                                <li> 
+                                    <a href="#">Administrator</a>
+                                </li>
+                                <li>Last Access :
+                                    <br>
+                                    <small>
+                                    <i class="fa fa-calendar"></i>&nbsp;16 Mar 16:32</small> 
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <!--<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong><?php echo $this->layout()->admin_name; ?></strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
+                <!-- #menu -->
+                <ul id="menu" class="bg-blue dker">
+                    <li class="nav-header">Menu</li>
+                    <li class="nav-divider"></li>
+                    <li class="">
+                        <a href="#">
+                            <i class="fa fa-dashboard"></i><span class="link-title">&nbsp;Dashboard</span> 
+                        </a> 
+                    </li>
+
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-fw fa-file-text"></i>
+                            <span class="link-title">Post</span> 
+                            <span class="fa arrow"></span> 
+                        </a>
+                        <ul>
+                            <!--<?php if($this->layout()->admin_issuper): ?>
+                            <li>
+                                <a href="/admin/post/index">
+                                    <i class="fa fa-angle-right"></i>&nbsp; All
                                 </a>
                             </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
+                            <?php endif;?>-->
+
+                            <?php foreach($this->layout()->allCategory as $category):?>
+                                <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$category['name']])): ?>
+                                <li>
+                                    <a href="/admin/post/index/category/<?php echo $category['name'] ?>">
+                                        <i class="fa fa-angle-right"></i>&nbsp; <?php echo $category[ 'display_name']?>
+                                    </a>
+                                </li>
+                                <?php endif;?>
+                            <?php endforeach;?>
+
+                            <!--<?php if($this->layout()->admin_issuper): ?>
+                            <li>
+                                <a href="/admin/post/detail">
+                                    <i class="fa fa-angle-right"></i>&nbsp; Add Post
+                                </a>
+                            </li>
+                            <?php endif;?>-->
+                        </ul>
+                    </li>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-fw fa-sitemap"></i>
+                            <span class="link-title">Menu</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="/admin/menu/index/name/<?php echo HEADER_MENU_CONF ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; Header Menu
+                                </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-fw fa-indent"></i>
+                            <span class="link-title">Slide</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul>
                             <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>-->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $this->layout()->admin_name; ?> <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <!--<li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>-->
-                            <li>
-                                <a href="/admin/login/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                <a href="/admin/slide/index/name/<?php echo MAIN_SLIDE_CONF ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; Main Slide
+                                </a>
                             </li>
                         </ul>
                     </li>
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
+                    <li>
+                        <a href="javascript:void(0);">
+                            <i class="fa fa-fw fa-th-list"></i> 
+                            <span class="link-title">Sidebar</span> 
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul id="sidebar" class="collapse">
+                            <li>
+                                <a href="/admin/sidebar/index/name/<?php echo RIGHT_SIDEBAR_CONF ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; Right Sidebar
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/admin/sidebar/index/name/<?php echo TOP_SIDEBAR_CONF ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; Top Sidebar
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
+                    <li>
+                        <a href="/admin/media/index">
+                            <i class="fa fa-fw fa-picture-o"></i>
+                            <span class="link-title">Media</span>
+                        </a>
+                    </li>
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
+                    <li>
+                        <a href="/admin/category/index">
+                            <i class="fa fa-fw fa-list-ol"></i>
+                            <span class="link-title">Post Category</span>
+                        </a>                            
+                    </li>
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
+                    <li>
+                        <a href="/admin/configuration/index">
+                            <i class="fa fa-fw fa-cog"></i>
+                            <span class="link-title">Configuration</span>
+                        </a>                            
+                    </li>
+                    <?php endif;?>
+
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
+                    <li>
+                        <a href="/admin/user/index">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span class="link-title">User</span>
+                        </a>                            
+                    </li> 
+                    <?php endif;?>                
                 </ul>
-                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li>
-                            <a href="/admin/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                <!-- /#menu -->
+            </div>
+            <!-- /#left -->
+            <div id="content">
+                <div class="outer">
+                    <div class="inner bg-light lter">
+                        <?php echo $this->layout()->content ?>
+                    </div>
+                    <!-- /.inner -->
+                </div>
+                <!-- /.outer -->
+            </div>
+            <!-- /#content -->
+            <div id="right" class="bg-light lter">
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Warning!</strong>  Best check yo self, you're not looking too good.
+                </div>
+                <!-- .well well-small -->
+                <div class="well well-small dark">
+                    <ul class="list-unstyled">
+                        <li>Visitor <span class="inlinesparkline pull-right">1,4,4,7,5,9,10</span> 
                         </li>
-                        <li>
-                            <a href="javascript:void();" data-toggle="collapse" data-target="#post"><i class="fa fa-fw fa-file-text"></i> Post <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
-                            <ul id="post" class="collapse">
-                                <?php if($this->layout()->admin_issuper): ?>
-                                <li>
-                                    <a href="/admin/post/index">All</a>
-                                </li>
-                                <?php endif;?>
-                                
-                                <?php foreach($this->layout()->allCategory as $category):?>
-                                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$category['name']])): ?>
-                                    <li>
-                                        <a href="/admin/post/index/category/<?php echo $category['name'] ?>"><?php echo $category[ 'display_name']?></a>
-                                    </li>
-                                    <?php endif;?>
-                                <?php endforeach;?>
-                                
-                                <?php if($this->layout()->admin_issuper): ?>
-                                <li>
-                                    <a href="/admin/post/detail">Add Post</a>
-                                </li>
-                                <?php endif;?>
-                            </ul>
+                        <li>Online Visitor <span class="dynamicsparkline pull-right">Loading..</span> 
                         </li>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
-                        <li>
-                            <a href="javascript:void();" data-toggle="collapse" data-target="#menu"><i class="fa fa-fw fa-sitemap"></i> Menu <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
-                            <ul id="menu" class="collapse">
-                                <li>
-                                    <a href="/admin/menu/index/name/<?php echo HEADER_MENU_CONF ?>">Header Menu</a>
-                                </li>
-                            </ul>
+                        <li>Popularity <span class="dynamicbar pull-right">Loading..</span> 
                         </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
-                        <li>
-                            <a href="javascript:void();" data-toggle="collapse" data-target="#slide"><i class="fa fa-fw fa-indent"></i> Slide <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
-                            <ul id="slide" class="collapse">
-                                <li>
-                                    <a href="/admin/slide/index/name/<?php echo MAIN_SLIDE_CONF ?>">Main Slide</a>
-                                </li>
-                            </ul>
+                        <li>New Users <span class="inlinebar pull-right">1,3,4,5,3,5</span> 
                         </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
-                        <li>
-                            <a href="javascript:void();" data-toggle="collapse" data-target="#sidebar"><i class="fa fa-fw fa-th-list"></i> Sidebar <i class="fa fa-fw fa-chevron-circle-down pull-right"></i></a>
-                            <ul id="sidebar" class="collapse">
-                                <li>
-                                    <a href="/admin/sidebar/index/name/<?php echo RIGHT_SIDEBAR_CONF ?>">Right Sidebar</a>
-                                </li>
-                                <li>
-                                    <a href="/admin/sidebar/index/name/<?php echo TOP_SIDEBAR_CONF ?>">Top Sidebar</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
-                        <li>
-                            <a href="/admin/media/index"><i class="fa fa-fw fa-picture-o"></i> Media</a>                            
-                        </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
-                        <li>
-                            <a href="/admin/category/index"><i class="fa fa-fw fa-list-ol"></i>Post Category</a>                            
-                        </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
-                        <li>
-                            <a href="/admin/configuration/index"><i class="fa fa-fw fa-cog"></i> Configuration</a>                            
-                        </li>
-                        <?php endif;?>
-                        
-                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
-                        <li>
-                            <a href="/admin/user/index"><i class="fa fa-fw fa-users"></i> User</a>                            
-                        </li> 
-                        <?php endif;?>
                     </ul>
                 </div>
-                <!-- /.navbar-collapse -->
-            </nav>
-
-            <div id="page-wrapper">
-                <div class="container-fluid">
-                    <?php echo $this->layout()->content ?>
+                <!-- /.well well-small -->
+                <!-- .well well-small -->
+                <div class="well well-small dark">
+                    <button class="btn btn-block">Default</button>
+                    <button class="btn btn-primary btn-block">Primary</button>
+                    <button class="btn btn-info btn-block">Info</button>
+                    <button class="btn btn-success btn-block">Success</button>
+                    <button class="btn btn-danger btn-block">Danger</button>
+                    <button class="btn btn-warning btn-block">Warning</button>
+                    <button class="btn btn-inverse btn-block">Inverse</button>
+                    <button class="btn btn-metis-1 btn-block">btn-metis-1</button>
+                    <button class="btn btn-metis-2 btn-block">btn-metis-2</button>
+                    <button class="btn btn-metis-3 btn-block">btn-metis-3</button>
+                    <button class="btn btn-metis-4 btn-block">btn-metis-4</button>
+                    <button class="btn btn-metis-5 btn-block">btn-metis-5</button>
+                    <button class="btn btn-metis-6 btn-block">btn-metis-6</button>
+                </div>
+                <!-- /.well well-small -->
+                <!-- .well well-small -->
+                <div class="well well-small dark">
+                    <span>Default</span> <span class="pull-right"><small>20%</small> </span> 
+                    <div class="progress xs">
+                        <div class="progress-bar progress-bar-info" style="width: 20%"></div>
+                    </div>
+                    <span>Success</span> <span class="pull-right"><small>40%</small> </span> 
+                    <div class="progress xs">
+                        <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+                    </div>
+                    <span>warning</span> <span class="pull-right"><small>60%</small> </span> 
+                    <div class="progress xs">
+                        <div class="progress-bar progress-bar-warning" style="width: 60%"></div>
+                    </div>
+                    <span>Danger</span> <span class="pull-right"><small>80%</small> </span> 
+                    <div class="progress xs">
+                        <div class="progress-bar progress-bar-danger" style="width: 80%"></div>
+                    </div>
                 </div>
             </div>
-
+            <!-- /#right -->
         </div>
+        <!-- /#wrap -->    
     <?php else: ?>
         <?php echo $this->layout()->content ?>
     <?php endif; ?>

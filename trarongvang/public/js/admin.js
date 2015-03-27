@@ -1,9 +1,4 @@
 $(function () {
-    $(window).resize(function () {
-        $('#page-wrapper').height($(window).height() - 70 + 'px');
-    });
-    $(window).resize();
-    
     
     var opertationUrl;
     $('[need-confirm]').click(function () {
@@ -17,10 +12,5 @@ $(function () {
             window.location.href = opertationUrl;
             opertationUrl = null;
         }
-    });
-    
-    $('select[multiple] option').on('mousedown', function (e) {
-        this.selected = !this.selected;
-        e.preventDefault();
     });
 })
