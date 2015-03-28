@@ -10,6 +10,17 @@
 </head>
 
 <body class="main-page <?php echo $this->layout()->mainClassesOfPage ?>">
+    <!--<div class="container" style="position: relative;">
+        <div style="position: absolute; right: 0px; top: 0px;">
+            <div style="background: #649e5a; color: #ffffff; font-size: 24px; padding: 0px 40px; margin-bottom: 5px;">
+                Call us now
+            </div>
+            <div style="background: #649e5a; color: #ffffff; font-size: 24px; padding: 0px 40px; margin-bottom: 5px;">
+                0903.080.686
+            </div>
+        </div>
+    </div>-->
+    <?php echo $this->layout()->configurations[PLUGIN_FOR_ALL_PAGE_CONF]['value'] ?>
     <header>
         <div class="container">
             <div class="logo-container">
@@ -18,7 +29,7 @@
             <div class="banner-container">
                 <img src="<?php echo $this->layout()->configurations[LOGO_IMG_2_CONF]['value'] ?>" class="img-responsive">                    
             </div>
-            <div class="language-container">
+            <div class="language-container hidden-xs">
                 <a class="en">English</a>
                 <a class="vi">Vietnam</a>
             </div>
@@ -112,37 +123,51 @@
         </div>
     </section>
     <?php endif;?>
+    
     <section id="main-content">
         <div class="container">
             <div class="row">
-                <?php echo $this->layout()->content ?>
-                
-                <!--<div class="pull-right <?php echo $this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF]) ?'col-sm-9':'col-sm-12' ?>">
-                    <?php echo $this->layout()->content ?>
-                </div>
-                <div class="clearfix visible-xs"></div>
-                <?php if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF])):?>
-                    <div class="col-sm-3">
+                <?php if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar[LEFT_SIDEBAR_CONF])):?>
+                    <div class="col-sm-2 hidden-xs">
                         <div class="row">
-                            <?php foreach($this->layout()->sidebar[RIGHT_SIDEBAR_CONF] as $i => $sidebar):?>
-                                <?php if($i != 0):?>
-                                    <div class="col-sm-12">
-                                        <div class="right-sidebar panel panel-danger">
-                                            <?php if($sidebar['post']['has_title']):?>
-                                                <div class="panel-heading">
-                                                    <?php echo Utils_StringUtils::getTextFromPost($sidebar['post'], 'title') ?>
-                                                </div>
-                                            <?php endif;?>
-                                            <div class="panel-body">
-                                                <?php echo $sidebar['post']['content'] ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <?php endif;?>
+                            <?php foreach($this->layout()->sidebar[LEFT_SIDEBAR_CONF] as $i => $sidebar):?>
+                                <div class="col-sm-12">
+                                    <?php echo $sidebar['post']['content'] ?>
+                                </div>
                             <?php endforeach;?>
                         </div>
                     </div>
-                <?php endif;?>-->
+                <?php endif;?>
+                
+                <?php 
+                    $size = 12;
+                    if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF]))
+                    {
+                        $size -= 2;
+                    }
+                    if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar[LEFT_SIDEBAR_CONF]))
+                    {
+                        $size -= 2;
+                    }
+                ?>
+                
+                <div class="col-sm-<?php echo $size ?>">
+                    <div class="row">
+                        <?php echo $this->layout()->content ?>
+                    </div>
+                </div>
+                
+                <?php if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF])):?>
+                    <div class="col-sm-2 hidden-xs">
+                        <div class="row">
+                            <?php foreach($this->layout()->sidebar[RIGHT_SIDEBAR_CONF] as $i => $sidebar):?>
+                                <div class="col-sm-12">
+                                    <?php echo $sidebar['post']['content'] ?>
+                                </div>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                <?php endif;?>
             </div>
         </div>
     </section>
@@ -180,8 +205,6 @@
         </div>-->
         <?php echo $this->layout()->configurations[FOOTER_INFO_CONF]['value'] ?>
     </footer>
-    
-    <?php echo $this->layout()->configurations[PLUGIN_FOR_ALL_PAGE_CONF]['value'] ?>
     
 </body>
 

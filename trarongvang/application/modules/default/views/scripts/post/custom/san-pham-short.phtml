@@ -73,9 +73,9 @@
                 <?php foreach($this->paramPosts as $index => $post):?>
                 <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                     <div class="fg-sidebar-list-item">
-                        <?php if($index==8 ): ?> Sản phẩm khác
+                        <?php if($index==8): ?> Sản phẩm khác
                         <?php elseif($index < 8): ?>
-                        <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
                         <?php endif;?>
                     </div>
                 </a>
@@ -83,14 +83,26 @@
             </div>
         </div>
     </div>
-    <div class="sp-content">
-        <?php foreach($this->paramPosts as $index => $post):?>
-        <div class="sp-content-1">
-            <div class="sp-thumbnail-1">
-                <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
-            </div>
-        </div>
+    <div class="sp-content pagination-container">
+        <?php $this->paramPageSize = 6; ?>
+        <?php foreach($this->paramPosts as $index => $post):?>            
+            <?php if($index % $this->paramPageSize == 0):?>
+                <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" <?php echo intval($index/$this->paramPageSize) == 0? '':'style="display:none"' ?> >
+            <?php endif;?>
+                <div class="sp-content-1">
+                    <div class="sp-thumbnail-1">
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+            <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                </div>
+            <?php endif;?>
         <?php endforeach;?>
+        <?php if(!$this->post['is_front_page']):?>
+            <?php echo $this->render('post/pagination.phtml');?>
+        <?php endif;?>
     </div>
     <div class="clearfix"></div>
 </div>

@@ -157,7 +157,8 @@ class Admin_SidebarController extends Zend_Controller_Action
 				->setRequired(true)
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Vui lòng nhập nội dung.')
-                ->setAttrib('rows', '5');
+                ->setAttrib('rows', '5')
+                ->setAttrib('class', 'form-control input-editor');
         
         
         $hasTitle = new Zend_Form_Element_Checkbox('has_title');

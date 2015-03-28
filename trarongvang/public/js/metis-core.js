@@ -1112,6 +1112,7 @@
 
         /*----------- BEGIN datatable CODE -------------------------*/
         $('.data-table').dataTable({
+            order: [[ 0, "desc" ]]
             //         "sDom": "<'pull-right'l>t<'row'<'col-lg-6'f><'col-lg-6'p>>",
             //         "sPaginationType": "bootstrap",
             //         "oLanguage": {

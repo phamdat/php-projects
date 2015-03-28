@@ -1,8 +1,6 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category])): ?>
     <script>
         $(document).ready(function () {
-            //CKEDITOR.replace('content');
-            //CKEDITOR.replace('en_content');
             var opertationUrl;
         });
 
@@ -126,6 +124,7 @@
                                         <div class="panel-heading"><strong>Advanced settings</strong></div>
                                         <div class="panel-body">
                                             <?php echo $this->postForm->getElement('has_slide'); ?>
+                                            <?php echo $this->postForm->getElement('has_left_sidebar'); ?>
                                             <?php echo $this->postForm->getElement('has_right_sidebar'); ?>
                                             <?php echo $this->postForm->getElement('has_top_sidebar'); ?>
                                             <?php echo $this->postForm->getElement('has_breadcrumb'); ?>

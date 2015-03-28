@@ -70,6 +70,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         defined('RIGHT_SIDEBAR_CONF') || define('RIGHT_SIDEBAR_CONF', 'RIGHT_' . SIDEBAR_CONF);
         
+        defined('LEFT_SIDEBAR_CONF') || define('LEFT_SIDEBAR_CONF', 'LEFT_' . SIDEBAR_CONF);
+        
         defined('TOP_SIDEBAR_CONF') || define('TOP_SIDEBAR_CONF', 'TOP_' . SIDEBAR_CONF);
         
         defined('FOOTER_INFO_CONF') || define('FOOTER_INFO_CONF', 'FOOTER_INFO_CONF');
@@ -179,11 +181,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $menus = $db->select()
                 ->from(array('c' => 'configuration'))
-                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array('order_id'=>'p.order_id'))
+                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array())
                 ->where('c.name like ?', '%'.MENU_CONF.'%')
                 ->where('c.link_id is null or c.link_id = 0')
                 ->columns('*', 'c')
-                ->order(array('p.order_id DESC'))
+                ->order(array('c.order_id DESC'))
                 ->query()
                 ->fetchAll();
         
@@ -202,11 +204,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             
             $submenus = $db->select()
                 ->from(array('c' => 'configuration'))
-                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array('order_id'=>'p.order_id'))
+                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array())
                 ->where('c.name like ?', '%'.MENU_CONF.'%')
                 ->where('c.link_id = ?', $item['id'])
                 ->columns('*', 'c')
-                ->order(array('p.order_id DESC'))
+                ->order(array('c.order_id DESC'))
                 ->query()
                 ->fetchAll();
 
@@ -249,12 +251,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $slides = $db->select()
                 ->from(array('c' => 'configuration'))
-                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array('order_id'=>'p.order_id'))
+                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array())
                 ->where('c.name like ?', '%'.SLIDE_CONF.'%')
                 ->where('c.post_id is not null')
                 ->where('c.post_id != 0')
                 ->columns('*', 'c')
-                ->order(array('p.order_id DESC'))
+                ->order(array('c.order_id DESC'))
                 ->query()
                 ->fetchAll();
         
@@ -294,12 +296,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         $sidebars = $db->select()
                 ->from(array('c' => 'configuration'))
-                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array('order_id'=>'p.order_id'))
+                ->joinLeft(array('p' => 'post'), 'c.post_id = p.id', array())
                 ->where('c.name like ?', '%'.SIDEBAR_CONF.'%')
                 ->where('c.post_id is not null')
                 ->where('c.post_id != 0')
                 ->columns('*', 'c')
-                ->order(array('p.order_id DESC'))
+                ->order(array('c.order_id DESC'))
                 ->query()
                 ->fetchAll();
         

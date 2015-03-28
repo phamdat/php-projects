@@ -120,7 +120,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
 
             /*if(!$this->_request->getParam('value_' . $value))
             {
-                $file->setRequired(true)->addValidator('Upload', true);
+                $file->setRequired(false)->addValidator('Upload', true);
 
                 $file->getValidator('Upload')->setMessage('Kích thước tối đa là 2MB.', Zend_Validate_File_Upload::INI_SIZE);
                 $file->getValidator('Upload')->setMessage('Vui lòng up hình đại diện.', Zend_Validate_File_Upload::NO_FILE);			
@@ -156,7 +156,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
             
             $text = new Zend_Form_Element_Textarea('value_' . $value);
             $text->setLabel($value)
-				->setRequired(true)
+				->setRequired(false)
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Vui lòng nhập thông tin.')
                 ->setAttrib('rows', '2');

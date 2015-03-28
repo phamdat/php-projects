@@ -53,16 +53,32 @@ class PostController extends Zend_Controller_Action
         }
         
         //-------------------------------------------------------------------------------similar post
-        $similarPosts = $db->select()
-                            ->from(array('p' => 'post'))
-                            ->columns('*', 'p')
-                            ->where('p.category = ?', $post['category'])
-                            ->where('p.is_filter_page != true')
-                            ->where('p.id != ?', $this->_request->getParam('id'))
-                            ->limit(6, 0)
-                            ->order(new Zend_Db_Expr('RAND()'))
-                            ->query()
-                            ->fetchAll();
+        $adapter = new Zend_Paginator_Adapter_DbSelect(
+            $db->select()
+                    ->from(array('p' => 'post'))
+                    ->columns('*', 'p')
+                    ->where('p.category = ?', $post['category'])
+                    ->where('p.is_filter_page != true')
+                    ->where('p.id != ?', $this->_request->getParam('id'))
+                    ->order(new Zend_Db_Expr('RAND()'))
+        );
+
+        $adapter->setRowCount(
+            $db->select()
+                    ->from(array('p' => 'post'))
+                    ->columns('*', 'p')
+                    ->where('p.category = ?', $post['category'])
+                    ->where('p.is_filter_page != true')
+                    ->where('p.id != ?', $this->_request->getParam('id'))
+                ->reset( Zend_Db_Select::COLUMNS )
+                ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
+        );
+
+        $similarPosts = new Zend_Paginator($adapter);
+
+        $similarPosts->setItemCountPerPage(9999);
+
+        $similarPosts->setCurrentPageNumber($this->_request->getParam('page'));
         
         //-------------------------------------------------------------------------------most of view post
         $mostOfViewPosts = $db->select()
@@ -111,12 +127,13 @@ class PostController extends Zend_Controller_Action
                             ->where('p.category like ?', '%,'.$ca.',%')
                             ->where('p.category not like ?', '%,MAIN_PAGE,%')
                             ->where('p.is_filter_page = ?', false)
-                            ->order('p.order_id DESC')
                             ->reset( Zend_Db_Select::COLUMNS )
                             ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
                     );
                     
                     $paginator = new Zend_Paginator($adapter);
+                    
+                    $paginator->setItemCountPerPage(9999);
 
                     $paginator->setCurrentPageNumber($this->_request->getParam('page'));
 
@@ -127,6 +144,7 @@ class PostController extends Zend_Controller_Action
         
         //-------------------------------------------------------------------------------
         Zend_Layout::getMvcInstance()->assign('hasSlide', $post['has_slide']);
+        Zend_Layout::getMvcInstance()->assign('hasLeftSidebar', $post['has_left_sidebar']);
         Zend_Layout::getMvcInstance()->assign('hasRightSidebar', $post['has_right_sidebar']);
         Zend_Layout::getMvcInstance()->assign('hasTopSidebar', $post['has_top_sidebar']);
 		

@@ -18,6 +18,7 @@
         padding: 0px 17px 0px 0px;
         color: #ffffff;
         height: 34px;
+        cursor: pointer;
     }
     
     .tintuc-container .tintuc-menu-item.active {
@@ -118,45 +119,124 @@
         padding-bottom: 10px;
     }
     
-    @media (min-width: 992px) and (max-width: 1199px) {}
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .tintuc-container .tintuc-content-1 {
+            width: 380px;            
+        }
+        .tintuc-container .tintuc-content-2 {
+            width: 570px;
+        }
+    }
     
     @media (min-width: 768px) and (max-width: 991px) {
         .tintuc-container .tintuc-menu-item {
             font-size: 12px;
         }
+        .tintuc-container .tintuc-content-1 {
+            width: 270px;            
+        }
+        .tintuc-container .tintuc-content-2 {
+            width: 460px;
+        }
     }
     
-    @media (max-width: 767px) {}
+    @media (max-width: 767px) {
+        .tintuc-container .tintuc-content-1 {
+            width: 100%;
+            padding-right: 0px;
+            border-right-color: transparent;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #717374;
+        }
+        .tintuc-container .tintuc-content-2 {
+            width: 100%;
+            margin-left: 0px;
+        }
+        .tintuc-container .tintuc-content-2 .tintuc-thumbnail {
+            width: 100%;
+            float: none;
+            margin-bottom: 10px;
+        }
+        .tintuc-container .tintuc-content-1 .tintuc-title {
+            text-transform: none;
+            font-size: 16px;
+            border-bottom-color: transparent;
+        }
+        .tintuc-container .tintuc-content-1 .tintuc-description {
+            padding-top: 0px;
+        }
+    }
 </style>
+<script>
+    $(document).ready(function(){
+        $('.tintuc-menu-item').click(function(){
+            $('.pagination-container').hide();
+            $('#tintuc-content-' + $(this).attr('ref')).show();
+            $('.tintuc-menu-item, .tintuc-menu-item-re, .tintuc-menu-item-ra').removeClass('active');
+            $(this).addClass('active');
+            $(this).next().find('.tintuc-menu-item-re').addClass('active');
+            $(this).prev().find('.tintuc-menu-item-ra').addClass('active');
+        });
+        $($('.tintuc-menu-item')[0]).click();
+    });
+</script>
 <div class="tintuc-container">
 
     <div class="tintuc-menu hidden-xs">
         <?php foreach($this->categories as $i => $value):?>
-            <div class="tintuc-menu-item <?php echo $i==0?'active':''?>"><?php echo $value['category']['display_name']?></div>
+            <div class="tintuc-menu-item" ref="<?php echo $value['category']['name']?>"><?php echo $value['category']['display_name']?></div>
             <div class="tintuc-menu-item-ro">
-                <div class="tintuc-menu-item-re <?php echo $i==0?'active':''?>"></div>
+                <div class="tintuc-menu-item-re"></div>
                 <div class="tintuc-menu-item-ra"></div>
             </div>
         <?php endforeach;?>
     </div>
     
     <?php foreach($this->categories as $value):?>
-        <div class="tintuc-content-<?php echo $value['category']['name']?>">
-            <?php foreach($value['posts'] as $i => $post):?>
-                <?php if($i == 0):?>
+        <div id="tintuc-content-<?php echo $value['category']['name']?>" class="pagination-container">
+            <?php $this->paramPageSize = 4; ?>
+            <?php $this->paramPosts = $value['posts']; ?>
+            <?php foreach($value['posts'] as $index => $post):?>
+                <?php if($index % $this->paramPageSize == 0):?>
+                    <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
+                <?php endif;?>
+                <?php if($index % $this->paramPageSize == 0):?>
                     <div class="tintuc-content-1">
-                        <div class="tintuc-thumbnail"><img src="<?php echo $post['thumbnail']?>" class="img-responsive"></div>
-                        <div class="tintuc-title"><?php echo $post['title']?></div>
+                        <div class="tintuc-thumbnail">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="tintuc-title">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <?php echo $post['title']?>
+                            </a>
+                        </div>
                         <div class="tintuc-description"><?php echo $post['description']?></div>
                     </div>
                 <?php else:?>
                     <div class="tintuc-content-2">
-                        <div class="tintuc-thumbnail"><img src="<?php echo $post['thumbnail']?>" class="img-responsive"></div>
-                        <div class="tintuc-title"><?php echo $post['title']?></div>
+                        <div class="tintuc-thumbnail">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="tintuc-title">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <?php echo $post['title']?>
+                            </a>
+                        </div>
                         <div class="tintuc-description"><?php echo $post['description']?></div>
                     </div>
                 <?php endif;?>
-            <?php endforeach;?>   
+                <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                    </div>
+                <?php endif;?>
+            <?php endforeach;?>
+            <?php echo $this->render('post/pagination.phtml');?>
             <div class="clearfix"></div>
         </div>
     <?php endforeach;?>

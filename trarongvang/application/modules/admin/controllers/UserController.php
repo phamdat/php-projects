@@ -78,9 +78,7 @@ class Admin_UserController extends Zend_Controller_Action
     {
 		$db = Zend_Registry::get('db');
 		
-		$n = $db->delete('configuration', 'id = ' . $this->_request->getParam('id'));
-        
-        $n = $db->delete('configuration', 'link_id = ' . $this->_request->getParam('id'));
+		$n = $db->delete('user', 'id = ' . $this->_request->getParam('id'));
 		
 		$this->redirect('/admin/user/index');
     }    

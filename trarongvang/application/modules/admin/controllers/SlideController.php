@@ -87,32 +87,6 @@ class Admin_SlideController extends Zend_Controller_Action
 		$this->redirect('/admin/slide/index/name/' . $this->_request->getParam('name'));
     }
     
-    public function swapAction()
-    {
-		$db = Zend_Registry::get('db');
-        
-        $orderId = 1;
-        $aboveOrderId = 2;
-        if($this->_request->getParam('order_id'))
-        {
-            $orderId = $this->_request->getParam('order_id');
-        }
-        if($this->_request->getParam('above_order_id'))
-        {
-            $aboveOrderId = $this->_request->getParam('above_order_id');
-        }
-        if($orderId == $aboveOrderId)
-        {
-            $aboveOrderId++;
-        }
-		
-		$n = $db->update('post', array('order_id' => $aboveOrderId), array('id = ?' => $this->_request->getParam('post_id')));
-        
-        $n = $db->update('post', array('order_id' => $orderId), array('id = ?' => $this->_request->getParam('above_post_id')));
-		
-		$this->redirect('/admin/slide/index/name/' . $this->_request->getParam('name'));
-    }
-    
     protected function uploadFile($oldName=null)
     {
         $fileAdapter = new Zend_File_Transfer_Adapter_Http();
