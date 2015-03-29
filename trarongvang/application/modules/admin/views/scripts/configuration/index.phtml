@@ -1,27 +1,17 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
     <style>
         .form-group {      
-          margin-top: 20px;
-          border-top-style: solid;
-          border-top-width: 2px;
-          border-top-color: #878787;
-          padding-top: 15px;
+            margin-top: 20px;
+            border-top-style: solid;
+            border-top-width: 2px;
+            border-top-color: #878787;
+            padding-top: 15px;
         }
     </style>
 
     <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
         <?php echo $this->render('form-disable.phtml');?>
     <?php endif;?>
-
-    <!-- Page Heading -->
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                Edit Configuration
-            </h1>
-        </div>
-    </div>
-    <!-- /.row -->
 
     <div class="configuration-form">
         <script>

@@ -1170,11 +1170,15 @@
 
 (function ($, Metis) {
     Metis.nestable = function () {
-        var $nestable = $('.nestable-list');
-        $nestable.nestable({
-            rootClass: 'nestable-list',
-            maxDepth: 2
-        });
+        var $nestable = $('.nestable-list'),
+            $action = $('.nestable-list .dd-handle a');
+        
+        $nestable.each(function(index, value){
+            $(this).nestable({
+                rootClass: 'nestable-list',
+                maxDepth: $(this).attr('level')
+            });
+        });        
         
         $nestable.on('change', function() {
             var params = [];
@@ -1194,6 +1198,17 @@
                 
                 }
             });
+        });
+        
+        $action.on('mousedown', function(event) {
+            event.preventDefault();
+            return false;
+        });
+
+        $action.on('click', function(event){
+            event.preventDefault();
+            window.location.href = $(this).attr('href');
+            return false;
         });
     };
     return Metis;
@@ -1216,5 +1231,13 @@
         Metis.formValidation();
         Metis.formGeneral();
         Metis.nestable();
+    });
+    
+    $(window).load(function(){
+        $(window).resize(function () {
+            $('#wrap').css('min-height', $('html').height() + 'px');
+            $('#menu').css('min-height', $('html').height() - $('#menu')[0].offsetTop - $('#left')[0].offsetTop + 'px');
+        });
+        $(window).resize();
     });
 })(jQuery);

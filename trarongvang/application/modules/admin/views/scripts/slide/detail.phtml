@@ -1,35 +1,39 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
-    <?php if($this->layout()->admin_role['SLIDE'] == 1): ?>
-        <?php echo $this->render('form-disable.phtml');?>
-    <?php endif;?>
-
     <form enctype="multipart/form-data" action="<?php echo $this->slideForm->getAction(); ?>" method="<?php echo $this->slideForm->getMethod(); ?>">
-        <!-- Page Heading -->
+        <?php if($this->layout()->admin_role['SLIDE'] == 1): ?>
+            <?php echo $this->render('form-disable.phtml');?>
+        <?php endif;?>
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Add/Edit Slide Item
-                    <div class="pull-right">
-                        <?php echo $this->slideForm->getElement('submit'); ?>
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->slideForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="slide-form">
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+
+                            <?php echo $this->slideForm->getElement('id'); ?>
+                            <?php echo $this->slideForm->getElement('name'); ?>
+                            <?php echo $this->slideForm->getElement('value'); ?>
+                            <?php echo $this->slideForm->getElement('file'); ?>
+                            <img class="img-responsive" src="<?php echo $this->slideForm->getElement('value')->getValue(); ?>">
+                            <?php echo $this->slideForm->getElement('post_id'); ?>       
+                        </div>
                     </div>
-                </h1>
+                </div>
             </div>
-        </div>
-        <!-- /.row -->
-
-        <div class="slide-form">
-            <?php if($this->errorMessage != ""): ?>
-            <p class="error">
-                <?php echo $this->errorMessage; ?></p>
-            <?php endif; ?>
-
-            <?php echo $this->slideForm->getElement('id'); ?>
-            <?php echo $this->slideForm->getElement('name'); ?>
-            <?php echo $this->slideForm->getElement('value'); ?>
-            <?php echo $this->slideForm->getElement('file'); ?>
-            <img class="img-responsive" src="<?php echo $this->slideForm->getElement('value')->getValue(); ?>">
-            <?php echo $this->slideForm->getElement('post_id'); ?>       
-
         </div>
     </form>
 <?php else:?>

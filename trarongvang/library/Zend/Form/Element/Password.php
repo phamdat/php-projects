@@ -85,4 +85,22 @@ class Zend_Form_Element_Password extends Zend_Form_Element_Xhtml
         }
         return parent::isValid($value, $context);
     }
+    
+    public function loadDefaultDecorators()
+    {
+        if ($this->loadDefaultDecoratorsIsDisabled()) {
+            return $this;
+        }
+        $this->setAttrib('class', 'form-control');
+        $this->setDecorators(array('ViewHelper',
+                                   'Description',
+                                   'Errors',
+                                   array('Label', array('class' => 'control-label')),
+                                   array(
+                                         array('div' => 'HtmlTag'),
+                                         array('tag' => 'div', 'class' => 'form-group')
+                                   )
+                            ));
+        return $this;
+    }
 }

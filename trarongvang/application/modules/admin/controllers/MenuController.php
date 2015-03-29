@@ -12,6 +12,7 @@ class Admin_MenuController extends Zend_Controller_Action
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
 		Zend_Layout::getMvcInstance()->assign('icon', 'sitemap');
+        Zend_Layout::getMvcInstance()->assign('title', 'Menu');
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -21,7 +22,7 @@ class Admin_MenuController extends Zend_Controller_Action
 
     public function indexAction()
     {	
-        Zend_Layout::getMvcInstance()->assign('title', 'Menu');
+        
         
 		if(isset(Zend_Registry::get('menu')[$this->_request->getParam('name')]))
         {
@@ -35,9 +36,7 @@ class Admin_MenuController extends Zend_Controller_Action
 	
 
 	public function detailAction()
-	{	
-        Zend_Layout::getMvcInstance()->assign('title', 'Add/Edit Menu Item');
-        
+	{
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -138,6 +137,7 @@ class Admin_MenuController extends Zend_Controller_Action
         $postId = new Zend_Form_Element_Select('post_id');
         $postId->setLabel('Post')
 				->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Vui lòng chọn bài viết.');
 

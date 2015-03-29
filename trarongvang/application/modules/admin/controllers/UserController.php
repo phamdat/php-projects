@@ -11,7 +11,9 @@ class Admin_UserController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'users');
+        Zend_Layout::getMvcInstance()->assign('title', 'User');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -95,6 +97,7 @@ class Admin_UserController extends Zend_Controller_Action
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Display name')
                 ->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
                 ->addValidator('NotEmpty', true)
 				->addErrorMessage('Please input display name.');
         
@@ -103,14 +106,16 @@ class Admin_UserController extends Zend_Controller_Action
         $username = new Zend_Form_Element_Text('username');
         $username->setLabel('Username')
                 ->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
                 ->addValidator('NotEmpty', true)
 				->addErrorMessage('Please input username.');
         
         //-------------------------------------------------------------------------------------------------------------------------
         
         $password = new Zend_Form_Element_Password('password');
-        $password->setLabel('Username')
+        $password->setLabel('Password')
                 ->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
                 ->addValidator('NotEmpty', true)
 				->addErrorMessage('Please input password.');
         
@@ -155,13 +160,14 @@ class Admin_UserController extends Zend_Controller_Action
         $role->addMultiOption('USER:3', 'User(read/add/edit/delete)');
         
         $role->setAttrib('size', count(Zend_Registry::get('allCategory')) * 3 + 19);
+        $role->setAttrib('class', 'form-control input-multiple-select validate[required]');
         
         //-------------------------------------------------------------------------------------------------------------------------
         
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         //-------------------------------------------------------------------------------------------------------------------------        
         

@@ -11,7 +11,9 @@ class Admin_ConfigurationController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'cog');
+        Zend_Layout::getMvcInstance()->assign('title', 'Configuration');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -90,6 +92,21 @@ class Admin_ConfigurationController extends Zend_Controller_Action
         }
         
         return $newName;
+    }
+    
+    public function orderAction()
+    {
+		$db = Zend_Registry::get('db');
+        
+        $l = json_decode($this->_request->getParam('data'));
+        
+        foreach($l as $i => $v)
+        {            
+            $v = (array) $v;
+            $n = $db->update('configuration', array('order_id' => $v['order_id']), array('id = ?' => $v['id']));
+        }
+        
+		exit();
     }
 	
     protected function getConfigurationForm($configurations=null)
@@ -175,7 +192,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         $configurationForm->addElement($submit);
 

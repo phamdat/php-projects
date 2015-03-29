@@ -11,7 +11,9 @@ class Admin_SidebarController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'th-list');
+        Zend_Layout::getMvcInstance()->assign('title', 'Sidebar');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -147,6 +149,7 @@ class Admin_SidebarController extends Zend_Controller_Action
         $title = new Zend_Form_Element_Text('title');
         $title->setLabel('Title')
 				->setRequired(true)
+                ->setAttrib('class', 'form-control validate[required]')
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Vui lòng nhập tiêu đề.');
         
@@ -171,7 +174,7 @@ class Admin_SidebarController extends Zend_Controller_Action
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         
         

@@ -11,7 +11,9 @@ class Admin_SlideController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'indent');
+        Zend_Layout::getMvcInstance()->assign('title', 'Slide');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -173,7 +175,7 @@ class Admin_SlideController extends Zend_Controller_Action
                 
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         //---------------------------------------------------------------------------------------------------------------------------
         

@@ -12,6 +12,7 @@ class Admin_PostController extends Zend_Controller_Action
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());		
         Zend_Layout::getMvcInstance()->assign('icon', 'file-text');
+        Zend_Layout::getMvcInstance()->assign('title', 'Post');
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -20,9 +21,7 @@ class Admin_PostController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {	
-        Zend_Layout::getMvcInstance()->assign('title', 'List of Posts');
-        
+    {
 		$db = Zend_Registry::get('db');
 						
 		$adapter = new Zend_Paginator_Adapter_DbSelect(
@@ -60,9 +59,7 @@ class Admin_PostController extends Zend_Controller_Action
 	
 
 	public function detailAction()
-	{	
-        Zend_Layout::getMvcInstance()->assign('title', 'Add/Edit Post');
-        
+	{
 		if($this->_request->getParam('id'))
 		{
 			$db = Zend_Registry::get('db');
@@ -174,22 +171,7 @@ class Admin_PostController extends Zend_Controller_Action
         $n = $db->update('post', array('order_id' => $orderId), array('id = ?' => $this->_request->getParam('above_post_id')));
 		
 		$this->redirect('/admin/post/index/category/' . $this->_request->getParam('category'));
-    }
-    
-    public function orderAction()
-    {
-		$db = Zend_Registry::get('db');
-        
-        $l = json_decode($this->_request->getParam('data'));
-        
-        foreach($l as $i => $v)
-        {            
-            $v = (array) $v;
-            $n = $db->update('post', array('order_id' => $v['order_id']), array('id = ?' => $v['id']));
-        }
-        
-		exit();
-    }
+    }    
     
 	public function deleteAction()
     {

@@ -1,35 +1,39 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
-    <?php if($this->layout()->admin_role['USER'] == 1): ?>
-        <?php echo $this->render('form-disable.phtml');?>
-    <?php endif;?>
 
     <form action="<?php echo $this->userForm->getAction(); ?>" method="<?php echo $this->userForm->getMethod(); ?>">
-        <!-- Page Heading -->
+        <?php if($this->layout()->admin_role['USER'] == 1): ?>
+            <?php echo $this->render('form-disable.phtml');?>
+        <?php endif;?>
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                Add/Edit User
-                <div class="pull-right">
-                    <?php echo $this->userForm->getElement('submit'); ?>
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->userForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="menu-form">
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+
+                            <?php echo $this->userForm->getElement('id'); ?>
+                            <?php echo $this->userForm->getElement('name'); ?>
+                            <?php echo $this->userForm->getElement('username'); ?>
+                            <?php echo $this->userForm->getElement('password'); ?>
+                            <?php echo $this->userForm->getElement('role'); ?>
+                        </div>
+                    </div>
                 </div>
-            </h1>
             </div>
-        </div>
-        <!-- /.row -->
-
-        <div class="menu-form">
-            <?php if($this->errorMessage != ""): ?>
-            <p class="error">
-                <?php echo $this->errorMessage; ?></p>
-            <?php endif; ?>
-
-
-            <?php echo $this->userForm->getElement('id'); ?>
-            <?php echo $this->userForm->getElement('name'); ?>
-            <?php echo $this->userForm->getElement('username'); ?>
-            <?php echo $this->userForm->getElement('password'); ?>
-            <?php echo $this->userForm->getElement('role'); ?>
-
         </div>
     </form>
 <?php else:?>

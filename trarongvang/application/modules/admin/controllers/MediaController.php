@@ -11,7 +11,9 @@ class Admin_MediaController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName() . '-content');
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'picture-o');
+        Zend_Layout::getMvcInstance()->assign('title', 'Media');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');

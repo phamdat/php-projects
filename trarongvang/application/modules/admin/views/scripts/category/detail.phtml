@@ -4,30 +4,36 @@
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
 
-        <!-- Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Add/Edit Post Category
-                    <div class="pull-right">
-                        <?php echo $this->categoryForm->getElement('submit'); ?>
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->categoryForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="category-form">
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+
+                            <?php echo $this->categoryForm->getElement('id'); ?>
+                            <?php echo $this->categoryForm->getElement('name'); ?>
+                            <?php echo $this->categoryForm->getElement('display_name'); ?>
+                            <?php echo $this->categoryForm->getElement('link_id'); ?>
+
+                        </div>
                     </div>
-                </h1>
+                </div>
             </div>
-        </div>
-        <!-- /.row -->
-
-        <div class="category-form">
-            <?php if($this->errorMessage != ""): ?>
-            <p class="error">
-                <?php echo $this->errorMessage; ?></p>
-            <?php endif; ?>
-
-            <?php echo $this->categoryForm->getElement('id'); ?>
-            <?php echo $this->categoryForm->getElement('name'); ?>
-            <?php echo $this->categoryForm->getElement('display_name'); ?>
-            <?php echo $this->categoryForm->getElement('link_id'); ?>
-
         </div>
     </form>
 <?php else:?>

@@ -19,10 +19,10 @@
                     <?php endif;?>
                 </header>
                 <div class="body">
-                    <div class="nestable-list" url="/admin/post/order">
+                    <div class="nestable-list" url="/admin/configuration/order" level="1">
                         <ol class="dd-list">
                             <?php foreach($this->menu as $index => $value):?>
-                                <li class="dd-item" data-id="<?php echo $value['post']['id'];?>">
+                                <li class="dd-item" data-id="<?php echo $value['menu']['id'];?>">
                                     <div class="dd-handle">
                                         <?php echo $value['post']['title'];?>
                                         <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 2): ?>

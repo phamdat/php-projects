@@ -11,7 +11,9 @@ class Admin_CategoryController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		
+		Zend_Layout::getMvcInstance()->assign('icon', 'list-ol');
+        Zend_Layout::getMvcInstance()->assign('title', 'Post Category');
+        
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
             $this->redirect('/admin/login');
@@ -89,17 +91,19 @@ class Admin_CategoryController extends Zend_Controller_Action
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Name')
             ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
             ->addValidator('NotEmpty', true)
-            ->addErrorMessage('Vui lòng nhập tên.');
+            ->addErrorMessage('Please input category name.');
         
         
         
         
         $displayName = new Zend_Form_Element_Text('display_name');
-        $displayName->setLabel('Display')
+        $displayName->setLabel('Display')            
+            ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
             ->addValidator('NotEmpty', true)
-            ->addErrorMessage('Vui lòng nhập tên hiển thị.')
-            ->setRequired(true);
+            ->addErrorMessage('Please input display name.');
 
         
         
@@ -126,7 +130,7 @@ class Admin_CategoryController extends Zend_Controller_Action
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
-                ->setAttrib('class', 'btn btn-primary');
+                ->setAttrib('class', 'btn btn-primary btn-sm');
 
         
         
