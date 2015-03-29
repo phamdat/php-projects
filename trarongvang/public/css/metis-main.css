@@ -15,11 +15,11 @@ body {
 html {
     position: relative;
     min-height: 100%;
-    overflow: scroll;
+    overflow-y: scroll;
 }
 
 body {
-    margin-bottom: 48px
+    
 }
 
 .Footer,
