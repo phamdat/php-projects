@@ -1,0 +1,35 @@
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
+    <style>
+        .form-group {      
+            margin-top: 20px;
+            border-top-style: solid;
+            border-top-width: 2px;
+            border-top-color: #878787;
+            padding-top: 15px;
+        }
+    </style>
+
+    <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
+        <?php echo $this->render('form-disable.phtml');?>
+    <?php endif;?>
+
+    <div class="configuration-form">
+        <script>
+            $(document).ready(function () {
+                CKEDITOR.replace('value_FOOTER_INFO_CONF')
+
+                CKEDITOR.replace('value_PLUGIN_FOR_ALL_PAGE_CONF')
+
+                CKEDITOR.replace('value_POST_ADVERTISMENT_CONF')            
+            });
+        </script>
+        <?php if($this->errorMessage != ""): ?>
+        <p class="error">
+            <?php echo $this->errorMessage; ?>
+        </p>
+        <?php endif; ?>
+         <?php echo $this->configurationForm; ?>
+    </div>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

@@ -1,0 +1,69 @@
+<div>
+    <?php echo $this->render('post/breadcrumb.phtml');?>
+    
+    <?php if(strpos($this->post['category'], 'SAN_PHAM') == false): ?>
+        <?php echo $this->render('post/media.phtml');?>
+        <?php echo $this->render('post/title.phtml');?>
+        <?php echo $this->render('post/description.phtml');?>
+    <?php endif;?>    
+    
+    <?php if(strpos($this->post['category'], 'SAN_PHAM') != false): ?>
+        <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
+    <?php elseif(strpos($this->post['category'], 'CONTACT') != false): ?>
+        <?php echo $this->render('post/contact.phtml');?>
+    <?php else: ?>
+        <?php echo $this->render('post/content.phtml');?>
+    <?php endif;?>    
+
+    <?php if($this->post['is_filter_page']): ?>
+        <div class="filter-post">
+            <?php if (count($this->categories) > 1):?>
+                <?php foreach($this->categories as $value):?>
+            
+                    <?php $this->paramCategory = $value['category']; ?>
+                    <?php $this->paramPosts = $value['posts']; ?>
+
+                    <?php if($value['category']['name'] == 'GIOI_THIEU'): ?>
+                        <?php echo $this->render('post/custom/gioi-thieu-short.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category']['name'] == 'SAN_PHAM'): ?>
+                        <?php echo $this->render('post/custom/san-pham-short.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category']['name'] == 'SAN_PHAM_MOI'): ?>
+                        <?php echo $this->render('post/custom/san-pham-moi-short.phtml');?>
+                    <?php endif;?>
+
+                    <?php if($value['category']['name'] == 'TIN_TUC'): ?>
+                        <?php echo $this->render('post/custom/tin-tuc-short.phtml');?>
+                    <?php endif;?>
+            
+                <?php endforeach;?>
+            
+                <?php if(strpos($this->post['category'], 'TIN_TUC') != false && strpos($this->post['category'], 'MAIN_PAGE') != false): ?>
+                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
+                <?php endif;?>
+            <?php elseif(count($this->categories) == 1):?>
+                
+                <?php $value = $this->categories[0]; ?>
+                
+                <?php $this->paramCategory = $value['category']; ?>
+                <?php $this->paramPosts = $value['posts']; ?>
+            
+                <?php if($value['category']['name'] == 'TIN_TUC'): ?>
+                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
+                <?php endif;?>                
+            <?php endif;?>            
+        </div>
+    <?php endif;?>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=412419298912724&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+</div>

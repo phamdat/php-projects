@@ -1,0 +1,87 @@
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<?php echo $this->headMeta() ?>
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/960.css" />
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/reset.css" />
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/text.css" />
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/red.css" />
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/smoothness/ui.css" />  
+		<script type="text/javascript" src="/public/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="/public/js/blend/jquery.blend.js"></script>
+		<script type="text/javascript" src="/public/js/ui.core.js"></script>
+		<script type="text/javascript" src="/public/js/ui.sortable.js"></script>    
+		<script type="text/javascript" src="/public/js/ui.dialog.js"></script>
+		<script type="text/javascript" src="/public/js/ui.datepicker.js"></script>
+		<script type="text/javascript" src="/public/js/effects.js"></script>
+		<script type="text/javascript" src="/public/js/flot/jquery.flot.pack.js"></script>
+		<!--[if IE]>
+		<script language="javascript" type="text/javascript" src="/public/js/flot/excanvas.pack.js"></script>
+		<![endif]-->
+		<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="/public/css/third-party/iefix.css" />
+		<script src="/public/js/pngfix.js"></script>
+		<script>
+			DD_belatedPNG.fix('#menu ul li a span span');
+		</script>        
+		<![endif]-->
+	</head>
+	<body class="<?php echo $this->layout()->mainClassesOfPage ?>">
+		<!-- WRAPPER START -->
+		<div class="container_16" id="wrapper">	
+			<!--LOGO-->
+			<div class="grid_8" id="logo">Phần Quản Lý Dành Nhà Sản Xuất</div>
+			<div class="grid_8">
+				<!-- USER TOOLS START -->
+				<div id="user_tools">
+					<span>
+						<?php if($this->layout()->username): ?>
+							Chào <a href="#"><?php echo $this->layout()->username;?></a> | <a href='/third-party/login/logout'>Logout</a>
+						<?php endif;?>
+					</span>
+				</div>
+			</div>
+			<!-- USER TOOLS END -->    
+			<div class="grid_16" id="header">
+				<!-- MENU START -->
+				<div id="menu">
+					<ul class="group" id="menu_group_main">
+						<li class="item first" id="one"><a href="/third-party" class="main <?php echo $this->layout()->section == 'one'?'current':'' ?>"><span class="outer"><span class="inner dashboard">Dashboard</span></span></a></li>
+						<li class="item last" id="two"><a href="/third-party/product" class="main <?php echo $this->layout()->section == 'two'?'current':'' ?>"><span class="outer"><span class="inner content">Sản Phẩm</span></span></a></li>
+<!--						<li class="item middle" id="three"><a href="#"><span class="outer"><span class="inner reports png">Reports</span></span></a></li>
+						<li class="item middle" id="four"><a href="#" class="main"><span class="outer"><span class="inner users">Users</span></span></a></li>
+						<li class="item middle" id="five"><a href="#" class="main"><span class="outer"><span class="inner media_library">Media Library</span></span></a></li>        
+						<li class="item middle" id="six"><a href="#" class="main"><span class="outer"><span class="inner event_manager">Event Manager</span></span></a></li>        
+						<li class="item middle" id="seven"><a href="#" class="main"><span class="outer"><span class="inner newsletter">Newsletter</span></span></a></li>        
+						<li class="item last" id="eight"><a href="#" class="main"><span class="outer"><span class="inner settings">Settings</span></span></a></li>        -->
+					</ul>
+				</div>
+				<!-- MENU END -->
+			</div>
+			<!-- CONTENT START -->
+			<div class="grid_16" id="content">
+				<!--  TITLE START  --> 
+				<div class="grid_9">
+					<h1 class="dashboard"><?php echo $this->layout()->titleOfPage ?></h1>
+				</div>
+				<!--RIGHT TEXT/CALENDAR-->
+<!--				<div class="grid_6" id="eventbox"><a href="#" class="inline_calendar">You don't have any events for today! Yay!</a>
+					<div class="hidden_calendar"></div>
+				</div>-->
+				<!--RIGHT TEXT/CALENDAR END-->
+				<div class="clearfix">
+				</div>
+				<!--  TITLE END  -->
+				<div class="clearfix"></div>
+				<!-- #PORTLETS START -->
+				<div id="portlets">
+					<?php echo $this->layout()->content ?>
+				</div>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<!-- FOOTER START -->
+		<div class="container_16" id="footer">Made by <a href="#">Maximark</a>.<br/>Copyright 2013. All rights reserved.</div>
+		<!-- FOOTER END -->
+	</body>
+</html>

@@ -1,0 +1,94 @@
+<style>
+    .spmoi-container {
+        width: 740px;
+        float: left;
+        margin-right: 40px;
+    }
+    
+    .spmoi-container .spmoi-content .spmoi-content-1 {
+        float: left;
+        margin-right: 40px;
+        margin-top: 30px;
+    }
+    
+    .spmoi-container .spmoi-content .spmoi-content-1 {
+        float: left;
+        width: 220px;
+    }
+    
+    .spmoi-container .spmoi-content .spmoi-content-1 .spmoi-thumbnail-1 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #ffffff;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
+        border-radius: 210px;
+        overflow: hidden;
+    }
+    
+    .spmoi-container .spmoi-content .spmoi-content-1 .spmoi-title-1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #3c663d;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    
+    .spmoi-container .spmoi-content .spmoi-content-1:nth-child(3n+3) {
+        margin-right: 0px;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .spmoi-container {
+            width: 620px;
+        }
+        .spmoi-container .spmoi-content .spmoi-content-1 {
+            width: 180px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        .spmoi-container {
+            width: 500px;
+        }
+        .spmoi-container .spmoi-content .spmoi-content-1 {
+            margin-right: 20px;
+            width: 153px;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .spmoi-container {
+            width: 100%;
+        }
+        .spmoi-container .spmoi-content .spmoi-content-1 {
+            margin-right: 0px;
+            width: 33.33%;
+            padding: 10px;
+        }
+    }
+</style>
+<div class="spmoi-container">
+    <div class="fg-title-2">
+        <div class="fg-title-text">
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+        </div>
+    </div>
+    <div class="spmoi-content">
+        <?php foreach($this->paramPosts as $index => $post):?>
+        <div class="spmoi-content-1">
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                <div class="spmoi-thumbnail-1">
+                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                </div>
+            </a>
+            <div class="clearfix"></div>
+            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                <div class="spmoi-title-1">
+                    <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                </div>
+            </a>
+        </div>
+        <?php endforeach;?>
+    </div>
+    <div class="clearfix"></div>
+</div>

@@ -1,0 +1,56 @@
+<style>
+    .post-container {
+
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+
+    }
+    
+    @media (max-width: 767px) {
+
+    }
+</style>
+<div class="post-container">    
+
+    <?php if($this->post['has_like_share']): ?>
+        <div class="post-like-share">
+            <div class="fb-like" data-href="<?php echo $this->fullUrl; ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+        </div>
+    <?php endif;?>
+
+
+    <?php if($this->post['has_content']): ?>
+        <div class="post-content">
+            <?php echo $this->post['content'] ?>
+        </div>
+    <?php endif;?>
+
+    <?php if($this->post['has_advertisment']): ?>
+        <div class="post-advertisment">
+            <?php echo $this->layout()->configurations[POST_ADVERTISMENT_CONF]['value'] ?>
+        </div>
+    <?php endif;?>
+
+
+    <?php if($this->post['has_similar_post']): ?>
+        <div class="similar-post">
+
+            <?php $this->paramCategory = array('display_name' => 'Sản phẩm khác'); ?>
+            <?php $this->paramPosts = $this->similarPosts; ?>
+
+            <?php echo $this->render('post/custom/san-pham-short.phtml');?>
+        </div>
+    <?php endif;?>
+
+
+    <?php if($this->post['has_comment']): ?>
+        <div class="comment">
+            <div class="fb-comments" data-href="<?php echo $this->fullUrl; ?>" data-width="100%" data-num-posts="10"></div>
+        </div>
+    <?php endif;?>
+</div>

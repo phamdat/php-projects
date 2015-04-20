@@ -98,17 +98,17 @@ class Admin_PostController extends Zend_Controller_Action
                     'seo_url'          => $postForm->getValue('seo_url'),
                     'seo_title'        => $postForm->getValue('seo_title'),
                     'seo_description'  => $postForm->getValue('seo_description'),
-                    'seo_template'     => $postForm->getValue('seo_template'),
+                    'seo_keyword'      => $postForm->getValue('seo_keyword'),
                     'en_seo_url'       => $postForm->getValue('en_seo_url'),
                     'en_seo_title'     => $postForm->getValue('en_seo_title'),
-                    'en_seo_description'  => $postForm->getValue('en_seo_description'),
-                    'en_seo_template'  => $postForm->getValue('en_seo_template'),
-                    'has_slide'        => $postForm->getValue('has_slide'),
-                    'has_left_sidebar' => $postForm->getValue('has_left_sidebar'),
-                    'has_right_sidebar'   => $postForm->getValue('has_right_sidebar'),
-                    'has_top_sidebar'     => $postForm->getValue('has_top_sidebar'),
-                    'has_breadcrumb'      => $postForm->getValue('has_breadcrumb'),
-                    'has_title'        => $postForm->getValue('has_title'),
+                    'en_seo_description'    => $postForm->getValue('en_seo_description'),
+                    'en_seo_keyword'        => $postForm->getValue('en_seo_keyword'),
+                    'has_slide'             => $postForm->getValue('has_slide'),
+                    'has_left_sidebar'      => $postForm->getValue('has_left_sidebar'),
+                    'has_right_sidebar'     => $postForm->getValue('has_right_sidebar'),
+                    'has_top_sidebar'       => $postForm->getValue('has_top_sidebar'),
+                    'has_breadcrumb'        => $postForm->getValue('has_breadcrumb'),
+                    'has_title'             => $postForm->getValue('has_title'),
                     'has_created_date' => $postForm->getValue('has_created_date'),
                     'has_description'  => $postForm->getValue('has_description'),
                     'has_content'      => $postForm->getValue('has_content'),
@@ -337,16 +337,15 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------        
-        
-        $seoDescription = new Zend_Form_Element_Textarea('seo_description');
-        $seoDescription->setLabel('SEO description')
-				->setRequired(false)
-                ->setAttrib('rows', '3');
+
+        $seoKeyword = new Zend_Form_Element_Text('seo_keyword');
+        $seoKeyword->setLabel('SEO keyword')
+				->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
-        $seoTemplate = new Zend_Form_Element_Textarea('seo_template');
-        $seoTemplate->setLabel('SEO template')
+        $seoDescription = new Zend_Form_Element_Textarea('seo_description');
+        $seoDescription->setLabel('SEO description')
 				->setRequired(false)
                 ->setAttrib('rows', '3');
         
@@ -363,16 +362,15 @@ class Admin_PostController extends Zend_Controller_Action
 				->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------        
-        
-        $enSeoDescription = new Zend_Form_Element_Textarea('en_seo_description');
-        $enSeoDescription->setLabel('English SEO description')
-				->setRequired(false)
-                ->setAttrib('rows', '3');
+
+        $enSeoKeyword = new Zend_Form_Element_Text('en_seo_keyword');
+        $enSeoKeyword->setLabel('English SEO keyword')
+				->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
-        $enSeoTemplate = new Zend_Form_Element_Textarea('en_seo_template');
-        $enSeoTemplate->setLabel('English SEO template')
+        $enSeoDescription = new Zend_Form_Element_Textarea('en_seo_description');
+        $enSeoDescription->setLabel('English SEO description')
 				->setRequired(false)
                 ->setAttrib('rows', '3');
         
@@ -608,12 +606,12 @@ class Admin_PostController extends Zend_Controller_Action
             $oldPrice->setValue($post['old_price']);
             $seoUrl->setValue($post['seo_url']);
             $seoTitle->setValue($post['seo_title']);
+            $seoKeyword->setValue($post['seo_keyword']);
             $seoDescription->setValue($post['seo_description']);
-            $seoTemplate->setValue($post['seo_template']);
             $enSeoUrl->setValue($post['en_seo_url']);
             $enSeoTitle->setValue($post['en_seo_title']);
+            $enSeoKeyword->setValue($post['en_seo_keyword']);
             $enSeoDescription->setValue($post['en_seo_description']);
-            $enSeoTemplate->setValue($post['en_seo_template']);
             $hasSlide->setValue($post['has_slide']);
             $hasLeftSidebar->setValue($post['has_left_sidebar']);
             $hasRightSidebar->setValue($post['has_right_sidebar']);
@@ -658,12 +656,12 @@ class Admin_PostController extends Zend_Controller_Action
                     ->addElement($oldPrice)
                     ->addElement($seoUrl)
                     ->addElement($seoTitle)
+                    ->addElement($seoKeyword)
                     ->addElement($seoDescription)
-                    ->addElement($seoTemplate)
                     ->addElement($enSeoUrl)
                     ->addElement($enSeoTitle)
+                    ->addElement($enSeoKeyword)
                     ->addElement($enSeoDescription)
-                    ->addElement($enSeoTemplate)
                     ->addElement($hasSlide)
                     ->addElement($hasLeftSidebar)
                     ->addElement($hasRightSidebar)

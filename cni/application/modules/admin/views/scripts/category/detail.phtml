@@ -1,0 +1,41 @@
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
+    <form action="<?php echo $this->categoryForm->getAction(); ?>" method="<?php echo $this->categoryForm->getMethod(); ?>">
+        <?php if($this->layout()->admin_role['CATEGORY'] == 1): ?>
+            <?php echo $this->render('form-disable.phtml');?>
+        <?php endif;?>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->categoryForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="category-form">
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+
+                            <?php echo $this->categoryForm->getElement('id'); ?>
+                            <?php echo $this->categoryForm->getElement('name'); ?>
+                            <?php echo $this->categoryForm->getElement('display_name'); ?>
+                            <?php echo $this->categoryForm->getElement('link_id'); ?>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

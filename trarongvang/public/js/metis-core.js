@@ -1236,7 +1236,7 @@
     $(window).load(function(){
         $(window).resize(function () {
             $('#wrap').css('min-height', $('html').height() + 'px');
-            $('#menu').css('min-height', $('html').height() - $('#menu')[0].offsetTop - $('#left')[0].offsetTop + 'px');
+            $('#content-container>.outer>.inner').css('min-height', $('html').height() - $('#content-container')[0].offsetTop - 20 + 'px');
         });
         $(window).resize();
     });

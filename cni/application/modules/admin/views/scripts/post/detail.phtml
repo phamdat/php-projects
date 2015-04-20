@@ -1,0 +1,179 @@
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category])): ?>
+    <script>
+        $(document).ready(function () {
+            var opertationUrl;
+        });
+
+        function swap(el, a, b){
+            var ela = $(el).parents('tr').find('img');
+            var elb = $(el).parents('tr').prev().find('img');
+
+            var a = ela.attr('src');
+            var b = elb.attr('src');
+
+            ela.attr('src', b);
+            elb.attr('src', a);
+
+            var v = $('#media').val();
+            v = v.replace(a, 'xxxxxxxx');
+            v = v.replace(b, a);
+            v = v.replace('xxxxxxxx', b);
+            $('#media').val(v);
+        }
+
+        function destroy(el, a){
+            var a = $(el).parents('tr').find('img').attr('src');
+
+            $(el).parents('tr').remove();
+
+            var v = $('#media').val();
+            v = v.replace(a, '');
+            $('#media').val(v);
+        }
+    </script>
+    <form class="validation-form" enctype="multipart/form-data" action="<?php echo $this->postForm->getAction(); ?>" method="<?php echo $this->postForm->getMethod(); ?>">
+        <?php if($this->layout()->admin_role[$this->category] == 1): ?>
+            <?php echo $this->render('form-disable.phtml');?>
+        <?php endif;?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->postForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="post-form">            
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>Post info</strong></div>
+                                        <div class="panel-body">                            
+                                            <?php echo $this->postForm->getElement('id'); ?>
+                                            <?php echo $this->postForm->getElement('category'); ?>
+                                            <?php echo $this->postForm->getElement('link_id'); ?>
+                                            <?php echo $this->postForm->getElement('title'); ?>
+                                            <?php echo $this->postForm->getElement('description'); ?>
+                                            <?php echo $this->postForm->getElement('content'); ?>
+
+                                            <?php echo $this->postForm->getElement('thumbnail'); ?>
+                                            <?php echo $this->postForm->getElement('file'); ?>
+                                            <img class="img-responsive" src="<?php echo $this->postForm->getElement('thumbnail')->getValue(); ?>">
+
+                                            <?php echo $this->postForm->getElement('media'); ?>
+                                            <?php echo $this->postForm->getElement('filemedia'); ?>
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                    <?php $ms = explode(';', preg_replace('/;+/', ';', trim($this->postForm->getElement('media')->getValue(), ';'))); ?>
+                                                    <?php foreach($ms as $i => $value): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <img class="img-responsive" src="<?php echo $value; ?>" style="max-width: 200px;">
+                                                        </td>
+                                                        <td>
+                                                            <?php if($i>0):?>
+                                                            <a href="javascript:void(0);" onclick="swap(this, '<?php echo $value; ?>', '<?php echo $ms[$i-1]; ?>')" data-toggle="tooltip" data-placement="top" title="Up">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </a>
+                                                            <?php endif;?>
+                                                            <a href="javascript:void(0);" onclick="destroy(this, '<?php echo $value; ?>')" data-toggle="tooltip" data-placement="top" title="Xóa">
+                                                                <i class="fa fa-times"></i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <?php endforeach;?>
+                                                </tbody>
+                                            </table>  
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>SEO</strong></div>
+                                        <div class="panel-body">                        
+                                            <?php echo $this->postForm->getElement('seo_url'); ?>
+                                            <?php echo $this->postForm->getElement('seo_title'); ?>
+                                            <?php echo $this->postForm->getElement('seo_keyword'); ?>
+                                            <?php echo $this->postForm->getElement('seo_description'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>Pricing</strong></div>
+                                        <div class="panel-body">
+                                            <?php echo $this->postForm->getElement('price'); ?>
+                                            <?php echo $this->postForm->getElement('old_price'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>Advanced settings</strong></div>
+                                        <div class="panel-body">
+                                            <?php echo $this->postForm->getElement('has_slide'); ?>
+                                            <?php echo $this->postForm->getElement('has_left_sidebar'); ?>
+                                            <?php echo $this->postForm->getElement('has_right_sidebar'); ?>
+                                            <?php echo $this->postForm->getElement('has_top_sidebar'); ?>
+                                            <?php echo $this->postForm->getElement('has_breadcrumb'); ?>
+                                            <?php echo $this->postForm->getElement('has_title'); ?>
+                                            <?php echo $this->postForm->getElement('has_created_date'); ?>
+                                            <?php echo $this->postForm->getElement('has_description'); ?>
+                                            <?php echo $this->postForm->getElement('has_content'); ?>
+                                            <?php echo $this->postForm->getElement('has_media'); ?>
+                                            <?php echo $this->postForm->getElement('has_creator'); ?>
+                                            <?php echo $this->postForm->getElement('has_similar_post'); ?>
+                                            <?php echo $this->postForm->getElement('has_most_of_post'); ?>
+                                            <?php echo $this->postForm->getElement('has_comment'); ?>
+                                            <?php echo $this->postForm->getElement('has_like_share'); ?>
+                                            <?php echo $this->postForm->getElement('has_advertisment'); ?>
+                                            <?php echo $this->postForm->getElement('is_front_page'); ?>
+                                            <?php echo $this->postForm->getElement('is_filter_page'); ?>
+                                            <?php echo $this->postForm->getElement('redirect_url'); ?>
+                                            <?php echo $this->postForm->getElement('category_to_list'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading"><strong>English Content</strong></div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-9">                            
+                                                    <?php echo $this->postForm->getElement('en_title'); ?>
+                                                    <?php echo $this->postForm->getElement('en_description'); ?>
+                                                    <?php echo $this->postForm->getElement('en_content'); ?>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <?php echo $this->postForm->getElement('en_seo_url'); ?>
+                                                    <?php echo $this->postForm->getElement('en_seo_title'); ?>
+                                                    <?php echo $this->postForm->getElement('en_seo_keyword'); ?>
+                                                    <?php echo $this->postForm->getElement('en_seo_description'); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

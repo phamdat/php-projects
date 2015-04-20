@@ -1,0 +1,41 @@
+<?php if ($this->paramPosts->getTotalItemCount() > $this->paramPageSize): ?>
+    <style>
+        .ajpa .pagination > li > a, .ajpa .pagination > li > span {
+            background-color: transparent;
+            border-color: transparent;
+            padding: 0px 0px 0px 5px;
+        }
+    </style>
+    <script>
+        $(document).ready(function(){
+            $('.pagination-container a[page]').click(function(){
+                $(this).parents('.pagination-container').find('.page-wrapper').hide();  
+                $(this).parents('.pagination-container').find('.page-wrapper[page=' + $(this).attr('page') + ']').show();
+            });
+            $('.pagination-container a[page=1]').click();
+        });
+    </script>
+    <nav class="ajpa">
+        <ul class="pagination pull-right">
+            <li class="">
+                <a href="javascript:void(0)" page="1">
+                    <span aria-hidden="true">Trang đầu,</span>
+                </a>
+            </li>
+
+            <?php foreach($this->paramPosts as $index => $post): ?>
+                <?php if ($index % $this->paramPageSize == 0): ?>
+                    <li>
+                        <a href="javascript:void(0)" page="<?php echo ($index / $this->paramPageSize) + 1; ?>">[<?php echo $index / $this->paramPageSize + 1; ?>],</a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
+
+            <li class="">
+                <a href="javascript:void(0)" page="<?php echo intval($this->paramPosts->getTotalItemCount() / $this->paramPageSize) + 1?>">
+                    <span aria-hidden="true">Trang cuối</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<?php endif; ?>

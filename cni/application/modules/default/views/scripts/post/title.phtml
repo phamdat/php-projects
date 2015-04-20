@@ -1,0 +1,52 @@
+<style>
+    .post-title-container {
+        position: relative;
+    }
+    
+    .post-title:not(.fg-title-2) {
+        font-size: 24px;
+        color: #ffffff;
+        position: absolute;
+        top: -130px;
+        text-transform: uppercase;
+        background-color: #3c663d;
+        padding: 5px 45px;
+    }
+    
+    .post-title.fg-title-2 {
+        margin-top: 20px;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .post-title:not(.fg-title-2) {
+            top: -110px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {
+        .post-title:not(.fg-title-2) {
+            top: -100px;
+            font-size: 20px;
+        }
+    }
+    
+    @media (max-width: 767px) {
+
+    }
+</style>
+<?php if($this->post['has_title']): ?>
+    
+    <?php if($this->post['has_media']): ?>
+        <div class="post-title-container">
+            <div class="post-title hidden-xs">
+                <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
+            </div>
+        </div>
+    <?php else:?>
+        <div class="post-title fg-title-2">
+            <div class="fg-title-text">
+                <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
+            </div>
+        </div>
+    <?php endif;?>
+<?php endif;?>

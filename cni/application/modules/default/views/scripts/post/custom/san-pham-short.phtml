@@ -1,0 +1,108 @@
+<style>
+    .sp-container {
+        margin-top: 20px;
+    }
+    
+    .sp-container .sp-content {
+        width: 840px;
+        float: left;
+        margin-left: 15px;
+    }
+    
+    .sp-container .sp-content .sp-content-1 .sp-thumbnail-1 {
+        border-style: solid;
+        border-width: 10px;
+        border-color: #ffffff;
+        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
+    }
+    
+    .sp-container .sp-content .sp-content-1 {
+        float: left;
+        width: 395px;
+        margin-left: 25px;
+        margin-bottom: 20px;
+    }
+    
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .sp-container .sp-content {
+            width: 690px;
+        }
+        .sp-container .sp-content .sp-content-1 {
+            width: 320px;
+        }
+    }
+    
+    @media (min-width: 768px) and (max-width: 991px) {        
+        .sp-container .sp-content {
+            width: 535px;
+        }
+        .sp-container .sp-content .sp-content-1 {
+            width: 242px;
+        }
+    }
+    
+    @media (max-width: 767px) {        
+        .sp-container .sp-content {
+            width: auto;
+            margin-left: 0px;
+        }
+        .sp-container .sp-content .sp-content-1 {
+            width: 50%;
+            margin-left: 0px;
+            padding: 0px 10px;
+        }
+    }
+</style>
+<div class="sp-container">
+    <div class="fg-title-1">
+        <div class="fg-title-text">
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+        </div>
+        <div class="fg-title-line">
+            <div></div>
+        </div>
+    </div>
+    <div class="fg-sidebar-container">
+        <div class="fg-sidebar">
+            <div class="fg-sidebar-title">
+                <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+            </div>
+            <div class="fg-sidebar-title-re">
+            </div>
+            <div class="fg-sidebar-list">
+                <?php foreach($this->paramPosts as $index => $post):?>
+                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                    <div class="fg-sidebar-list-item">
+                        <?php if($index==8): ?> Sản phẩm khác
+                        <?php elseif($index < 8): ?>
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        <?php endif;?>
+                    </div>
+                </a>
+                <?php endforeach;?>
+            </div>
+        </div>
+    </div>
+    <div class="sp-content pagination-container">
+        <?php $this->paramPageSize = 6; ?>
+        <?php foreach($this->paramPosts as $index => $post):?>            
+            <?php if($index % $this->paramPageSize == 0):?>
+                <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" <?php echo intval($index/$this->paramPageSize) == 0? '':'style="display:none"' ?> >
+            <?php endif;?>
+                <div class="sp-content-1">
+                    <div class="sp-thumbnail-1">
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </a>
+                    </div>
+                </div>
+            <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                </div>
+            <?php endif;?>
+        <?php endforeach;?>
+        <?php if(!$this->post['is_front_page']):?>
+            <?php echo $this->render('post/pagination.phtml');?>
+        <?php endif;?>
+    </div>
+    <div class="clearfix"></div>
+</div>

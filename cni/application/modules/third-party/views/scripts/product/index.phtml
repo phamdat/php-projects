@@ -1,0 +1,69 @@
+
+<div style="margin: 10px 0px;">
+	<a class="button" href="<?php echo $this->url(array ('module'=> 'third-party', 'controller'=> 'product', 'action'=> 'detail')) ?>" style="float: right;"><span>Thêm sản phẩm</span></a>
+	<div class="clearfix"></div>
+</div>
+
+<!--THIS IS A WIDE PORTLET-->
+<div class="portlet">
+	<div class="portlet-content nopadding">
+		<form action="" method="post">
+			<table width="100%" cellpadding="0" cellspacing="0" id="box-table-a" summary="Employee Pay Sheet">
+				<thead>
+					<tr>
+						<th width="136" scope="col">Tên sản phẩm</th>
+						<th width="136" scope="col">Loại sản phẩm</th>
+						<th width="102" scope="col">Hình thu nhỏ</th>
+						<th width="109" scope="col">Nhà sản xuất</th>
+						<th width="129" scope="col">Giá cũ</th>
+						<th width="171" scope="col">Giá mới</th>
+						<th width="90" scope="col">Hành động</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php if (count($this->paginator) > 0):?>
+						<?php foreach($this->paginator as $value):?>
+						<tr>
+							<td>
+								<?php echo $value['name'];?>
+							</td>
+							<td>
+								<?php echo $value['category_name'];?>
+							</td>
+							<td>
+								<img src="<?php echo $value['thumbnail'];?>" width="100px" height="80px"/>
+							</td>
+							<td>
+								<?php echo $value['producer'];?>
+							</td>
+							<td>
+								<?php echo $value['old_price'];?>
+							</td>
+							<td>
+								<?php echo $value['new_price'];?>
+							</td>
+							<td width="90">
+								<a href="<?php echo $this->url(array ('module'=> 'third-party', 'controller'=> 'product', 'action'=> 'detail', 'id' => $value['id'] )) ?>" class="edit_icon" title="Sửa"></a>
+								<a href="<?php echo $this->url(array ('module'=> 'third-party', 'controller'=> 'product', 'action'=> 'delete', 'id' => $value['id'] )) ?>" class="delete_icon" title="Xóa"></a>
+							</td>
+						</tr>
+						<?php endforeach;?>
+						<tr class="footer">
+							<td colspan="7" align="right">
+								<?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination-control.phtml');?>
+							</td>
+						</tr>
+					<?php else:?>
+						<tr>
+							<td colspan="7">
+								Chưa có sản phẩm
+							</td>
+						</tr>
+					<?php endif;?>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</div>
+<!--  END #PORTLETS -->  
+<div class="clearfix"></div>
