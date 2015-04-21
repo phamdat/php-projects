@@ -4,22 +4,12 @@
 <head>
     <?php echo $this->headMeta() ?>
     <?php echo $this->layout()->configurations[META_HEADER_CONF]['value'] ?>
-    <?php echo $this->headTitle() ?>
+    <?php echo $this->headTitle() ?>    
     <?php echo $this->headLink()?>
     <?php echo $this->headScript()?>
 </head>
 
-<body class="main-page <?php echo $this->layout()->mainClassesOfPage ?>">
-    <!--<div class="container" style="position: relative;">
-        <div style="position: absolute; right: 0px; top: 0px;">
-            <div style="background: #649e5a; color: #ffffff; font-size: 24px; padding: 0px 40px; margin-bottom: 5px;">
-                Call us now
-            </div>
-            <div style="background: #649e5a; color: #ffffff; font-size: 24px; padding: 0px 40px; margin-bottom: 5px;">
-                0903.080.686
-            </div>
-        </div>
-    </div>-->
+<body class="main-page <?php echo $this->layout()->mainClassesOfPage ?>">    
     <?php echo $this->layout()->configurations[PLUGIN_FOR_ALL_PAGE_CONF]['value'] ?>
     <h1 class="hidden">
         <?php echo $this->layout()->seoh1 ?>
@@ -28,7 +18,33 @@
         <?php echo $this->layout()->seoh2 ?>
     </h2>
     <header>
-        <div class="container">
+        <div class="top-header">
+            <div class="container">
+                <div class="search">
+                    <div class="icon"><img src="/public/images/search.png"></div>
+                    <input type="text">
+                </div>
+                <div class="language">
+                    <a class="en"><img src="/public/images/en.png"></a>
+                    <a class="vi"><img src="/public/images/vi.png"></a>
+                </div>
+                <div class="item">
+                    <div class="icon"><img src="/public/images/user.png"></div>
+                    <a href="#" class="text">Thành Viên Pro-JV</a>
+                </div>
+                <div class="item">
+                    <div class="icon"><img src="/public/images/user.png"></div>
+                    <a href="#" class="text">Đăng Nhập</a>
+                </div>
+                <div class="item">
+                    <div class="icon"><img src="/public/images/edit.png"></div>
+                    <a href="#" class="text">Tham Gia CNI</a>
+                </div>
+                
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="main-header container">
             <div class="logo-container">
                 <img src="<?php echo $this->layout()->configurations[LOGO_IMG_CONF]['value'] ?>" class="img-responsive">                    
             </div>

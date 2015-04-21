@@ -119,6 +119,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$view->headScript()->appendFile('/public/js/jquery.js');
 		$view->headScript()->appendFile('/public/js/bootstrap.js');		        
 
+        
+        
         if(preg_match('/admin/', $_SERVER['REQUEST_URI']))
         {
             $view->headLink()->appendStylesheet('/public/css/bootstrap.datatables.css');
@@ -131,11 +133,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headLink()->appendStylesheet('/public/css/metis-menu.css');
             $view->headLink()->appendStylesheet('/public/css/metis-style-switcher.css');                        
             
+            $view->headScript()->appendFile('/public/js/less.js');
             
             $view->headScript()->appendFile('/public/js/ckeditor/ckeditor.js');
             $view->headScript()->appendFile('/public/js/ckeditor/adapters/jquery.js');
-            
-            $view->headScript()->appendFile('/public/js/less.js');
+                        
             $view->headScript()->appendFile('/public/js/modernizr.js');
             
             $view->headScript()->appendFile('/public/js/jquery.ui.js');
@@ -160,6 +162,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
         else
         {
+            $parser = new lessc();
+            $less_code = file_get_contents('public/less/default.less');
+            $processed_css = $parser->parse($less_code);
+            file_put_contents('public/css/default.css', $processed_css);
+            
             $view->headLink()->appendStylesheet('/public/css/default.css');
             
             $view->headScript()->appendFile('/public/js/default.js');
