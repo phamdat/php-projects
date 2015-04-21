@@ -113,13 +113,27 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
 		$view->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
 		
+        /*******************************************************************
+         *   parse less to css
+         *******************************************************************/
+        $lessfiles = array('default');
+        
+        foreach($lessfiles as $item)
+        {
+            $parser = new lessc();
+            $less_code = file_get_contents('public/less/' . $item . '.less');
+            $processed_css = $parser->parse($less_code);
+            file_put_contents('public/css/' . $item . '.css', $processed_css);
+        }
+        
+        /*******************************************************************
+         *   import css and js
+         *******************************************************************/
 		$view->headLink()->appendStylesheet('/public/css/bootstrap.css');
         $view->headLink()->appendStylesheet('/public/css/font-awesome.css');
         		
 		$view->headScript()->appendFile('/public/js/jquery.js');
 		$view->headScript()->appendFile('/public/js/bootstrap.js');		        
-
-        
         
         if(preg_match('/admin/', $_SERVER['REQUEST_URI']))
         {
@@ -161,12 +175,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile('/public/js/admin.js');
         }
         else
-        {
-            $parser = new lessc();
-            $less_code = file_get_contents('public/less/default.less');
-            $processed_css = $parser->parse($less_code);
-            file_put_contents('public/css/default.css', $processed_css);
-            
+        {            
             $view->headLink()->appendStylesheet('/public/css/default.css');
             
             $view->headScript()->appendFile('/public/js/default.js');
