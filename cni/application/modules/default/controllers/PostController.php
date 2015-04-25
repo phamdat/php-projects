@@ -122,7 +122,6 @@ class PostController extends Zend_Controller_Action
                             ->columns('*', 'p')
                             ->where('p.category like ?', '%,'.$ca.',%')
                             ->where('p.category not like ?', '%,MAIN_PAGE,%')
-                            ->where('p.is_filter_page = ?', false)
                             ->order('p.order_id DESC')
                     );
                     
@@ -132,7 +131,6 @@ class PostController extends Zend_Controller_Action
                             ->columns('*', 'p')
                             ->where('p.category like ?', '%,'.$ca.',%')
                             ->where('p.category not like ?', '%,MAIN_PAGE,%')
-                            ->where('p.is_filter_page = ?', false)
                             ->reset( Zend_Db_Select::COLUMNS )
                             ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
                     );
@@ -147,7 +145,7 @@ class PostController extends Zend_Controller_Action
                 }
             }
         }
-        
+
         //-------------------------------------------------------------------------------
         Zend_Layout::getMvcInstance()->assign('hasSlide', $post['has_slide']);
         Zend_Layout::getMvcInstance()->assign('hasLeftSidebar', $post['has_left_sidebar']);

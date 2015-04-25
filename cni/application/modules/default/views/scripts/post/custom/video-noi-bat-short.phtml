@@ -1,0 +1,97 @@
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .videonoibat-container {
+            margin-top: 20px;
+            width: 750px;
+            float: left;
+        }
+
+        .videonoibat-container .title {
+            color: #ffffff;
+            font-size: 28px;
+            text-transform: uppercase;
+            background-color: #1c87c5;
+            padding: 10px 15px;
+        }
+
+        .videonoibat-container .content .item {
+            position: relative;
+        }
+
+        .videonoibat-container .content .item .thumbnail {
+            overflow: hidden;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+            border: none;
+        }
+
+        .videonoibat-container .content .item .thumbnail img {
+            width: 100%;
+            height: 430px;
+        }
+
+        .videonoibat-container .content .item .title {
+            color: #fff;
+            padding: 5px 20px;
+            position: absolute;
+            bottom: 20px;
+            width: 640px;
+            font-size: 18px;
+            background-color: #1c87c5;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .videonoibat-container {
+                width: 620px;
+            }
+            .videonoibat-container .content .item {
+                width: 180px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .videonoibat-container {
+                width: 500px;
+            }
+            .videonoibat-container .content .item {
+                margin-right: 20px;
+                width: 153px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .videonoibat-container {
+                width: 100%;
+            }
+            .videonoibat-container .content .item {
+                margin-right: 0px;
+                width: 33.33%;
+                padding: 10px;
+            }
+        }
+    </style>
+    <div class="videonoibat-container">
+        <div class="title">
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+        </div>
+        <div class="content">
+            <?php foreach($this->paramPosts as $index => $post):?>
+                <div class="item">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="thumbnail">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="title">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        </div>
+                    </a>
+            </div>
+            <?php endforeach;?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<?php endif;?>

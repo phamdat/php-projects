@@ -1,0 +1,102 @@
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .spbanchay-container {
+            background-color: #e4e4e4;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        .spbanchay-container .title {
+            color: #585a5c;
+            font-size: 34px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .spbanchay-container .content .item {
+            float: left;
+            margin-right: 30px;
+            margin-top: 10px;
+            width: 360px;
+            position: relative;
+        }
+
+        .spbanchay-container .content .item .thumbnail {
+            border-style: solid;
+            border-width: 2px;
+            border-color: #ffffff;
+            overflow: hidden;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+        }
+
+        .spbanchay-container .content .item .title {
+            color: #fff;
+            padding: 5px 20px;
+            position: absolute;
+            bottom: 2px;
+            left: 2px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #f69b0c;
+        }
+
+        .spbanchay-container .content .item:nth-child(3n+3) {
+            margin-right: 0px;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .spbanchay-container {
+                width: 620px;
+            }
+            .spbanchay-container .content .item {
+                width: 180px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .spbanchay-container {
+                width: 500px;
+            }
+            .spbanchay-container .content .item {
+                margin-right: 20px;
+                width: 153px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .spbanchay-container {
+                width: 100%;
+            }
+            .spbanchay-container .content .item {
+                margin-right: 0px;
+                width: 33.33%;
+                padding: 10px;
+            }
+        }
+    </style>
+    <div class="spbanchay-container">
+        <div class="title">
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+        </div>
+        <div class="content">
+            <?php foreach($this->paramPosts as $index => $post):?>
+                <div class="item">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="thumbnail">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="title">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        </div>
+                    </a>
+                </div>
+            <?php endforeach;?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<?php endif;?>

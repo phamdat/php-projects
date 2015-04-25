@@ -1,3 +1,5 @@
+<?php if($this->post['has_breadcrumb']): ?>
+
 <style>
     .breadcrumb-post-super-container {
         position: relative;
@@ -30,9 +32,7 @@
         vertical-align: middle;
     }
     
-    @media (min-width: 992px) and (max-width: 1199px) {
-
-    }
+    @media (min-width: 992px) and (max-width: 1199px) {}
     
     @media (min-width: 768px) and (max-width: 991px) {
         .breadcrumb-post-container {
@@ -58,18 +58,19 @@
         }
     }
 </style>
-<?php if($this->post['has_breadcrumb']): ?>    
-    <div class="breadcrumb-post-super-container">
-        <div class="breadcrumb-post-container">
-            <div class="breadcrumb-post-wrapper">
-                <div class="breadcrumb-post">
-                    <?php if(count($this->breadcrumb) > 1):?>
-                        <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 2], 'title'); ?>
-                    <?php else:?>
-                        <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 1], 'title'); ?>
-                    <?php endif;?>
-                </div>
+
+<div class="breadcrumb-post-super-container">
+    <div class="breadcrumb-post-container">
+        <div class="breadcrumb-post-wrapper">
+            <div class="breadcrumb-post">
+                <?php if(count($this->breadcrumb) > 1):?>
+                <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 2], 'title'); ?>
+                <?php else:?>
+                <?php echo Utils_StringUtils::getTextFromPost($this->breadcrumb[count($this->breadcrumb) - 1], 'title'); ?>
+                <?php endif;?>
             </div>
         </div>
     </div>
+</div>
+
 <?php endif;?>

@@ -1,101 +1,170 @@
-<style>
-    .tintuc-container {
-        float: left;
-        width: 390px;
-    }    
-    
-    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
-        border-style: solid;
-        border-width: 5px;
-        border-color: #ffffff;
-        float: left;
-        width: 100px;
-        margin-bottom: 20px;
-        margin-right: 20px;
-        -webkit-box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.3);
-    }
-    
-    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
-        color: #e39444;
-        font-size: 20px;
-    }
-    
-    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
-        font-size: 16px;
-        color: #51524c;
-    }
-    
-    .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-more-1 {
-        text-align: right;
-        color: #51524c;
-    }
-    
-    @media (min-width: 992px) and (max-width: 1199px) {
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
         .tintuc-container {
-            width: 310px;
+            float: left;
+            width: 870px;
+            margin-top: 20px;
+        }    
+        
+        .tintuc-container .item-first {
+            position: relative;
+            float: left;
+            width: 510px;
         }
-    }
-    
-    @media (min-width: 768px) and (max-width: 991px) {
-        .tintuc-container {
-            width: 210px;
+        
+        .tintuc-container .item-first .thumbnail {
+            border: none;
+            position: relative;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+            margin-bottom: 0px;
+            width: 510px;
+            height: 375px;
         }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
-            font-size: 16px;
-        }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
-            width: 70px;
-        }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
-            font-size: 14px;
-        }
-    }
-    
-    @media (max-width: 767px) {
-        .tintuc-container {
+        
+        .tintuc-container .item-first .thumbnail img {
             width: 100%;
+            height: 100%;
         }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-date-1 {
+        
+        .tintuc-container .item-first .title-wrapper {
+            position: absolute;
+            left: 10px;
+            bottom: 0px;
+            background-color: #fba102;
+            padding: 10px;
+            color: #ffffff;
+            width: 330px;
+        }
+        
+        .tintuc-container .item-first .title {
+            color: #ffffff;
+            font-weight: bold;
             font-size: 16px;
+            text-transform: uppercase;
         }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-thumbnail-1 {
-            width: 30%;
+        
+        .tintuc-container .item-first .more {
+            float: right;
         }
-        .tintuc-container .tintuc-content .tintuc-content-1 .tintuc-title-1 {
+        
+        .tintuc-container .item {
+            float: right;
+            width: 340px;
+            margin-bottom: 15px;
+        }
+        
+        .tintuc-container .item .thumbnail {
+            border: none;
+            float: left;
+            width: 160px;
+            height: 115px;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+            margin-right: 10px;
+        }
+        
+        .tintuc-container .item .thumbnail img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tintuc-container .item .date {
+            color: #fba102;
             font-size: 14px;
         }
-    }
-</style>
-<div class="tintuc-container">
-    <div class="fg-title-2">
-        <div class="fg-title-text">
-            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
-        </div>
-    </div>
-    <div class="tintuc-content">
+
+        .tintuc-container .item .title {
+            font-size: 14px;
+            color: #153242;
+        }
+
+        .tintuc-container .item .more {
+            text-align: right;
+            color: #51524c;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .tintuc-container {
+                width: 310px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .tintuc-container {
+                width: 210px;
+            }
+            .tintuc-container .item .date {
+                font-size: 16px;
+            }
+            .tintuc-container .item .thumbnail {
+                width: 70px;
+            }
+            .tintuc-container .item .title {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tintuc-container {
+                width: 100%;
+            }
+            .tintuc-container .item .date {
+                font-size: 16px;
+            }
+            .tintuc-container .item .thumbnail {
+                width: 30%;
+            }
+            .tintuc-container .item .title {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <div class="tintuc-container">
         <?php foreach($this->paramPosts as $index => $post):?>
-        <div class="tintuc-content-1">
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                <div class="tintuc-thumbnail-1">
-                    <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+            <?php if($index == 0):?>
+                <div class="item-first">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="thumbnail">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>
+                    <div class="title-wrapper">
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                            <div class="title">
+                                <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            </div>
+                        </a>
+                        <div class="description">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'description');?>
+                        </div>
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                            <div class="more">
+                                <img src="/public/images/more.png">
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </a>
-            <div class="tintuc-date-1">
-                <?php echo $post[ 'created_date'];?>
-            </div>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                <div class="tintuc-title-1">
-                    <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+            <?php else:?>
+                <div class="item">
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="thumbnail">
+                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                        </div>
+                    </a>                    
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="title">
+                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                        </div>
+                    </a>
+                    <div class="date">
+                        <?php echo $post[ 'created_date'];?>
+                    </div>
                 </div>
-            </a>
-            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                <div class="tintuc-more-1">
-                    xem thêm &gt;&gt;
-                </div>
-            </a>
-        </div>
-        <div class="clearfix"></div>
+            <?php endif;?>
         <?php endforeach;?>
     </div>
-    <div class="clearfix"></div>
-</div>
+<?php endif;?>

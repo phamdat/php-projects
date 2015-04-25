@@ -31,8 +31,16 @@
                         <?php echo $this->render('post/custom/san-pham-short.phtml');?>
                     <?php endif;?>
 
-                    <?php if($value['category']['name'] == 'SAN_PHAM_MOI'): ?>
-                        <?php echo $this->render('post/custom/san-pham-moi-short.phtml');?>
+                    <?php if($value['category']['name'] == 'SAN_PHAM_BAN_CHAY'): ?>
+                        <?php echo $this->render('post/custom/san-pham-ban-chay-short.phtml');?>
+                    <?php endif;?>
+            
+                    <?php if($value['category']['name'] == 'VIDEO_NOI_BAT'): ?>
+                        <?php echo $this->render('post/custom/video-noi-bat-short.phtml');?>
+                    <?php endif;?>
+            
+                    <?php if($value['category']['name'] == 'SU_KIEN_NOI_BAT'): ?>
+                        <?php echo $this->render('post/custom/su-kien-noi-bat-short.phtml');?>
                     <?php endif;?>
 
                     <?php if($value['category']['name'] == 'TIN_TUC'): ?>

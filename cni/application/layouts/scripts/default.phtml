@@ -48,15 +48,7 @@
             <div class="logo-container">
                 <img src="<?php echo $this->layout()->configurations[LOGO_IMG_CONF]['value'] ?>" class="img-responsive">                    
             </div>
-            <div class="banner-container">
-                <img src="<?php echo $this->layout()->configurations[LOGO_IMG_2_CONF]['value'] ?>" class="img-responsive">                    
-            </div>
-            <div class="language-container hidden-xs">
-                <a class="en">English</a>
-                <a class="vi">Vietnam</a>
-            </div>
-            <div class="clearfix hidden-xs"></div>
-            <div class="row">
+            <div class="menu-container">
                 <div class="navbar navbar-default no-border no-background">                        
                     <div class="navbar-header">
                         <a type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -126,26 +118,6 @@
         </section>
     <?php endif;?>
     
-    <?php if($this->layout()->hasTopSidebar && isset($this->layout()->sidebar[TOP_SIDEBAR_CONF])):?>
-    <section id="top-sidebar">
-        <div class="container">
-            <div class="row">
-                <?php foreach($this->layout()->sidebar[TOP_SIDEBAR_CONF] as $i => $sidebar):?>
-                    <?php if($i % 3 == 2):?>
-                        <div class="col-sm-6 top-sidebar">                        
-                            <?php echo $sidebar['post']['content'] ?>                            
-                        </div>                    
-                    <?php else:?>
-                        <div class="col-sm-3 top-sidebar">
-                            <?php echo $sidebar['post']['content'] ?>
-                        </div>
-                    <?php endif;?>
-                <?php endforeach;?>
-            </div>
-        </div>
-    </section>
-    <?php endif;?>
-    
     <section id="main-content">
         <div class="container">
             <div class="row">
@@ -194,18 +166,34 @@
         </div>
     </section>
     <footer>
-        <!--<div style="background-image: url('/public/images/bot-bg.png');background-size: auto 100%;color: #3c663d;">
+        <!--<div style="background-color: #373c43;background-size: auto 100%;color: #ffffff;">
             <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
                 <div class="row">
                     <div class="col-sm-6 no-padding-left" style="font-size: 18px;">
-                        <strong style="font-size: 20px;">CÔNG TY CỔ PHẦN TRÀ RỒNG VÀNG</strong><br>
-                        280A Trần Phú - tp Bảo Lộc - Lâm Đồng<br>
-                        Điện thoại: 84.63.3863746 - 3740741<br>
-                        Fax: 84.63.3862237<br>
-                        Email: trarongvang@vnn.vn<br>
+                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
+                            <a href="#"><img src="/public/images/question.png" style="width: 70px;"></a> 
+                            <div>
+                                CÂU HỎI THƯỜNG GẶP
+                            </div>
+                        </div>
+                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
+                            <a href="#"><img src="/public/images/blog.png" style="width: 70px;"></a>
+                            <div>
+                                KỶ NGUYÊN ENZYME
+                            </div>
+                        </div>
+                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
+                            <a href="#"><img src="/public/images/link.png" style="width: 70px;"></a>
+                            <div>
+                                WEBSITE NPP
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-6 no-padding-right" style="font-size: 20px;font-weight: bold;margin-top: 30px;">
-                        HỖ TRỢ TRỰC TUYẾN <a href="#"><img src="/public/images/yahoo.png"></a> <a href="#"><img src="/public/images/skype.png"></a>
+                    <div class="col-sm-6 no-padding-right" style="font-size: 16px;text-align: right;">
+                        <strong style="font-size: 18px;">BẢN QUYỀN THUỘC VỀ CNI VIỆT NAM</strong><br>
+                        39 Trần Đình Xu, Phường Cầu Kho, Quận 1, TP.HCM<br>
+                        Điện thoại: (+848) 3920 4535 | Fax: (+848) 3920 4536<br>
+                        Email: infovietnam@cni-global.com<br>                        
                     </div>
                 </div>
             </div>
@@ -213,13 +201,7 @@
         <div style="background-color: #000106;color: #fff;">
             <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
                 <div class="row">
-                    <div class="col-sm-6 no-padding-left">
-                        <a href="#" style="margin-right: 25px;"><img src="/public/images/home-icon.png"></a>
-                        <a href="#" style="margin-right: 25px;"><img src="/public/images/face-icon.png"></a>
-                        <a href="#" style="margin-right: 25px;"><img src="/public/images/google-icon.png"></a>
-                        <a href="#"><img src="/public/images/youtube-icon.png"></a>
-                    </div>
-                    <div class="col-sm-6 no-padding-right text-right" style="margin-top: 10px;">
+                    <div class="text-center">
                         Copyright by Bappro 2015
                     </div>                    
                 </div>

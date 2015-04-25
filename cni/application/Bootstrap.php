@@ -72,8 +72,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         defined('LEFT_SIDEBAR_CONF') || define('LEFT_SIDEBAR_CONF', 'LEFT_' . SIDEBAR_CONF);
         
-        defined('TOP_SIDEBAR_CONF') || define('TOP_SIDEBAR_CONF', 'TOP_' . SIDEBAR_CONF);
-        
         defined('FOOTER_INFO_CONF') || define('FOOTER_INFO_CONF', 'FOOTER_INFO_CONF');
         
         defined('SOCIAL_LINK_CONF') || define('SOCIAL_LINK_CONF', 'SOCIAL_LINK_CONF');
@@ -181,6 +179,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile('/public/js/default.js');
         }
         
+        /*******************************************************************
+         *   seo info
+         *******************************************************************/
         $view->headTitle()->setSeparator(' - ');
 		$view->headTitle(Zend_Registry::get('configurations')[TITLE_CONF]['value']);
         
