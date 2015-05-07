@@ -1,0 +1,139 @@
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .sp-container {
+            margin-top: 20px;
+        }
+        
+        .sp-container .ptitle {
+            color: #1c87c5;
+            font-size: 34px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .sp-container .content .item {
+            float: left;
+            margin-right: 30px;
+            margin-top: 10px;
+            width: 370px;
+            position: relative;
+        }
+
+        .sp-container .content .item .thumbnail {
+            border-width: 0px;
+            overflow: hidden;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+        }
+        .sp-container .content .item .thumbnail img {
+            height: 280px;
+        }
+
+        .sp-container .content .item .title {
+            font-size: 20px;
+            color: #585a5c;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+        
+        .sp-container .content .item .description {
+            font-size: 14px;
+            color: #585a5c;
+        }
+        
+        .sp-container .content .item .more {
+            background-color: #1c87c5;
+            float: right;
+            margin-top: 15px;
+            padding: 5px 20px;
+            color: #ffffff;
+        }
+
+        .sp-container .content .item:nth-child(3n+3) {
+            margin-right: 0px;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .sp-container .content .item {
+                width: 303px;
+            }
+            .sp-container .content .item .thumbnail img {
+                height: 240px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .sp-container .title {
+                font-size: 30px;
+            }
+            .sp-container .content .item {
+                width: 236px;
+                margin-right: 20px;
+            }
+            .sp-container .content .item .title {
+                font-size: 20px;
+            }
+            .sp-container .content .item .thumbnail img {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .sp-container {
+                width: 100%;
+                margin-top: 20px;
+            }
+            .sp-container .title {
+                font-size: 18px;
+            }
+            .sp-container .content .item {
+                margin-right: 5px;
+                width: 100%;
+            }
+            .sp-container .content .item .title {
+                font-size: 18px;
+            }
+            .sp-container .content .item .thumbnail img {
+                height: auto;
+            }
+        }
+    </style>
+    <?php echo $this->render('post/custom/san-pham-baner.phtml');?>
+    <div class="sp-container">
+        <div class="ptitle">
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
+        </div>
+        <div class="content pagination-container">
+            <?php $this->paramPageSize = 3; ?>
+            <?php foreach($this->paramPosts as $index => $post):?>
+                <?php if($index % $this->paramPageSize == 0):?>
+                    <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
+                <?php endif;?>
+                <div class="item">
+                    <div class="thumbnail">
+                        <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                    </div>
+                    <div class="title">
+                        <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                    </div>
+                    <div class="description">
+                        <?php echo Utils_StringUtils::getTextFromPost($post, 'description');?>
+                    </div>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="more">
+                            Chi tiết
+                        </div>
+                    </a>
+                </div>
+                <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                    </div>
+                <?php endif;?>
+            <?php endforeach;?>
+            <div class="clearfix"></div>
+            <?php echo $this->render('post/pagination.phtml');?>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+<?php endif;?>

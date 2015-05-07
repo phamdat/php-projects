@@ -20,23 +20,23 @@
     <header>
         <div class="top-header">
             <div class="container">
-                <div class="search">
+                <div class="search hidden-xs">
                     <div class="icon"><img src="/public/images/search.png"></div>
                     <input type="text">
                 </div>
-                <div class="language">
+                <div class="language hidden-xs">
                     <a class="en"><img src="/public/images/en.png"></a>
                     <a class="vi"><img src="/public/images/vi.png"></a>
                 </div>
-                <div class="item">
+                <div class="item hidden-xs">
                     <div class="icon"><img src="/public/images/user.png"></div>
                     <a href="#" class="text">Thành Viên Pro-JV</a>
                 </div>
-                <div class="item">
+                <div class="item hidden-xs">
                     <div class="icon"><img src="/public/images/user.png"></div>
                     <a href="#" class="text">Đăng Nhập</a>
                 </div>
-                <div class="item">
+                <div class="item hidden-xs">
                     <div class="icon"><img src="/public/images/edit.png"></div>
                     <a href="#" class="text">Tham Gia CNI</a>
                 </div>
@@ -83,6 +83,21 @@
                                     </li>
                                 <?php endif;?>                                
                             <?php endforeach;?>
+                            <li role="presentation" class="visible-xs">
+                                <a href="#">
+                                    Thành Viên Pro-JV
+                                </a>
+                            </li>
+                            <li role="presentation" class="visible-xs">
+                                <a href="#">
+                                    Đăng Nhập
+                                </a>
+                            </li>
+                            <li role="presentation" class="visible-xs">
+                                <a href="#">
+                                    Tham Gia CNI
+                                </a>
+                            </li>
                         </ul>                            
                     </div>
                 </div>
@@ -169,20 +184,20 @@
         <!--<div style="background-color: #373c43;background-size: auto 100%;color: #ffffff;">
             <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
                 <div class="row">
-                    <div class="col-sm-6 no-padding-left" style="font-size: 18px;">
+                    <div class="col-sm-6 no-padding-left hidden-xs" style="font-size: 18px;">
                         <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
                             <a href="#"><img src="/public/images/question.png" style="width: 70px;"></a> 
                             <div>
                                 CÂU HỎI THƯỜNG GẶP
                             </div>
                         </div>
-                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
+                        <div class="col-sm-4 no-padding-left text-center hidden-xs" style="font-size: 12px;">
                             <a href="#"><img src="/public/images/blog.png" style="width: 70px;"></a>
                             <div>
                                 KỶ NGUYÊN ENZYME
                             </div>
                         </div>
-                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
+                        <div class="col-sm-4 no-padding-left text-center hidden-xs" style="font-size: 12px;">
                             <a href="#"><img src="/public/images/link.png" style="width: 70px;"></a>
                             <div>
                                 WEBSITE NPP

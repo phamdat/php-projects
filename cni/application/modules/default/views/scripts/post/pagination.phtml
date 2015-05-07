@@ -1,14 +1,26 @@
 <?php if ($this->paramPosts->getTotalItemCount() > $this->paramPageSize): ?>
     <style>
         .ajpa .pagination > li > a, .ajpa .pagination > li > span {
-            background-color: transparent;
+            background-color: #1c87c5;
             border-color: transparent;
-            padding: 0px 0px 0px 5px;
+            padding: 0px;
+            margin-left: 10px;
+            color: #ffffff;
+            border-radius: 25px;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            text-align: center;
+        }
+        .ajpa .pagination > li > a.active, .ajpa .pagination > li > span.active {
+            background-color: #fe9d04;
         }
     </style>
     <script>
         $(document).ready(function(){
             $('.pagination-container a[page]').click(function(){
+                $('.pagination-container a[page]').removeClass('active');
+                $(this).addClass('active');
                 $(this).parents('.pagination-container').find('.page-wrapper').hide();  
                 $(this).parents('.pagination-container').find('.page-wrapper[page=' + $(this).attr('page') + ']').show();
             });
@@ -17,25 +29,13 @@
     </script>
     <nav class="ajpa">
         <ul class="pagination pull-right">
-            <li class="">
-                <a href="javascript:void(0)" page="1">
-                    <span aria-hidden="true">Trang đầu,</span>
-                </a>
-            </li>
-
             <?php foreach($this->paramPosts as $index => $post): ?>
                 <?php if ($index % $this->paramPageSize == 0): ?>
                     <li>
-                        <a href="javascript:void(0)" page="<?php echo ($index / $this->paramPageSize) + 1; ?>">[<?php echo $index / $this->paramPageSize + 1; ?>],</a>
+                        <a href="javascript:void(0)" page="<?php echo ($index / $this->paramPageSize) + 1; ?>"><?php echo $index / $this->paramPageSize + 1; ?></a>
                     </li>
                 <?php endif; ?>
             <?php endforeach; ?>
-
-            <li class="">
-                <a href="javascript:void(0)" page="<?php echo intval($this->paramPosts->getTotalItemCount() / $this->paramPageSize) + 1?>">
-                    <span aria-hidden="true">Trang cuối</span>
-                </a>
-            </li>
         </ul>
     </nav>
 <?php endif; ?>

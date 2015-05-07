@@ -1,35 +1,71 @@
 <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
     <style>
-        .form-group {      
-            margin-top: 20px;
-            border-top-style: solid;
-            border-top-width: 2px;
-            border-top-color: #878787;
-            padding-top: 15px;
+        .configuration-form .item-wrapper {      
+            border-style: solid;
+            border-width: 1px;
+            border-color: #d4d4d4;
+            padding: 15px;
+        }
+        .fa-times {
+            float: right;
+            color: #d9534f;
+            font-size: 20px;
         }
     </style>
 
-    <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
-        <?php echo $this->render('form-disable.phtml');?>
-    <?php endif;?>
-
-    <div class="configuration-form">
-        <script>
-            $(document).ready(function () {
-                CKEDITOR.replace('value_FOOTER_INFO_CONF')
-
-                CKEDITOR.replace('value_PLUGIN_FOR_ALL_PAGE_CONF')
-
-                CKEDITOR.replace('value_POST_ADVERTISMENT_CONF')            
-            });
-        </script>
-        <?php if($this->errorMessage != ""): ?>
-        <p class="error">
-            <?php echo $this->errorMessage; ?>
-        </p>
-        <?php endif; ?>
-         <?php echo $this->configurationForm; ?>
-    </div>
+    <form class="validation-form" enctype="multipart/form-data" action="<?php echo $this->configurationForm->getAction(); ?>" method="<?php echo $this->configurationForm->getMethod(); ?>">
+        <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
+            <?php echo $this->render('form-disable.phtml');?>
+        <?php endif;?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <a class="btn btn-primary btn-sm" href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'configuration', 'action'=> 'detail')) ?>">
+                                <i class="fa fa-plus"></i> Add Configuration
+                            </a>
+                            <div class="btn-group">                                
+                                <?php echo $this->configurationForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="configuration-form">
+                            <?php if($this->errorMessage != ""): ?>
+                                <p class="error">
+                                    <?php echo $this->errorMessage; ?>
+                                </p>
+                            <?php endif; ?>
+                            <?php foreach($this->layout()->configurations as $name => $conf): ?>
+                                <div class="item-wrapper">
+                                    <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'configuration', 'action'=> 'delete', 'id' => $conf['id'])) ?>" need-confirm>
+                                        <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
+                                    </a>
+                                    <?php echo $this->configurationForm->getElement('id_' . $name); ?>
+                                    <?php echo $this->configurationForm->getElement('value_' . $name); ?>
+                                    <?php if($conf['type'] == 'IMAGE'):?>
+                                        <?php echo $this->configurationForm->getElement('file_' . $name); ?>
+                                        <?php echo $this->configurationForm->getElement('image_' . $name); ?>
+                                    <?php elseif($conf['type'] == 'RICH_TEXT'):?>
+                                        <script>
+                                            $(document).ready(function () {
+                                                CKEDITOR.replace('value_<?php echo $name; ?>')         
+                                            });
+                                        </script>
+                                    <?php endif;?>
+                                </div>
+                            <?php endforeach;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 <?php else:?>
     <?php echo $this->render('permission-denied.phtml');?>
 <?php endif;?>

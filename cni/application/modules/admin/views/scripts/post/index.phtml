@@ -35,11 +35,14 @@
                                     Title
                                 </th>
                                 <th>
+                                    Category to líst
+                                </th>
+                                <th>
                                     Created date
                                 </th>
                                 <th>
                                     Creator
-                                </th>
+                                </th>                                
                                 <th>
                                     Action
                                 </th>
@@ -64,6 +67,14 @@
                                 </td>
                                 <td>
                                     <?php echo $value[ 'title'];?>
+                                </td>
+                                <td>
+                                    <?php foreach($this->layout()->allCategory as $ca):?>
+                                        <?php if(strpos($value[ 'category_to_list'], ','.$ca[ 'name']. ',')> -1):?> |
+                                            <?php echo $ca[ 'display_name'];?> |
+                                            <br>
+                                        <?php endif;?>
+                                    <?php endforeach;?>
                                 </td>
                                 <td>
                                     <?php echo $value[ 'created_date'];?>

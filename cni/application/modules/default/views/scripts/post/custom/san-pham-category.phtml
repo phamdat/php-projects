@@ -1,30 +1,26 @@
 <?php if($this->paramPosts->getTotalItemCount() > 0):?>
     <style>
-        .spbanchay-container {
-            background-color: #e4e4e4;
-            padding: 15px;
-            margin-top: 40px;
+        .spcategory-container {
+            margin-top: 20px;
         }
 
-        .spbanchay-container .title {
+        .spcategory-container .title {
             color: #585a5c;
             font-size: 34px;
             text-transform: uppercase;
             font-weight: bold;
         }
 
-        .spbanchay-container .content .item {
+        .spcategory-container .content .item {
             float: left;
             margin-right: 30px;
             margin-top: 10px;
-            width: 360px;
+            width: 370px;
             position: relative;
         }
 
-        .spbanchay-container .content .item .thumbnail {
-            border-style: solid;
-            border-width: 2px;
-            border-color: #ffffff;
+        .spcategory-container .content .item .thumbnail {
+            border-width: 0px;
             overflow: hidden;
             margin-bottom: 0px;
             padding: 0px;
@@ -32,61 +28,61 @@
             background-color: transparent;
         }
 
-        .spbanchay-container .content .item .title {
+        .spcategory-container .content .item .title {
             color: #fff;
-            padding: 5px 20px;
+            padding: 15px 20px;
             position: absolute;
-            bottom: 2px;
-            left: 2px;
+            bottom: 0px;
+            left: 0px;
             font-size: 24px;
             font-weight: bold;
             background-color: #f69b0c;
+            width: 100%;
+            text-align: center;
         }
 
-        .spbanchay-container .content .item:nth-child(3n+3) {
+        .spcategory-container .content .item:nth-child(3n+3) {
             margin-right: 0px;
         }
 
         @media (min-width: 992px) and (max-width: 1199px) {
-            .spbanchay-container .content .item {
-                width: 293px;
+            .spcategory-container .content .item {
+                width: 303px;
             }
         }
 
         @media (min-width: 768px) and (max-width: 991px) {
-            .spbanchay-container .title {
+            .spcategory-container .title {
                 font-size: 30px;
             }
-            .spbanchay-container .content .item {
-                width: 226px;
+            .spcategory-container .content .item {
+                width: 236px;
                 margin-right: 20px;
             }
-            .spbanchay-container .content .item .title {
+            .spcategory-container .content .item .title {
                 font-size: 20px;
             }
         }
 
         @media (max-width: 767px) {
-            .spbanchay-container {
+            .spcategory-container {
                 width: 100%;
                 margin-top: 20px;
             }
-            .spbanchay-container .title {
+            .spcategory-container .title {
                 font-size: 18px;
             }
-            .spbanchay-container .content .item {
+            .spcategory-container .content .item {
                 margin-right: 5px;
                 width: 100%;
             }
-            .spbanchay-container .content .item .title {
+            .spcategory-container .content .item .title {
                 font-size: 18px;
             }
         }
     </style>
-    <div class="spbanchay-container">
-        <div class="title">
-            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
-        </div>
+    <?php echo $this->render('post/custom/san-pham-baner.phtml');?>
+    <div class="spcategory-container">
         <div class="content">
             <?php foreach($this->paramPosts as $index => $post):?>
                 <div class="item">

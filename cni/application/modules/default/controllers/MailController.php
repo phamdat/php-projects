@@ -23,12 +23,13 @@ class MailController extends Zend_Controller_Action
                                     $this->_request->getParam('email'),
                                     $this->_request->getParam('phone'),
                                     $this->_request->getParam('address'),
-                                    $this->_request->getParam('comment'));
+                                    $this->_request->getParam('comment')
+                                    $this->_request->getParam('subject'));
         }
         exit();	
     }
 	
-	protected function sendContactMail($name, $email, $phone, $address, $comment){
+	protected function sendContactMail($name, $email, $phone, $address, $comment, $subject){
 	
 		if (file_exists(CONTACT_MAIL_TEMPLATE)) {
 				
@@ -39,6 +40,7 @@ class MailController extends Zend_Controller_Action
 			$content = str_replace("#phone#", $phone, $content);
 			$content = str_replace("#address#", $address, $content);
 			$content = str_replace("#comment#", $comment, $content);
+            $content = str_replace("#subject#", $subject, $content);
 			
 			$mail = new Zend_Mail('UTF-8');
 			$mail->setBodyText($content);

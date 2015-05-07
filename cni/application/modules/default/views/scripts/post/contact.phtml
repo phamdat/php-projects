@@ -5,10 +5,10 @@
     }
     
     .post-content {
-        float: right;
-        width: 570px;        
-        margin-top: 20px;
-        font-size: 18px;
+        float: left;
+        width: 440px;      
+        font-size: 18px;        
+        margin-right: 30px;
     }
     
     .post-map {
@@ -21,31 +21,29 @@
     }
     
     .contact-form {
-        float: right;
-        width: 570px;
+        float: left;
+        width: 700px;
         margin-top: 20px;
-        margin-left: 30px;
     }
     
     .contact-form input,
     .contact-form textarea {
-        background-color: #3c663d;
         color: #ffffff;
         width: 100%;
         margin-bottom: 10px;
     }
     
     .contact-form button {
-        background-color: #3c663d;
+        background-color: #1c87c5;
         color: #ffffff;
     }
     
     @media (min-width: 992px) and (max-width: 1199px) {
         .post-content {
-            width: 470px;
+            width: 370px;
         }
         .contact-form {
-            width: 470px;
+            width: 570px;
         }
     }
     
@@ -67,14 +65,8 @@
         }
     }
 </style>
+<?php echo $this->render('post/custom/contact-baner.phtml');?>
 <div class="post-container">
-
-    <?php if($this->post['has_like_share']): ?>
-    <div class="post-like-share">
-        <div class="fb-like" data-href="<?php echo $this->fullUrl; ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
-    </div>
-    <?php endif;?>
-
     <script>
         function sendContact(){
             if($('#name').val() != '' && $('#email').val() != '' && $('#comment').val() != ''){
@@ -92,28 +84,18 @@
             }
         }
     </script>
+    
+    <?php echo $this->post['content'] ?>
+    
     <div class="contact-form">
         <form id="contact-form">
             <input id="name" name="name" type="text" class="form-control" placeholder="Họ và tên">
             <input id="email" name="email" type="text" class="form-control" placeholder="Email">
+            <input id="subject" name="subject" type="text" class="form-control" placeholder="Tiêu đề">
             <textarea id="comment" name="comment" class="form-control" rows="5" placeholder="Nội dung"></textarea>
             <button type="button" class="btn btn-default pull-right" onclick="sendContact()">Gửi</button>
         </form>
     </div>
     
-    <?php if($this->post['has_content']): ?>
-        <?php echo $this->post['content'] ?>        
-    <?php endif;?>
-
-    <?php if($this->post['has_advertisment']): ?>
-    <div class="post-advertisment">
-        <?php echo $this->layout()->configurations[POST_ADVERTISMENT_CONF]['value'] ?>
-    </div>
-    <?php endif;?>
-
-    <?php if($this->post['has_comment']): ?>
-    <div class="comment">
-        <div class="fb-comments" data-href="<?php echo $this->fullUrl; ?>" data-width="100%" data-num-posts="10"></div>
-    </div>
-    <?php endif;?>
+    
 </div>

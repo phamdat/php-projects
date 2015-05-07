@@ -32,30 +32,22 @@ class Admin_ConfigurationController extends Zend_Controller_Action
         {
             if($configurationForm->isValid($this->_request->getPost()))
 			{
-                foreach(Zend_Registry::get('CONFIGURATION_IMG') as $value){
-                    $data = array(
-                        'name'              => $configurationForm->getValue('name_' . $value),
-                        'value'             => $this->uploadFile($value, $configurationForm->getValue('value_' . $value))
-                    );
-                    
-                    if($configurationForm->getValue('id_' . $value)){
-					    $n = $db->update('configuration', $data, array('id = ?' => $configurationForm->getValue('id_' . $value)));
-                    }else{
-                        $n = $db->insert('configuration', $data);
-                    }                  
-                }
-                
-                foreach(Zend_Registry::get('CONFIGURATION_TEXT') as $value){
-                    $data = array(
-                        'name'              => $configurationForm->getValue('name_' . $value),
-                        'value'             => $configurationForm->getValue('value_' . $value)
-                    );
-                    
-                    if($configurationForm->getValue('id_' . $value)){
-					    $n = $db->update('configuration', $data, array('id = ?' => $configurationForm->getValue('id_' . $value)));
-                    }else{
-                        $n = $db->insert('configuration', $data);
-                    }                  
+                foreach($configurations as $name => $conf)
+                {
+                    if($conf['type'] == 'IMAGE')
+                    {
+                        $data = array(
+                            'value'             => $this->uploadFile($name, $configurationForm->getValue('value_' . $name))
+                        );
+                        $n = $db->update('simple_configuration', $data, array('id = ?' => $configurationForm->getValue('id_' . $name)));
+                    }
+                    else if($conf['type'] == 'TEXT' || $conf['type'] == 'RICH_TEXT')
+                    {
+                        $data = array(
+                            'value'             => $configurationForm->getValue('value_' . $name)
+                        );
+                        $n = $db->update('simple_configuration', $data, array('id = ?' => $configurationForm->getValue('id_' . $name)));                        
+                    }
                 }
                 
                 $this->redirect('/admin/configuration');
@@ -65,13 +57,85 @@ class Admin_ConfigurationController extends Zend_Controller_Action
         $this->view->configurationForm = $configurationForm;
     }
     
-    protected function uploadFile($key, $oldName)
+    public function detailAction()
+    {		
+		$name = new Zend_Form_Element_Text('name');
+        $name->setLabel('Name')
+            ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
+            ->addValidator('NotEmpty', true)
+            ->addErrorMessage('Please input category name.');
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $displayName = new Zend_Form_Element_Text('display_name');
+        $displayName->setLabel('Display')            
+            ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
+            ->addValidator('NotEmpty', true)
+            ->addErrorMessage('Please input display name.');
+
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $type = new Zend_Form_Element_Select('type');
+        $type->setLabel('Type')
+				->setRequired(false);        
+        $type->addMultiOption('IMAGE', 'Image');
+        $type->addMultiOption('TEXT', 'Text');
+        $type->addMultiOption('RICH_TEXT', 'Rich text');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+        
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Save')
+                ->setAttrib('class', 'btn btn-primary btn-sm');
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $configurationForm = $configurationForm = new Zend_Form();
+        $configurationForm->setAction($this->_request->getBaseUrl() . '/admin/configuration/detail')
+                ->setMethod('post');
+        $configurationForm->addElement($name);
+        $configurationForm->addElement($displayName);
+        $configurationForm->addElement($type);
+        $configurationForm->addElement($submit);
+        
+        if($this->_request->isPost())
+        {
+            if($configurationForm->isValid($this->_request->getPost()))
+			{
+                $data = array(
+                    'name'              => $configurationForm->getValue('name'),
+                    'display_name'      => $configurationForm->getValue('display_name'),
+                    'type'              => $configurationForm->getValue('type')
+                    
+                );
+                $db = Zend_Registry::get('db');
+                $n = $db->insert('simple_configuration', $data);
+                
+                $this->redirect('/admin/configuration');
+            }
+        }
+        
+        $this->view->configurationForm = $configurationForm;
+    }   
+    
+    public function deleteAction()
+    {
+		$db = Zend_Registry::get('db');
+        
+        $n = $db->delete('simple_configuration', 'id = ' . $this->_request->getParam('id'));
+		
+		$this->redirect('/admin/configuration');
+    }
+    
+    protected function uploadFile($name, $oldName)
     {
         $fileAdapter = new Zend_File_Transfer_Adapter_Http();
 
         $fileAdapter->setDestination(MEDIA_DIRECTORY);
 
-        $file = 'file_' . $key;
+        $file = 'file_' . $name;
 
         $infos = $fileAdapter->getFileInfo();
         $info = $infos[$file];
@@ -94,6 +158,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
         return $newName;
     }
     
+    // this is right! dont delete
     public function orderAction()
     {
 		$db = Zend_Registry::get('db');
@@ -116,85 +181,81 @@ class Admin_ConfigurationController extends Zend_Controller_Action
 		exit();
     }
 	
-    protected function getConfigurationForm($configurations=null)
+    protected function getConfigurationForm($configurations)
     {
 
         $configurationForm = new Zend_Form();
         $configurationForm->setAction($this->_request->getBaseUrl().'/admin/configuration/index')
                 ->setMethod('post');
             
-        foreach(Zend_Registry::get('CONFIGURATION_IMG') as $value)
+        foreach($configurations as $name => $conf)
         {
-            $id = new Zend_Form_Element_Hidden('id_' . $value);
-            $id->setRequired(false);
-            
-            $name = new Zend_Form_Element_Hidden('name_' . $value);
-            $name->setRequired(false);
-            
-            $file = new Zend_Form_Element_File('file_' . $value);
-            $file->setLabel($value)
-                        ->setRequired(false)
-                        ->addValidator('Count', false, 1)
-                        ->addValidator('Size', false, 2097152)
-                        ->addValidator('Extension', false, 'jpg,png,gif');
-
-            $file->getValidator('Count')->setMessage('Chỉ được up một file.');
-            $file->getValidator('Size')->setMessage('Kích thước tối đa là 2MB.');
-            $file->getValidator('Extension')->setMessage('Chỉ được up file có định dạng jpg, png, gif.');
-
-            /*if(!$this->_request->getParam('value_' . $value))
+            if($conf['type'] == 'IMAGE')
             {
-                $file->setRequired(false)->addValidator('Upload', true);
+                $id = new Zend_Form_Element_Hidden('id_' . $name);
+                $id->setRequired(false)
+                    ->setValue($conf['id']);
 
-                $file->getValidator('Upload')->setMessage('Kích thước tối đa là 2MB.', Zend_Validate_File_Upload::INI_SIZE);
-                $file->getValidator('Upload')->setMessage('Vui lòng up hình đại diện.', Zend_Validate_File_Upload::NO_FILE);			
-            }*/
+                //-------------------------------------------------------------------------------------------------------------------------
 
-            $im = new Zend_Form_Element_Image('image_' . $value);
-            $im->setImage($configurations[$value]['value']);
+                $file = new Zend_Form_Element_File('file_' . $name);
+                $file->setLabel($name)
+                            ->setRequired(false)
+                            ->addValidator('Count', false, 1)
+                            ->addValidator('Size', false, 2097152)
+                            ->addValidator('Extension', false, 'jpg,png,gif');
+
+                $file->getValidator('Count')->setMessage('Chỉ được up một file.');
+                $file->getValidator('Size')->setMessage('Kích thước tối đa là 2MB.');
+                $file->getValidator('Extension')->setMessage('Chỉ được up file có định dạng jpg, png, gif.');
+
+                /*if(!$this->_request->getParam('value_' . $name))
+                {
+                    $file->setRequired(false)->addValidator('Upload', true);
+
+                    $file->getValidator('Upload')->setMessage('Kích thước tối đa là 2MB.', Zend_Validate_File_Upload::INI_SIZE);
+                    $file->getValidator('Upload')->setMessage('Vui lòng up hình đại diện.', Zend_Validate_File_Upload::NO_FILE);			
+                }*/
                 
-            $img = new Zend_Form_Element_Hidden('value_' . $value);
-            $img->setRequired($configurations[$value]['value']);
-            
-            if(isset($configurations[$value]))
-            {
-                $id->setValue($configurations[$value]['id']);
-                $name->setValue($configurations[$value]['name']);
-                $img->setValue($configurations[$value]['value']);
+                //-------------------------------------------------------------------------------------------------------------------------
+
+                $im = new Zend_Form_Element_Image('image_' . $name);
+                $im->setImage($conf['value']);
+                
+                //-------------------------------------------------------------------------------------------------------------------------
+
+                $img = new Zend_Form_Element_Hidden('value_' . $name);
+                $img->setRequired($conf['value'])
+                    ->setValue($conf['value']);
+
+                //-------------------------------------------------------------------------------------------------------------------------
+
+                $configurationForm->addElement($id);
+                $configurationForm->addElement($img);
+                $configurationForm->addElement($file);
+                $configurationForm->addElement($im);
             }
-            
-            $configurationForm->addElement($id);
-            $configurationForm->addElement($name);
-            $configurationForm->addElement($img);
-            $configurationForm->addElement($file);
-            $configurationForm->addElement($im);
-        }
-        
-        foreach(Zend_Registry::get('CONFIGURATION_TEXT') as $value)
-        {
-            $id = new Zend_Form_Element_Hidden('id_' . $value);
-            $id->setRequired(false);
-            
-            $name = new Zend_Form_Element_Hidden('name_' . $value);
-            $name->setRequired(false);
-            
-            $text = new Zend_Form_Element_Textarea('value_' . $value);
-            $text->setLabel($value)
-				->setRequired(false)
-				->addValidator('NotEmpty', true)
-				->addErrorMessage('Vui lòng nhập thông tin.')
-                ->setAttrib('rows', '2');
-            
-            if(isset($configurations[$value]))
+            else if($conf['type'] == 'TEXT' || $conf['type'] == 'RICH_TEXT')
             {
-                $id->setValue($configurations[$value]['id']);
-                $name->setValue($configurations[$value]['name']);
-                $text->setValue($configurations[$value]['value']);
+                $id = new Zend_Form_Element_Hidden('id_' . $name);
+                $id->setRequired(false)
+                    ->setValue($conf['id']);
+                
+                //-------------------------------------------------------------------------------------------------------------------------
+
+                $text = new Zend_Form_Element_Textarea('value_' . $name);
+                $text->setLabel($name)
+                    ->setRequired(false)
+                    ->setValue($conf['value'])
+                    ->addValidator('NotEmpty', true)
+                    ->addErrorMessage('Vui lòng nhập thông tin.')
+                    ->setAttrib('rows', '2');
+                
+                //-------------------------------------------------------------------------------------------------------------------------
+                
+                $configurationForm->addElement($id);
+                $configurationForm->addElement($text);
             }
-            
-            $configurationForm->addElement($id);
-            $configurationForm->addElement($name);
-            $configurationForm->addElement($text);
         }
         
         $submit = new Zend_Form_Element_Submit('submit');

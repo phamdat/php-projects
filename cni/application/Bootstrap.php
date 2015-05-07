@@ -21,7 +21,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$db = Zend_Registry::get('db');
         	
 		$configs = $db->select()
-                ->from(array('c' => 'configuration'))
+                ->from(array('c' => 'simple_configuration'))
                 ->columns('*', 'c')
                 ->query()
                 ->fetchAll();
@@ -183,9 +183,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
          *   seo info
          *******************************************************************/
         $view->headTitle()->setSeparator(' - ');
-		$view->headTitle(Zend_Registry::get('configurations')[TITLE_CONF]['value']);
+		$view->headTitle(isset(Zend_Registry::get('configurations')[TITLE_CONF]) ? Zend_Registry::get('configurations')[TITLE_CONF]['value'] : '');
         
-        $view->headMeta()->appendName('description', Zend_Registry::get('configurations')[DESCRIPTION_CONF]['value']);
+        $view->headMeta()->appendName('description', isset(Zend_Registry::get('configurations')[DESCRIPTION_CONF]) ? Zend_Registry::get('configurations')[DESCRIPTION_CONF]['value'] : '');
         $view->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
 	}
     

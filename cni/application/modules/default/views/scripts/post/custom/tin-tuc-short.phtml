@@ -86,25 +86,57 @@
             text-align: right;
             color: #51524c;
         }
+        
+        .tintuc-container .item:nth-child(3n+4) {
+            margin-bottom: 0px;
+        }
 
         @media (min-width: 992px) and (max-width: 1199px) {
             .tintuc-container {
-                width: 310px;
+                width: 720px;
+            }
+            .tintuc-container .item-first {
+                width: 420px;
+            }
+            .tintuc-container .item-first .thumbnail {
+                width: 420px;
+                height: 340px;
+            }
+            .tintuc-container .item {
+                width: 285px;
+            }
+            .tintuc-container .item .thumbnail {
+                width: 130px;
+                height: 103px;
             }
         }
 
         @media (min-width: 768px) and (max-width: 991px) {
             .tintuc-container {
-                width: 210px;
+                width: 560px;
             }
-            .tintuc-container .item .date {
-                font-size: 16px;
+            .tintuc-container .item-first {
+                width: 330px;
+            }
+            .tintuc-container .item-first .thumbnail {
+                width: 330px;
+                height: 280px;
+            }
+            .tintuc-container .item-first .title-wrapper {
+                width: 300px;
+            }
+            .tintuc-container .item {
+                width: 220px;
             }
             .tintuc-container .item .thumbnail {
-                width: 70px;
+                width: 95px;
+                height: 83px;
             }
             .tintuc-container .item .title {
-                font-size: 14px;
+                font-size: 12px;
+            }
+            .tintuc-container .item .date {
+                font-size: 12px;
             }
         }
 
@@ -112,14 +144,23 @@
             .tintuc-container {
                 width: 100%;
             }
-            .tintuc-container .item .date {
-                font-size: 16px;
+            .tintuc-container .item-first {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            .tintuc-container .item-first .thumbnail {
+                width: 100%;
+                height: auto;
+            }
+            .tintuc-container .item-first .title-wrapper {
+                width: 90%;
+            }
+            .tintuc-container .item {
+                width: 100%;
             }
             .tintuc-container .item .thumbnail {
-                width: 30%;
-            }
-            .tintuc-container .item .title {
-                font-size: 14px;
+                width: 95px;
+                height: 83px;
             }
         }
     </style>
@@ -148,7 +189,7 @@
                         </a>
                     </div>
                 </div>
-            <?php else:?>
+            <?php elseif($index < 4):?>
                 <div class="item">
                     <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                         <div class="thumbnail">

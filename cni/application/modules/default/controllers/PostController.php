@@ -121,7 +121,7 @@ class PostController extends Zend_Controller_Action
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
                             ->where('p.category like ?', '%,'.$ca.',%')
-                            ->where('p.category not like ?', '%,MAIN_PAGE,%')
+                            //->where('p.category not like ?', '%,MAIN_PAGE,%')
                             ->order('p.order_id DESC')
                     );
                     
@@ -130,7 +130,7 @@ class PostController extends Zend_Controller_Action
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
                             ->where('p.category like ?', '%,'.$ca.',%')
-                            ->where('p.category not like ?', '%,MAIN_PAGE,%')
+                            //->where('p.category not like ?', '%,MAIN_PAGE,%')
                             ->reset( Zend_Db_Select::COLUMNS )
                             ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
                     );

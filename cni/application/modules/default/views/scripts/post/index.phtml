@@ -1,69 +1,49 @@
 <div>
-    <?php echo $this->render('post/breadcrumb.phtml');?>
-    
-    <?php if(strpos($this->post['category'], 'SAN_PHAM') == false): ?>
-        <?php echo $this->render('post/media.phtml');?>
-        <?php echo $this->render('post/title.phtml');?>
-        <?php echo $this->render('post/description.phtml');?>
-    <?php endif;?>    
-    
-    <?php if(strpos($this->post['category'], 'SAN_PHAM') != false): ?>
-        <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
-    <?php elseif(strpos($this->post['category'], 'CONTACT') != false): ?>
-        <?php echo $this->render('post/contact.phtml');?>
-    <?php else: ?>
-        <?php echo $this->render('post/content.phtml');?>
-    <?php endif;?>    
-
     <?php if($this->post['is_filter_page']): ?>
         <div class="filter-post">
-            <?php if (count($this->categories) > 1):?>
-                <?php foreach($this->categories as $value):?>
-            
-                    <?php $this->paramCategory = $value['category']; ?>
-                    <?php $this->paramPosts = $value['posts']; ?>
+            <?php foreach($this->categories as $value):?>
 
-                    <?php if($value['category']['name'] == 'GIOI_THIEU'): ?>
-                        <?php echo $this->render('post/custom/gioi-thieu-short.phtml');?>
-                    <?php endif;?>
-
-                    <?php if($value['category']['name'] == 'SAN_PHAM'): ?>
-                        <?php echo $this->render('post/custom/san-pham-short.phtml');?>
-                    <?php endif;?>
-
-                    <?php if($value['category']['name'] == 'SAN_PHAM_BAN_CHAY'): ?>
-                        <?php echo $this->render('post/custom/san-pham-ban-chay-short.phtml');?>
-                    <?php endif;?>
-            
-                    <?php if($value['category']['name'] == 'VIDEO_NOI_BAT'): ?>
-                        <?php echo $this->render('post/custom/video-noi-bat-short.phtml');?>
-                    <?php endif;?>
-            
-                    <?php if($value['category']['name'] == 'SU_KIEN_NOI_BAT'): ?>
-                        <?php echo $this->render('post/custom/su-kien-noi-bat-short.phtml');?>
-                    <?php endif;?>
-
-                    <?php if($value['category']['name'] == 'TIN_TUC'): ?>
-                        <?php echo $this->render('post/custom/tin-tuc-short.phtml');?>
-                    <?php endif;?>
-            
-                <?php endforeach;?>
-            
-                <?php if(strpos($this->post['category'], 'TIN_TUC') != false && strpos($this->post['category'], 'MAIN_PAGE') != false): ?>
-                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
-                <?php endif;?>
-            <?php elseif(count($this->categories) == 1):?>
-                
-                <?php $value = $this->categories[0]; ?>
-                
                 <?php $this->paramCategory = $value['category']; ?>
                 <?php $this->paramPosts = $value['posts']; ?>
+
+                <?php if($value['category']['name'] == 'SAN_PHAM_SUC_KHOE' || $value['category']['name'] == 'SAN_PHAM_NANG_LUONG' || $value['category']['name'] == 'SAN_PHAM_SAC_DEP'): ?>
+                    <?php echo $this->render('post/custom/san-pham-full.phtml');?>
+                <?php endif;?>
             
+                <?php if($value['category']['name'] == 'SAN_PHAM_CATEGORY'): ?>
+                    <?php echo $this->render('post/custom/san-pham-category.phtml');?>
+                <?php endif;?>
+
+                <?php if($value['category']['name'] == 'SAN_PHAM_BAN_CHAY'): ?>
+                    <?php echo $this->render('post/custom/san-pham-ban-chay-short.phtml');?>
+                <?php endif;?>
+
+                <?php if($value['category']['name'] == 'VIDEO_NOI_BAT'): ?>
+                    <?php echo $this->render('post/custom/video-noi-bat-short.phtml');?>
+                <?php endif;?>
+
+                <?php if($value['category']['name'] == 'SU_KIEN_NOI_BAT'): ?>
+                    <?php echo $this->render('post/custom/su-kien-noi-bat-short.phtml');?>
+                <?php endif;?>
+
                 <?php if($value['category']['name'] == 'TIN_TUC'): ?>
-                    <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
-                <?php endif;?>                
-            <?php endif;?>            
+                    <?php if (count($this->categories) > 1):?>
+                        <?php echo $this->render('post/custom/tin-tuc-short.phtml');?>
+                    <?php else:?>
+                        <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
+                    <?php endif;?>
+                <?php endif;?>
+
+            <?php endforeach;?>
         </div>
+    <?php else:?>
+        <?php if(strpos($this->post['category'], 'SAN_PHAM') != false): ?>
+            <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
+        <?php elseif(strpos($this->post['category'], 'CONTACT') != false): ?>
+            <?php echo $this->render('post/contact.phtml');?>
+        <?php else: ?>
+            <?php echo $this->render('post/content.phtml');?>
+        <?php endif;?>
     <?php endif;?>
 
     <div id="fb-root"></div>
