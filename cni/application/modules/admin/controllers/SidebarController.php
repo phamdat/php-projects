@@ -31,6 +31,40 @@ class Admin_SidebarController extends Zend_Controller_Action
             $this->view->sidebar = array();
         }
     }
+    
+    public function addAction()
+    {		
+		$name = new Zend_Form_Element_Text('name');
+        $name->setLabel('Name')
+            ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
+            ->addValidator('NotEmpty', true)
+            ->addErrorMessage('Please input menu name.');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+        
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Save')
+                ->setAttrib('class', 'btn btn-primary btn-sm');
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $configurationForm = $configurationForm = new Zend_Form();
+        $configurationForm->setAction($this->_request->getBaseUrl() . '/admin/sidebar/add')
+                ->setMethod('post')
+                ->addElement($name)
+                ->addElement($submit);
+        
+        if($this->_request->isPost())
+        {
+            if($configurationForm->isValid($this->_request->getPost()))
+			{                
+                $this->redirect('/admin/sidebar/detail/name/'.$configurationForm->getValue('name'));
+            }
+        }
+        
+        $this->view->configurationForm = $configurationForm;
+    }
 	
 
 	public function detailAction()

@@ -1,6 +1,21 @@
 <style>
     .post-container {
-
+        margin-top: 20px;
+    }
+    
+    .post-container .title {
+        color: #1c87c5;
+        font-size: 34px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    
+    .post-container .description {
+        margin-top: 10px
+    }
+    
+    .post-container .content {
+        margin-top: 10px
     }
     
     @media (min-width: 992px) and (max-width: 1199px) {
@@ -17,36 +32,29 @@
 </style>
 <div class="post-container">    
 
+    <?php if($this->post['has_title']): ?>
+        <div class="title">
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
+        </div>
+    <?php endif;?>
+    
+    <?php if($this->post['has_description']): ?>
+        <div class="description">
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
+        </div>
+    <?php endif;?>
+    
     <?php if($this->post['has_like_share']): ?>
         <div class="post-like-share">
             <div class="fb-like" data-href="<?php echo $this->fullUrl; ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
         </div>
     <?php endif;?>
 
-
     <?php if($this->post['has_content']): ?>
-        <div class="post-content">
-            <?php echo $this->post['content'] ?>
+        <div class="content">
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'content');?>
         </div>
     <?php endif;?>
-
-    <?php if($this->post['has_advertisment']): ?>
-        <div class="post-advertisment">
-            <?php echo $this->layout()->configurations[POST_ADVERTISMENT_CONF]['value'] ?>
-        </div>
-    <?php endif;?>
-
-
-    <?php if($this->post['has_similar_post']): ?>
-        <div class="similar-post">
-
-            <?php $this->paramCategory = array('display_name' => 'Sản phẩm khác'); ?>
-            <?php $this->paramPosts = $this->similarPosts; ?>
-
-            <?php echo $this->render('post/custom/san-pham-short.phtml');?>
-        </div>
-    <?php endif;?>
-
 
     <?php if($this->post['has_comment']): ?>
         <div class="comment">

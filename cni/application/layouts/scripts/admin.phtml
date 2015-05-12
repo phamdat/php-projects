@@ -140,7 +140,7 @@
                             <?php endif;?>-->
 
                             <?php foreach($this->layout()->allCategory as $category):?>
-                                <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$category['name']])): ?>
+                                <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$category['name'].':READONLY']) || isset($this->layout()->admin_role[$category['name'].':ADD']) || isset($this->layout()->admin_role[$category['name'].':EDIT']) || isset($this->layout()->admin_role[$category['name'].':DELETE'])): ?>
                                 <li>
                                     <a href="/admin/post/index/category/<?php echo $category['name'] ?>">
                                         <i class="fa fa-angle-right"></i>&nbsp; <?php echo $category[ 'display_name']?>
@@ -159,7 +159,7 @@
                         </ul>
                     </li>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:READONLY']) || isset($this->layout()->admin_role['MENU:ADD']) || isset($this->layout()->admin_role['MENU:EDIT']) || isset($this->layout()->admin_role['MENU:DELETE'])): ?>
                     <li>
                         <a href="javascript:void(0);">
                             <i class="fa fa-fw fa-sitemap"></i>
@@ -167,16 +167,25 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul>
+                            <?php foreach($this->layout()->menu as $key => $menu):?>
                             <li>
-                                <a href="/admin/menu/index/name/<?php echo HEADER_MENU_CONF ?>">
-                                    <i class="fa fa-angle-right"></i>&nbsp; Header Menu
+                                <a href="/admin/menu/index/name/<?php echo $key ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; <?php echo ucfirst(strtolower(str_replace('CONF', ' ', str_replace('_', ' ', $key)))) ?>
                                 </a>
                             </li>
+                            <?php endforeach;?>
+                            <?php if($this->layout()->admin_issuper): ?>
+                            <li>
+                                <a href="/admin/menu/add">
+                                    <i class="fa fa-plus"></i> Add menu
+                                </a>
+                            </li>
+                            <?php endif;?>
                         </ul>
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE:READONLY']) || isset($this->layout()->admin_role['SLIDE:ADD']) || isset($this->layout()->admin_role['SLIDE:EDIT']) || isset($this->layout()->admin_role['SLIDE:DELETE'])): ?>
                     <li>
                         <a href="javascript:void(0);">
                             <i class="fa fa-fw fa-indent"></i>
@@ -184,16 +193,25 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul>
+                            <?php foreach($this->layout()->slide as $key => $slide):?>
                             <li>
-                                <a href="/admin/slide/index/name/<?php echo MAIN_SLIDE_CONF ?>">
-                                    <i class="fa fa-angle-right"></i>&nbsp; Main Slide
+                                <a href="/admin/slide/index/name/<?php echo $key ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; <?php echo ucfirst(strtolower(str_replace('CONF', ' ', str_replace('_', ' ', $key)))) ?>
                                 </a>
                             </li>
+                            <?php endforeach;?>
+                            <?php if($this->layout()->admin_issuper): ?>
+                            <li>
+                                <a href="/admin/slide/add">
+                                    <i class="fa fa-plus"></i> Add slide
+                                </a>
+                            </li>
+                            <?php endif;?>
                         </ul>
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR:READONLY']) || isset($this->layout()->admin_role['SIDEBAR:ADD']) || isset($this->layout()->admin_role['SIDEBAR:EDIT']) || isset($this->layout()->admin_role['SIDEBAR:DELETE'])): ?>
                     <li>
                         <a href="javascript:void(0);">
                             <i class="fa fa-fw fa-th-list"></i> 
@@ -201,21 +219,25 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul id="sidebar" class="collapse">
+                            <?php foreach($this->layout()->sidebar as $key => $sidebar):?>
                             <li>
-                                <a href="/admin/sidebar/index/name/<?php echo RIGHT_SIDEBAR_CONF ?>">
-                                    <i class="fa fa-angle-right"></i>&nbsp; Right Sidebar
+                                <a href="/admin/sidebar/index/name/<?php echo $key ?>">
+                                    <i class="fa fa-angle-right"></i>&nbsp; <?php echo ucfirst(strtolower(str_replace('CONF', ' ', str_replace('_', ' ', $key)))) ?>
                                 </a>
                             </li>
+                            <?php endforeach;?>
+                            <?php if($this->layout()->admin_issuper): ?>
                             <li>
-                                <a href="/admin/sidebar/index/name/<?php echo LEFT_SIDEBAR_CONF ?>">
-                                    <i class="fa fa-angle-right"></i>&nbsp; Left Sidebar
+                                <a href="/admin/sidebar/add">
+                                    <i class="fa fa-plus"></i> Add sidebar
                                 </a>
                             </li>
+                            <?php endif;?>
                         </ul>
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA:READONLY']) || isset($this->layout()->admin_role['MEDIA:ADD']) || isset($this->layout()->admin_role['MEDIA:EDIT']) || isset($this->layout()->admin_role['MEDIA:DELETE'])): ?>
                     <li>
                         <a href="/admin/media/index">
                             <i class="fa fa-fw fa-picture-o"></i>
@@ -224,16 +246,16 @@
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:READONLY']) || isset($this->layout()->admin_role['CATEGORY:ADD']) || isset($this->layout()->admin_role['CATEGORY:EDIT']) || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
                     <li>
                         <a href="/admin/category/index">
                             <i class="fa fa-fw fa-list-ol"></i>
-                            <span class="link-title">Post Category</span>
+                            <span class="link-title">Post category</span>
                         </a>                            
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION:READONLY']) || isset($this->layout()->admin_role['CONFIGURATION:ADD']) || isset($this->layout()->admin_role['CONFIGURATION:EDIT']) || isset($this->layout()->admin_role['CONFIGURATION:DELETE'])): ?>
                     <li>
                         <a href="/admin/configuration/index">
                             <i class="fa fa-fw fa-cog"></i>
@@ -242,7 +264,7 @@
                     </li>
                     <?php endif;?>
 
-                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER:READONLY']) || isset($this->layout()->admin_role['USER:ADD']) || isset($this->layout()->admin_role['USER:EDIT']) || isset($this->layout()->admin_role['USER:DELETE'])): ?>
                     <li>
                         <a href="/admin/user/index">
                             <i class="fa fa-fw fa-users"></i>

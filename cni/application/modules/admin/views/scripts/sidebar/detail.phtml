@@ -1,7 +1,7 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SIDEBAR:READONLY']) || isset($this->layout()->admin_role['SIDEBAR:ADD']) || isset($this->layout()->admin_role['SIDEBAR:EDIT']) || isset($this->layout()->admin_role['SIDEBAR:DELETE'])): ?>
 
     <form action="<?php echo $this->sidebarForm->getAction(); ?>" method="<?php echo $this->sidebarForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['SIDEBAR'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['SIDEBAR:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">

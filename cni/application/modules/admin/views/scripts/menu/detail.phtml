@@ -1,7 +1,7 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:READONLY']) || isset($this->layout()->admin_role['MENU:ADD']) || isset($this->layout()->admin_role['MENU:EDIT']) || isset($this->layout()->admin_role['MENU:DELETE'])): ?>
     
     <form action="<?php echo $this->menuForm->getAction(); ?>" method="<?php echo $this->menuForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['MENU'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['MENU:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">

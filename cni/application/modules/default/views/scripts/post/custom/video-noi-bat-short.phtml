@@ -16,6 +16,7 @@
 
         .videonoibat-container .content .item {
             position: relative;
+            cursor: pointer;
         }
 
         .videonoibat-container .content .item .thumbnail {
@@ -40,6 +41,42 @@
             width: 640px;
             font-size: 18px;
             background-color: #1c87c5;
+        }
+        
+        .videonoibat-container .content .item .cover {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.0);
+            color: rgba(255, 255, 255, 0.0);
+            padding: 25px;
+            text-align: center;
+            -webkit-transition: background .5s ease-out, color .5s ease-out;
+            -moz-transition: background .5s ease-out, color .5s ease-out;
+            -o-transition: background .5s ease-out, color .5s ease-out;
+            transition: background .5s ease-out, color .5s ease-out;
+        }
+        
+        .videonoibat-container .content .item .cover img{
+            margin-top: 100px;
+        }
+        
+        .videonoibat-container .content .item:hover .cover {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: rgba(255, 255, 255, 1.0);
+        }
+        
+        .videonoibat-container .content .item iframe {
+            width: 100%;
+            height: 375px;
+        }
+        
+        .videonoibat-container .content .item button.close {
+            margin-right: -11px;
+            margin-top: -17px;
+            color: red;
+            font-size: 36px;
         }
 
         @media (min-width: 992px) and (max-width: 1199px) {
@@ -93,20 +130,31 @@
         </div>
         <div class="content">
             <?php foreach($this->paramPosts as $index => $post):?>
-                <div class="item">
-                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                <?php if($index == 0):?>
+                    <div class="item">
                         <div class="thumbnail">
                             <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
                         </div>
-                    </a>
-                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                        <div class="cover" data-toggle="modal" data-target="#video_<?php echo $post['id']?>">
+                            <img src="/public/images/play-icon.png">
+                        </div>
                         <div class="title">
                             <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
                         </div>
-                    </a>
-            </div>
+                        <div class="modal fade" id="video_<?php echo $post['id']?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <div class="modal-body">
+                                        <?php echo Utils_StringUtils::getTextFromPost($post, 'content');?>
+                                    </div>              
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif;?>
             <?php endforeach;?>
         </div>
-        <div class="clearfix"></div>
+        <div class="clearfix"></div>        
     </div>
 <?php endif;?>

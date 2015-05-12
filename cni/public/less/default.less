@@ -28,8 +28,12 @@
                 .item {
                     float: right;
                     margin-right: 60px;
-                    .icon {
-                        float: left;
+                    color: #ffffff;
+                    a {
+                        color: #ffffff;
+                    }
+                    img {
+                        margin-right: 10px;
                     }
                     .text {
                         float: left;
@@ -76,9 +80,39 @@
                 margin-top: 95px;
                 margin-left: 170px;
                 font-size: 18px;
+                position: absolute;
                 .navbar-nav i.fa {
                     font-size: 32px;
                     margin-top: -12px;
+                }
+            }
+            .global-menu {
+                float: left;
+                margin-top: 105px;
+                margin-left: 906px;
+                position: absolute;
+                width: 250px;
+                ul, li, a {
+                    width: 100%;
+                }
+                .navbar-nav > li > a{
+                    background-color: #9b9ea1;
+                    padding: 5px 25px;
+                    height: 30px;
+                    border-radius: 15px;
+                }
+                .dropdown-menu {
+                    background-color: transparent;
+                    border: none;
+                    -webkit-box-shadow: none;
+                    box-shadow: none;
+                }
+                .dropdown-menu > li > a {
+                    background-color: #9b9ea1;
+                    padding: 5px 25px;
+                    height: 30px;
+                    border-radius: 15px;
+                    margin-bottom: 5px;
                 }
             }
         }
@@ -162,6 +196,10 @@
                         padding-right: 10px;
                     }
                 }
+                .global-menu {
+                    margin-top: 85px;
+                    margin-left: 707px;
+                }
             }
         }
         #main-slide {
@@ -201,6 +239,11 @@
                         padding-left: 10px;
                         padding-right: 10px;
                     }
+                }
+                .global-menu {
+                    margin-top: 66px;
+                    margin-left: 531px;
+                    width: 215px;
                 }
             }
         }
@@ -243,6 +286,9 @@
                     float: none;
                     height: 0px;
                     margin: 0px;
+                    top: 0px;
+                    width: 100%;
+                    right: 0px;
                     .navbar {
                         position: static;
                         .navbar-header {
@@ -272,6 +318,9 @@
                         font-size: 32px;
                         margin-top: 0px;
                     }
+                }
+                .global-menu {
+                    display: none;
                 }
             }
         }

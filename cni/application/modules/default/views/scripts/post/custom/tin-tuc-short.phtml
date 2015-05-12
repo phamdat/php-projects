@@ -32,7 +32,7 @@
             position: absolute;
             left: 10px;
             bottom: 0px;
-            background-color: #fba102;
+            background-color: rgba(251, 161, 2, 0.7);
             padding: 10px;
             color: #ffffff;
             width: 330px;
@@ -90,6 +90,11 @@
         .tintuc-container .item:nth-child(3n+4) {
             margin-bottom: 0px;
         }
+        
+        .facebook-container {
+            float: left;
+            width: 300px;
+        }
 
         @media (min-width: 992px) and (max-width: 1199px) {
             .tintuc-container {
@@ -108,6 +113,9 @@
             .tintuc-container .item .thumbnail {
                 width: 130px;
                 height: 103px;
+            }
+            .facebook-container {                
+                width: 250px;
             }
         }
 
@@ -138,6 +146,9 @@
             .tintuc-container .item .date {
                 font-size: 12px;
             }
+            .facebook-container {                
+                width: 190px;
+            }
         }
 
         @media (max-width: 767px) {
@@ -161,6 +172,9 @@
             .tintuc-container .item .thumbnail {
                 width: 95px;
                 height: 83px;
+            }
+            .facebook-container {                
+                width: 100%;
             }
         }
     </style>
@@ -207,5 +221,17 @@
                 </div>
             <?php endif;?>
         <?php endforeach;?>
+    </div>
+    <div class="facebook-container">
+        <div id="fb-root">&nbsp;</div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=412419298912724&version=v2.0";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+        <div class="fb-like-box" data-colorscheme="light" data-header="false" data-href="https://www.facebook.com/CNIVn?fref=ts&__mref=message_bubble" data-show-border="false" data-show-faces="true" data-stream="false">&nbsp;</div>
     </div>
 <?php endif;?>

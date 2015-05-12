@@ -1,0 +1,32 @@
+<?php if($this->layout()->admin_issuper): ?>
+    <form action="<?php echo $this->configurationForm->getAction(); ?>" method="<?php echo $this->configurationForm->getMethod(); ?>">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="box">
+                    <header>
+                        <div class="icons">
+                            <i class="fa fa-pencil"></i>
+                        </div>
+                        <h5></h5>
+                        <div class="toolbar">
+                            <div class="btn-group">
+                                <?php echo $this->configurationForm->getElement('submit'); ?>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="body">
+                        <div class="configuration-form">
+                            <?php if($this->errorMessage != ""): ?>
+                            <p class="error">
+                                <?php echo $this->errorMessage; ?></p>
+                            <?php endif; ?>
+                            <?php echo $this->configurationForm->getElement('name'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php else:?>
+    <?php echo $this->render('permission-denied.phtml');?>
+<?php endif;?>

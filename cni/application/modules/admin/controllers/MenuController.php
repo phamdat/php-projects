@@ -21,9 +21,7 @@ class Admin_MenuController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {	
-        
-        
+    {	        
 		if(isset(Zend_Registry::get('menu')[$this->_request->getParam('name')]))
         {
             $this->view->menu = Zend_Registry::get('menu')[$this->_request->getParam('name')];
@@ -32,6 +30,41 @@ class Admin_MenuController extends Zend_Controller_Action
         {
             $this->view->menu = array();
         }
+    }
+    
+    
+    public function addAction()
+    {		
+		$name = new Zend_Form_Element_Text('name');
+        $name->setLabel('Name')
+            ->setRequired(true)
+            ->setAttrib('class', 'form-control validate[required]')
+            ->addValidator('NotEmpty', true)
+            ->addErrorMessage('Please input menu name.');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+        
+        $submit = new Zend_Form_Element_Submit('submit');
+        $submit->setLabel('Save')
+                ->setAttrib('class', 'btn btn-primary btn-sm');
+        
+        //-------------------------------------------------------------------------------------------------------------------------
+        
+        $configurationForm = $configurationForm = new Zend_Form();
+        $configurationForm->setAction($this->_request->getBaseUrl() . '/admin/menu/add')
+                ->setMethod('post')
+                ->addElement($name)
+                ->addElement($submit);
+        
+        if($this->_request->isPost())
+        {
+            if($configurationForm->isValid($this->_request->getPost()))
+			{                
+                $this->redirect('/admin/menu/detail/name/'.$configurationForm->getValue('name'));
+            }
+        }
+        
+        $this->view->configurationForm = $configurationForm;
     }
 	
 

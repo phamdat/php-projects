@@ -1,243 +1,225 @@
-<style>
-    .tintuc-container {
-        margin-top: 20px;
-    }
-    
-    .tintuc-container .tintuc-menu {
-        display: table;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    .tintuc-container .tintuc-menu-item {
-        display: table-cell;
-        text-align: center;
-        font-size: 18px;
-        vertical-align: middle;
-        background-color: #77ae22;
-        padding: 0px 17px 0px 0px;
-        color: #ffffff;
-        height: 34px;
-        cursor: pointer;
-    }
-    
-    .tintuc-container .tintuc-menu-item.active {
-        background-color: #3c663d;
-    }
-    
-    .tintuc-container .tintuc-menu-item-ro {
-        display: table-cell;
-        position: relative;
-        width: 36px;
-    }
-    
-    .tintuc-container .tintuc-menu-item-ro:last-child {
-        width: 17px;
-    }
-    
-    .tintuc-container .tintuc-menu-item-ra {
-        border-style: solid;
-        border-width: 17px;
-        border-left-color: transparent;
-        border-top-color: #77ae22;
-        border-bottom-color: #77ae22;
-        border-right-color: #77ae22;
-        position: absolute;
-        right: 0px;
-    }
-    
-    .tintuc-container .tintuc-menu-item-ra.active {
-        border-top-color: #3c663d;
-        border-bottom-color: #3c663d;
-        border-right-color: #3c663d;
-    }
-    
-    .tintuc-container .tintuc-menu-item-ro:last-child .tintuc-menu-item-ra {
-        display: none;
-    }
-    
-    .tintuc-container .tintuc-menu-item-re {
-        border-style: solid;
-        border-width: 17px;
-        border-left-color: #77ae22;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        border-right-color: transparent;
-        position: absolute;
-    }
-    
-    .tintuc-container .tintuc-menu-item-re.active {
-        border-left-color: #3c663d;
-    }
-    
-    .tintuc-container .tintuc-content-1 {
-        width: 470px;
-        float: left;
-        padding-right: 20px;
-        border-right-style: solid;
-        border-right-width: 1px;
-        border-right-color: #717374;
-    }
-    
-    .tintuc-container .tintuc-content-1 .tintuc-thumbnail{
-          margin-bottom: 10px;
-    }
-    
-    .tintuc-container .tintuc-content-1 .tintuc-title {
-        text-transform: uppercase;
-        font-size: 18px;
-        font-weight: bold;
-        padding-bottom: 10px;
-        border-bottom-style: solid;
-        border-bottom-width: 1px;
-        border-bottom-color: #717374;
-    }
-    
-    .tintuc-container .tintuc-content-1 .tintuc-description {
-        padding-top: 10px;
-    }
-    
-    .tintuc-container .tintuc-content-2 {
-        width: 680px;
-        float: left;
-        margin-left: 20px;
-        padding-bottom: 10px;
-        margin-bottom: 10px;
-        border-bottom-style: solid;
-        border-bottom-width: 1px;
-        border-bottom-color: #717374;
-    }
-    
-    .tintuc-container .tintuc-content-2 .tintuc-thumbnail {
-        width: 170px;
-        float: right;
-    }
-    
-    .tintuc-container .tintuc-content-2 .tintuc-title {
-        font-size: 16px;
-        font-weight: bold;
-        padding-bottom: 10px;
-    }
-    
-    @media (min-width: 992px) and (max-width: 1199px) {
-        .tintuc-container .tintuc-content-1 {
-            width: 380px;            
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .tintuc-container {
+            margin-top: 20px;
         }
-        .tintuc-container .tintuc-content-2 {
-            width: 570px;
+
+        .tintuc-container .item-first {
+            width: 470px;
+            float: left;
+            padding-right: 20px;
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-right-color: #717374;
         }
-    }
-    
-    @media (min-width: 768px) and (max-width: 991px) {
-        .tintuc-container .tintuc-menu-item {
-            font-size: 12px;
+
+        .tintuc-container .item-first .thumbnail{
+            margin-bottom: 10px;
+            padding: 0px;
+            border: none;
         }
-        .tintuc-container .tintuc-content-1 {
-            width: 270px;            
+        
+        .tintuc-container .item-first .thumbnail img{
+            height: 326px;
         }
-        .tintuc-container .tintuc-content-2 {
-            width: 460px;
+
+        .tintuc-container .item-first .title {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #717374;
         }
-    }
-    
-    @media (max-width: 767px) {
-        .tintuc-container .tintuc-content-1 {
-            width: 100%;
-            padding-right: 0px;
-            border-right-color: transparent;
+        
+        .tintuc-container .title a{
+            color: #777;
+            text-decoration: none;
+        }
+        
+        .tintuc-container .title a:hover{
+            color: #555;
+        }
+
+        .tintuc-container .item-first .description {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .tintuc-container .item {
+            width: 680px;
+            float: left;
+            margin-left: 20px;
             padding-bottom: 10px;
             margin-bottom: 10px;
             border-bottom-style: solid;
             border-bottom-width: 1px;
             border-bottom-color: #717374;
         }
-        .tintuc-container .tintuc-content-2 {
-            width: 100%;
-            margin-left: 0px;
-        }
-        .tintuc-container .tintuc-content-2 .tintuc-thumbnail {
-            width: 100%;
-            float: none;
-            margin-bottom: 10px;
-        }
-        .tintuc-container .tintuc-content-1 .tintuc-title {
-            text-transform: none;
-            font-size: 16px;
-            border-bottom-color: transparent;
-        }
-        .tintuc-container .tintuc-content-1 .tintuc-description {
-            padding-top: 0px;
-        }
-    }
-</style>
-<script>
-    $(document).ready(function(){
-        $('.tintuc-menu-item').click(function(){
-            $('.pagination-container').hide();
-            $('#tintuc-content-' + $(this).attr('ref')).show();
-            $('.tintuc-menu-item, .tintuc-menu-item-re, .tintuc-menu-item-ra').removeClass('active');
-            $(this).addClass('active');
-            $(this).next().find('.tintuc-menu-item-re').addClass('active');
-            $(this).prev().find('.tintuc-menu-item-ra').addClass('active');
-        });
-        $($('.tintuc-menu-item')[0]).click();
-    });
-</script>
-<div class="tintuc-container">
 
-    <div class="tintuc-menu hidden-xs">
-        <?php foreach($this->categories as $i => $value):?>
-            <div class="tintuc-menu-item" ref="<?php echo $value['category']['name']?>"><?php echo $value['category']['display_name']?></div>
-            <div class="tintuc-menu-item-ro">
-                <div class="tintuc-menu-item-re"></div>
-                <div class="tintuc-menu-item-ra"></div>
+        .tintuc-container .item .thumbnail {
+            width: 170px;
+            float: right;
+            margin-bottom: 0px;
+            padding: 0px;
+            border: none;
+        }
+        
+        .tintuc-container .item .thumbnail img{
+            height: 170px;
+        }
+
+        .tintuc-container .item .title {
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+        
+        .tintuc-container .item .description {
+            padding-bottom: 10px;
+        }
+        
+        .tintuc-container .date {
+            float: left;
+            padding: 18px 0px;
+            border-radius: 36px;
+            background-color: #ff6400;
+            width: 55px;
+            height: 55px;
+            text-align: center;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        
+        .tintuc-container .more {
+            float: right;
+            padding: 5px 15px;
+            color: #ffffff;
+            font-style: italic;
+            background: linear-gradient(#cfcbcb, #a4a4a5);
+            margin-right: 15px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .tintuc-container .item-first {
+                width: 380px;            
+            }
+            .tintuc-container .item-first .thumbnail img{
+                height: 300px;
+            }
+            .tintuc-container .item {
+                width: 570px;
+            }            
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .tintuc-container .item-first {
+                width: 270px;            
+            }
+            .tintuc-container .item-first .thumbnail img{
+                height: 230px;
+            }
+            .tintuc-container .item {
+                width: 460px;
+            }
+            .tintuc-container .item .thumbnail img{
+                width: 120px;
+            }
+            .tintuc-container .item .thumbnail img{
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tintuc-container .item-first {
+                width: 100%;
+                padding-right: 0px;
+                border-right-color: transparent;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+                border-bottom-color: #717374;
+            }
+            .tintuc-container .item {
+                width: 100%;
+                margin-left: 0px;
+            }
+            .tintuc-container .item .thumbnail {
+                width: 100%;
+                float: none;
+                margin-bottom: 10px;
+            }
+            .tintuc-container .item-first .title {
+                text-transform: none;
+                font-size: 16px;
+                border-bottom-color: transparent;
+            }
+            .tintuc-container .item-first .description {
+                padding-top: 0px;
+            }
+        }
+    </style>
+    <?php echo $this->render('post/custom/tin-tuc-baner.phtml');?>
+    <div class="tintuc-container">
+        <?php foreach($this->categories as $value):?>
+            <div id="tintuc-content-<?php echo $value['category']['name']?>" class="pagination-container">
+                <?php $this->paramPageSize = 4; ?>
+                <?php $this->paramPosts = $value['posts']; ?>
+                <?php foreach($value['posts'] as $index => $post):?>
+                    <?php if($index % $this->paramPageSize == 0):?>
+                        <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
+                    <?php endif;?>
+                    <?php if($index % $this->paramPageSize == 0):?>
+                        <div class="item-first">
+                            <div class="thumbnail">
+                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                    <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="title">
+                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                    <?php echo $post['title']?>
+                                </a>
+                            </div>
+                            <div class="description"><?php echo $post['description']?></div>
+                            <div class="date"><?php echo date('d M', strtotime($post['created_date']))?></div>
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <div class="more">
+                                    Xem tiếp
+                                </div>
+                            </a>
+                        </div>
+                    <?php else:?>
+                        <div class="item">
+                            <div class="thumbnail">
+                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                    <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="title">
+                                <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                    <?php echo $post['title']?>
+                                </a>
+                            </div>
+                            <div class="description"><?php echo $post['description']?></div>
+                            <div class="date"><?php echo date('d M', strtotime($post['created_date']))?></div>
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                                <div class="more">
+                                    Xem tiếp
+                                </div>
+                            </a>
+                        </div>
+                    <?php endif;?>
+                    <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                        </div>
+                    <?php endif;?>
+                <?php endforeach;?>
+                <div class="clearfix"></div>
+                <?php echo $this->render('post/pagination.phtml');?>                
             </div>
         <?php endforeach;?>
     </div>
-    
-    <?php foreach($this->categories as $value):?>
-        <div id="tintuc-content-<?php echo $value['category']['name']?>" class="pagination-container">
-            <?php $this->paramPageSize = 4; ?>
-            <?php $this->paramPosts = $value['posts']; ?>
-            <?php foreach($value['posts'] as $index => $post):?>
-                <?php if($index % $this->paramPageSize == 0):?>
-                    <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
-                <?php endif;?>
-                <?php if($index % $this->paramPageSize == 0):?>
-                    <div class="tintuc-content-1">
-                        <div class="tintuc-thumbnail">
-                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                                <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="tintuc-title">
-                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                                <?php echo $post['title']?>
-                            </a>
-                        </div>
-                        <div class="tintuc-description"><?php echo $post['description']?></div>
-                    </div>
-                <?php else:?>
-                    <div class="tintuc-content-2">
-                        <div class="tintuc-thumbnail">
-                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                                <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="tintuc-title">
-                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                                <?php echo $post['title']?>
-                            </a>
-                        </div>
-                        <div class="tintuc-description"><?php echo $post['description']?></div>
-                    </div>
-                <?php endif;?>
-                <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
-                    </div>
-                <?php endif;?>
-            <?php endforeach;?>
-            <?php echo $this->render('post/pagination.phtml');?>
-            <div class="clearfix"></div>
-        </div>
-    <?php endforeach;?>
-</div>
+<?php endif;?>

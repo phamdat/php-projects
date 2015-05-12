@@ -1,6 +1,6 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE:READONLY']) || isset($this->layout()->admin_role['SLIDE:ADD']) || isset($this->layout()->admin_role['SLIDE:EDIT']) || isset($this->layout()->admin_role['SLIDE:DELETE'])): ?>
     <form enctype="multipart/form-data" action="<?php echo $this->slideForm->getAction(); ?>" method="<?php echo $this->slideForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['SLIDE'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['SLIDE:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">

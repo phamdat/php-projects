@@ -1,7 +1,7 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['USER:READONLY']) || isset($this->layout()->admin_role['USER:ADD']) || isset($this->layout()->admin_role['USER:EDIT']) || isset($this->layout()->admin_role['USER:DELETE'])): ?>
 
     <form action="<?php echo $this->userForm->getAction(); ?>" method="<?php echo $this->userForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['USER'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['USER:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">

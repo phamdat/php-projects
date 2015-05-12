@@ -199,7 +199,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
                 //-------------------------------------------------------------------------------------------------------------------------
 
                 $file = new Zend_Form_Element_File('file_' . $name);
-                $file->setLabel($name)
+                $file->setLabel($conf['display_name'] . ' (' . $name . ')')
                             ->setRequired(false)
                             ->addValidator('Count', false, 1)
                             ->addValidator('Size', false, 2097152)
@@ -244,7 +244,7 @@ class Admin_ConfigurationController extends Zend_Controller_Action
                 //-------------------------------------------------------------------------------------------------------------------------
 
                 $text = new Zend_Form_Element_Textarea('value_' . $name);
-                $text->setLabel($name)
+                $text->setLabel($conf['display_name'] . ' (' . $name . ')')
                     ->setRequired(false)
                     ->setValue($conf['value'])
                     ->addValidator('NotEmpty', true)

@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:READONLY']) || isset($this->layout()->admin_role['MENU:ADD']) || isset($this->layout()->admin_role['MENU:EDIT']) || isset($this->layout()->admin_role['MENU:DELETE'])): ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +8,7 @@
                         <i class="fa fa-table"></i>
                     </div>
                     <h5></h5>
-                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 1): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:ADD'])): ?>
                         <div class="toolbar">
                             <div class="btn-group">
                                 <a class="btn btn-primary btn-sm" href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'detail')) ?>">
@@ -25,15 +25,17 @@
                                 <li class="dd-item" data-id="<?php echo $value['menu']['id'];?>">
                                     <div class="dd-handle">
                                         <?php echo $value['menu']['value'] ? $value['menu']['value'] : $value['post']['title'];?>
-                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 2): ?>
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:DELETE'])): ?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'delete', 'id' => $value['menu']['id'] )) ?>" need-confirm>
                                                 <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                             </a>
                                         <?php endif;?>
-                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 1): ?>                        
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:EDIT'])): ?>                        
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'detail', 'id' => $value['menu']['id'] )) ?>">
                                                 <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                             </a>
+                                        <?php endif;?> 
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:ADD'])): ?>  
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'detail', 'link_id' => $value['menu']['id'] )) ?>">
                                                 <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Child"></i>
                                             </a>
@@ -45,12 +47,12 @@
                                                 <li class="dd-item" data-id="4">
                                                     <div class="dd-handle">
                                                         <?php echo $subvalue['menu']['value'] ? $subvalue['menu']['value'] : $subvalue['post']['title'];?>
-                                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 2): ?>
-                                                            <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'delete', 'id' => $subvalue['menu']['id'] )) ?>">
+                                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:DELETE'])): ?>
+                                                            <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'delete', 'id' => $subvalue['menu']['id'] )) ?>" need-confirm>
                                                                 <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                                             </a>
                                                         <?php endif;?>
-                                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MENU'] > 1): ?>
+                                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:EDIT'])): ?>
                                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'menu', 'action'=> 'detail', 'id' => $subvalue['menu']['id'] )) ?>">
                                                                 <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                                             </a>

@@ -1,6 +1,6 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:READONLY']) || isset($this->layout()->admin_role['CATEGORY:ADD']) || isset($this->layout()->admin_role['CATEGORY:EDIT']) || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
     <form action="<?php echo $this->categoryForm->getAction(); ?>" method="<?php echo $this->categoryForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['CATEGORY'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['CATEGORY:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
 

@@ -1,9 +1,10 @@
 $(function () {
     
     var opertationUrl;
-    $('[need-confirm]').click(function () {
+    $('[need-confirm]').click(function (e) {
         opertationUrl = $(this).attr('href');
         $('#confirm-modal').modal('show');
+        e.preventDefault();
         return false;
     });
 

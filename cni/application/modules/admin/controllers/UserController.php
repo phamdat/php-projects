@@ -128,36 +128,43 @@ class Admin_UserController extends Zend_Controller_Action
 				->addErrorMessage('Please select role.');
         
         foreach(Zend_Registry::get('allCategory') as $category){
-			$role->addMultiOption($category['name'] . ':1', $category['display_name'] . '(readonly)');
-            $role->addMultiOption($category['name'] . ':2', $category['display_name'] . '(read/add/edit)');
-            $role->addMultiOption($category['name'] . ':3', $category['display_name'] . '(read/add/edit/delete)');
+			$role->addMultiOption($category['name'] . ':READONLY', $category['display_name'] . '(readonly)');
+            $role->addMultiOption($category['name'] . ':ADD', $category['display_name'] . '(add)');
+            $role->addMultiOption($category['name'] . ':EDIT', $category['display_name'] . '(edit)');
+            $role->addMultiOption($category['name'] . ':DELETE', $category['display_name'] . '(delete)');
 		}
         
-        $role->addMultiOption('MENU:1', 'Menu(readonly)');
-        $role->addMultiOption('MENU:2', 'Menu(read/add/edit)');
-        $role->addMultiOption('MENU:3', 'Menu(read/add/edit/delete)');
+        $role->addMultiOption('MENU:READONLY', 'Menu(readonly)');
+        $role->addMultiOption('MENU:ADD', 'Menu(add)');
+        $role->addMultiOption('MENU:EDIT', 'Menu(edit)');
+        $role->addMultiOption('MENU:DELETE', 'Menu(delete)');
         
-        $role->addMultiOption('SIDEBAR:1', 'Sidebar(readonly)');
-        $role->addMultiOption('SIDEBAR:2', 'Sidebar(read/add/edit)');
-        $role->addMultiOption('SIDEBAR:3', 'Sidebar(read/add/edit/delete)');
+        $role->addMultiOption('SIDEBAR:READONLY', 'Sidebar(readonly)');
+        $role->addMultiOption('SIDEBAR:ADD', 'Sidebar(add)');
+        $role->addMultiOption('SIDEBAR:EDIT', 'Sidebar(edit)');
+        $role->addMultiOption('SIDEBAR:DELETE', 'Sidebar(delete)');
         
-        $role->addMultiOption('SLIDE:1', 'Slide(readonly)');
-        $role->addMultiOption('SLIDE:2', 'Slide(read/add/edit)');
-        $role->addMultiOption('SLIDE:3', 'Slide(read/add/edit/delete)');
+        $role->addMultiOption('SLIDE:READONLY', 'Slide(readonly)');
+        $role->addMultiOption('SLIDE:ADD', 'Slide(add)');
+        $role->addMultiOption('SLIDE:EDIT', 'Slide(edit)');
+        $role->addMultiOption('SLIDE:DELETE', 'Slide(delete)');
         
-        $role->addMultiOption('CONFIGURATION:1', 'Configuration(readonly)');
-        $role->addMultiOption('CONFIGURATION:2', 'Configuration(read/edit)');
+        $role->addMultiOption('CONFIGURATION:READONLY', 'Configuration(readonly)');
+        $role->addMultiOption('CONFIGURATION:EDIT', 'Configuration(edit)');
         
-        $role->addMultiOption('MEDIA:1', 'Media(readonly)');
-        $role->addMultiOption('MEDIA:3', 'Media(read/delete)');
+        $role->addMultiOption('MEDIA:READONLY', 'Media(readonly)');
+        $role->addMultiOption('MEDIA:ADD', 'Media(add)');
+        $role->addMultiOption('MEDIA:DELETE', 'Media(delete)');
         
-        $role->addMultiOption('CATEGORY:1', 'Category(readonly)');
-        $role->addMultiOption('CATEGORY:2', 'Category(read/add/edit)');
-        $role->addMultiOption('CATEGORY:3', 'Category(read/add/edit/delete)');
+        $role->addMultiOption('CATEGORY:READONLY', 'Category(readonly)');
+        $role->addMultiOption('CATEGORY:ADD', 'Category(add)');
+        $role->addMultiOption('CATEGORY:EDIT', 'Category(edit)');
+        $role->addMultiOption('CATEGORY:DELETE', 'Category(delete)');
         
-        $role->addMultiOption('USER:1', 'User(readonly)');
-        $role->addMultiOption('USER:2', 'User(read/add/edit)');
-        $role->addMultiOption('USER:3', 'User(read/add/edit/delete)');
+        $role->addMultiOption('USER:READONLY', 'User(readonly)');
+        $role->addMultiOption('USER:ADD', 'User(add)');
+        $role->addMultiOption('USER:ADD', 'User(edit)');
+        $role->addMultiOption('USER:DELETE', 'User(delete)');
         
         $role->setAttrib('size', count(Zend_Registry::get('allCategory')) * 3 + 19);
         $role->setAttrib('class', 'form-control input-multiple-select validate[required]');

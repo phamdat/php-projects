@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category.':READONLY']) || isset($this->layout()->admin_role[$this->category.':ADD']) || isset($this->layout()->admin_role[$this->category.':EDIT']) || isset($this->layout()->admin_role[$this->category.':DELETE'])): ?>
     
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +8,7 @@
                         <i class="fa fa-table"></i>
                     </div>
                     <h5></h5>
-                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role[$this->category] > 1): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category.':ADD'])): ?>
                         <div class="toolbar">
                             <div class="btn-group">
                                 <a class="btn btn-primary btn-sm" href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'post', 'action'=> 'detail', 'type'=> PAGE, 'language'=> 'vi')) ?>">
@@ -83,13 +83,13 @@
                                     <?php echo $value[ 'name'];?>
                                 </td>
                                 <td class="text-right">
-                                    <?php if($this->layout()->admin_role[$this->category] == 1): ?>
+                                    <?php if(isset($this->layout()->admin_role[$this->category.':READONLY'])): ?>
                                     <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'post', 'action'=> 'detail', 'id' => $value['id'] )) ?>">
                                         <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="View"></i>
                                     </a>
                                     <?php endif;?>
 
-                                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role[$this->category] > 1): ?>
+                                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category.':EDIT'])): ?>
                                         <?php if($key> 0):?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'post', 'action'=> 'swap', 'post_id' => $value['id'], 'order_id' => $value['order_id'], 'above_post_id' => $this->paginator->getItem($key)['id'], 'above_order_id' => $this->paginator->getItem($key)['order_id'] )) ?>">
                                                 <i class="fa fa-arrow-up" data-toggle="tooltip" data-placement="top" title="Up"></i>
@@ -107,7 +107,7 @@
                                         </a>
                                     <?php endif;?>
 
-                                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role[$this->category] > 2): ?>
+                                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category.':DELETE'])): ?>
                                     <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'post', 'action'=> 'delete', 'id' => $value['id'] )) ?>" need-confirm>
                                         <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                     </a>

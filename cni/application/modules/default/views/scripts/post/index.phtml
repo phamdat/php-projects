@@ -41,6 +41,10 @@
             <?php echo $this->render('post/custom/san-pham-detail.phtml');?>
         <?php elseif(strpos($this->post['category'], 'CONTACT') != false): ?>
             <?php echo $this->render('post/contact.phtml');?>
+        <?php elseif(strpos($this->post['category'], 'TIN_TUC') != false): ?>
+            <?php echo $this->render('post/custom/tin-tuc-detail.phtml');?>
+        <?php elseif(strpos($this->post['category'], 'SU_KIEN') != false): ?>
+            <?php echo $this->render('post/custom/su-kien-detail.phtml');?>
         <?php else: ?>
             <?php echo $this->render('post/content.phtml');?>
         <?php endif;?>

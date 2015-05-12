@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CONFIGURATION:READONLY']) || isset($this->layout()->admin_role['CONFIGURATION:ADD']) || isset($this->layout()->admin_role['CONFIGURATION:EDIT']) || isset($this->layout()->admin_role['CONFIGURATION:DELETE'])): ?>
     <style>
         .configuration-form .item-wrapper {      
             border-style: solid;
@@ -14,7 +14,7 @@
     </style>
 
     <form class="validation-form" enctype="multipart/form-data" action="<?php echo $this->configurationForm->getAction(); ?>" method="<?php echo $this->configurationForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role['CONFIGURATION'] == 1): ?>
+        <?php if(isset($this->layout()->admin_role['CONFIGURATION:READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">
@@ -26,9 +26,12 @@
                         </div>
                         <h5></h5>
                         <div class="toolbar">
+                            <?php if($this->layout()->admin_issuper): ?>
                             <a class="btn btn-primary btn-sm" href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'configuration', 'action'=> 'detail')) ?>">
                                 <i class="fa fa-plus"></i> Add Configuration
                             </a>
+                            <?php endif;?>
+                            
                             <div class="btn-group">                                
                                 <?php echo $this->configurationForm->getElement('submit'); ?>
                             </div>
@@ -43,9 +46,11 @@
                             <?php endif; ?>
                             <?php foreach($this->layout()->configurations as $name => $conf): ?>
                                 <div class="item-wrapper">
+                                    <?php if($this->layout()->admin_issuper): ?>
                                     <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'configuration', 'action'=> 'delete', 'id' => $conf['id'])) ?>" need-confirm>
                                         <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                     </a>
+                                    <?php endif;?>
                                     <?php echo $this->configurationForm->getElement('id_' . $name); ?>
                                     <?php echo $this->configurationForm->getElement('value_' . $name); ?>
                                     <?php if($conf['type'] == 'IMAGE'):?>

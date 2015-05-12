@@ -44,23 +44,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      *******************************************************************/
     protected function _initCustomConfig()
 	{
-        $config = $this->getOptions();
-        
-		defined('TITLE_CONF') || define('TITLE_CONF', 'TITLE_CONF');
-        
-        defined('DESCRIPTION_CONF') || define('DESCRIPTION_CONF', 'DESCRIPTION_CONF');
-        
-        defined('META_HEADER_CONF') || define('META_HEADER_CONF', 'META_HEADER_CONF');
-        
-        defined('LOGO_TEXT_CONF') || define('LOGO_TEXT_CONF', 'LOGO_TEXT_CONF');
-        
-        defined('LOGO_IMG_CONF') || define('LOGO_IMG_CONF', 'LOGO_IMG_CONF');
-        
-        defined('LOGO_IMG_2_CONF') || define('LOGO_IMG_2_CONF', 'LOGO_IMG_2_CONF');
+        $config = $this->getOptions();        
+                
         
         defined('MENU_CONF') || define('MENU_CONF', 'MENU_CONF');
         
-        defined('HEADER_MENU_CONF') || define('HEADER_MENU_CONF', 'HEADER_' . MENU_CONF);
+
         
         defined('SLIDE_CONF') || define('SLIDE_CONF', 'SLIDE_CONF');
         
@@ -71,14 +60,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         defined('RIGHT_SIDEBAR_CONF') || define('RIGHT_SIDEBAR_CONF', 'RIGHT_' . SIDEBAR_CONF);
         
         defined('LEFT_SIDEBAR_CONF') || define('LEFT_SIDEBAR_CONF', 'LEFT_' . SIDEBAR_CONF);
-        
-        defined('FOOTER_INFO_CONF') || define('FOOTER_INFO_CONF', 'FOOTER_INFO_CONF');
-        
-        defined('SOCIAL_LINK_CONF') || define('SOCIAL_LINK_CONF', 'SOCIAL_LINK_CONF');
-        
-        defined('PLUGIN_FOR_ALL_PAGE_CONF') || define('PLUGIN_FOR_ALL_PAGE_CONF', 'PLUGIN_FOR_ALL_PAGE_CONF');
-        
-        defined('POST_ADVERTISMENT_CONF') || define('POST_ADVERTISMENT_CONF', 'POST_ADVERTISMENT_CONF');
+                
         
         /*******************************************************************
          *   Post type
@@ -87,10 +69,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         defined('SIDEBAR') || define('SIDEBAR', 'SIDEBAR');
         
-        
-        Zend_Registry::set('CONFIGURATION_IMG', $config['configuration']['img']);
-        
-        Zend_Registry::set('CONFIGURATION_TEXT', $config['configuration']['text']);
                 
 		Zend_Registry::set('ADMIN_MAIL_ADDRESS', $config['mail']['address']['admin']);
 
@@ -162,6 +140,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile('/public/js/jquery.inputlimiter.js');
             $view->headScript()->appendFile('/public/js/jquery.tagsinput.js');
             $view->headScript()->appendFile('/public/js/jquery.chosen.js');
+            $view->headScript()->appendFile('/public/js/jquery.chosen.order.js');
             $view->headScript()->appendFile('/public/js/jquery.nestable.js');
             
             $view->headScript()->appendFile('/public/js/bootstrap.datatables.js');
@@ -183,9 +162,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
          *   seo info
          *******************************************************************/
         $view->headTitle()->setSeparator(' - ');
-		$view->headTitle(isset(Zend_Registry::get('configurations')[TITLE_CONF]) ? Zend_Registry::get('configurations')[TITLE_CONF]['value'] : '');
+		$view->headTitle(isset(Zend_Registry::get('configurations')['TITLE_CONF']) ? Zend_Registry::get('configurations')['TITLE_CONF']['value'] : '');
         
-        $view->headMeta()->appendName('description', isset(Zend_Registry::get('configurations')[DESCRIPTION_CONF]) ? Zend_Registry::get('configurations')[DESCRIPTION_CONF]['value'] : '');
+        $view->headMeta()->appendName('description', isset(Zend_Registry::get('configurations')['DESCRIPTION_CONF']) ? Zend_Registry::get('configurations')['DESCRIPTION_CONF']['value'] : '');
         $view->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
 	}
     
@@ -413,28 +392,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
         
         return $res;
-    }
-    
-    /*******************************************************************
-     *   Social network info
-     *******************************************************************/
-    protected function _initSocialLink()
-	{
-		$db = Zend_Registry::get('db');
-        
-        $social = $db->select()
-                ->from(array('c' => 'configuration'))
-                ->where('c.name = ?', SOCIAL_LINK_CONF)
-                ->columns('*', 'c')
-                ->query()
-                ->fetchAll();
-        
-        Zend_Registry::set('socialLink', $social);
-        
-        $this->bootstrap('layout');
-        $layout = $this->getResource('layout');
-		$layout->assign('socialLink', $social);
-	}    
+    }  
 	
     /*******************************************************************
      *   Get authenication info
@@ -458,12 +416,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             {
                 $ro = array();
                 foreach(explode(',', Zend_AdminAuth::getInstance()->getStorage()->read()->role) as $role)
-                {
-                    if(count(explode(':', $role)) > 1)
-                    {
-                        $ro[explode(':', $role)[0]] = intval(explode(':', $role)[1]);
-                    }
-                }
+                {                    
+                    $ro[$role] = true;                    
+                }                
                 $layout->assign('admin_role', $ro);
             }else{
                 $layout->assign('admin_issuper', true);

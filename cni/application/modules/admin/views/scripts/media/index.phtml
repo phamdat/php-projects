@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA:READONLY']) || isset($this->layout()->admin_role['MEDIA:ADD']) || isset($this->layout()->admin_role['MEDIA:EDIT']) || isset($this->layout()->admin_role['MEDIA:DELETE'])): ?>
 
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +8,7 @@
                         <i class="fa fa-table"></i>
                     </div>
                     <h5></h5>
-                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MEDIA'] > 1): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA:ADD'])): ?>
                         <script>
                             $(document).ready(function(){
                                 $('input:file').change(function(){
@@ -50,7 +50,7 @@
                                     <?php echo MEDIA_PATH . $value;?>
                                 </td>
                                 <td class="text-right">
-                                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['MEDIA'] > 2): ?>
+                                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MEDIA:DELETE'])): ?>
                                         <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'media', 'action'=> 'delete', 'file' => $value )) ?>" need-confirm>
                                             <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                         </a>

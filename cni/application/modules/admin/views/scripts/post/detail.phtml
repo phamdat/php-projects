@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role[$this->category.':READONLY']) || isset($this->layout()->admin_role[$this->category.':ADD']) || isset($this->layout()->admin_role[$this->category.':EDIT']) || isset($this->layout()->admin_role[$this->category.':DELETE'])): ?>
     <script>
         $(document).ready(function () {
             var opertationUrl;
@@ -32,7 +32,7 @@
         }
     </script>
     <form class="validation-form" enctype="multipart/form-data" action="<?php echo $this->postForm->getAction(); ?>" method="<?php echo $this->postForm->getMethod(); ?>">
-        <?php if($this->layout()->admin_role[$this->category] == 1): ?>
+        <?php if(isset($this->layout()->admin_role[$this->category.':READONLY'])): ?>
             <?php echo $this->render('form-disable.phtml');?>
         <?php endif;?>
         <div class="row">

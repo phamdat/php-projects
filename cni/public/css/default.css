@@ -20,9 +20,13 @@
 .main-page header .top-header .container .item {
   float: right;
   margin-right: 60px;
+  color: #ffffff;
 }
-.main-page header .top-header .container .item .icon {
-  float: left;
+.main-page header .top-header .container .item a {
+  color: #ffffff;
+}
+.main-page header .top-header .container .item img {
+  margin-right: 10px;
 }
 .main-page header .top-header .container .item .text {
   float: left;
@@ -67,10 +71,42 @@
   margin-top: 95px;
   margin-left: 170px;
   font-size: 18px;
+  position: absolute;
 }
 .main-page header .main-header .menu-container .navbar-nav i.fa {
   font-size: 32px;
   margin-top: -12px;
+}
+.main-page header .main-header .global-menu {
+  float: left;
+  margin-top: 105px;
+  margin-left: 906px;
+  position: absolute;
+  width: 250px;
+}
+.main-page header .main-header .global-menu ul,
+.main-page header .main-header .global-menu li,
+.main-page header .main-header .global-menu a {
+  width: 100%;
+}
+.main-page header .main-header .global-menu .navbar-nav > li > a {
+  background-color: #9b9ea1;
+  padding: 5px 25px;
+  height: 30px;
+  border-radius: 15px;
+}
+.main-page header .main-header .global-menu .dropdown-menu {
+  background-color: transparent;
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.main-page header .main-header .global-menu .dropdown-menu > li > a {
+  background-color: #9b9ea1;
+  padding: 5px 25px;
+  height: 30px;
+  border-radius: 15px;
+  margin-bottom: 5px;
 }
 .main-page #main-slide {
   margin-top: -55px;
@@ -140,6 +176,10 @@
     padding-left: 10px;
     padding-right: 10px;
   }
+  .main-page header .main-header .global-menu {
+    margin-top: 85px;
+    margin-left: 707px;
+  }
   .main-page #main-slide .slide img {
     height: 390px;
   }
@@ -166,6 +206,11 @@
   .main-page header .main-header .menu-container .navbar-nav > li > a {
     padding-left: 10px;
     padding-right: 10px;
+  }
+  .main-page header .main-header .global-menu {
+    margin-top: 66px;
+    margin-left: 531px;
+    width: 215px;
   }
   .main-page #main-slide .slide img {
     height: 300px;
@@ -197,6 +242,9 @@
     float: none;
     height: 0px;
     margin: 0px;
+    top: 0px;
+    width: 100%;
+    right: 0px;
   }
   .main-page header .main-header .menu-container .navbar {
     position: static;
@@ -226,6 +274,9 @@
   .main-page header .main-header .menu-container .navbar-nav i.fa {
     font-size: 32px;
     margin-top: 0px;
+  }
+  .main-page header .main-header .global-menu {
+    display: none;
   }
   .main-page #main-slide {
     margin-top: -30px;

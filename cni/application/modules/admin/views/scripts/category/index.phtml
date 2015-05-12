@@ -1,4 +1,4 @@
-<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY'])): ?>
+<?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:READONLY']) || isset($this->layout()->admin_role['CATEGORY:ADD']) || isset($this->layout()->admin_role['CATEGORY:EDIT']) || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
     
     <div class="row">
         <div class="col-lg-12">
@@ -8,7 +8,7 @@
                         <i class="fa fa-table"></i>
                     </div>
                     <h5></h5>
-                    <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CATEGORY'] > 1): ?>
+                    <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:ADD'])): ?>
                         <div class="toolbar">
                             <div class="btn-group">
                                 <a class="btn btn-primary btn-sm" href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail')) ?>">
@@ -43,16 +43,19 @@
                                         <?php echo $value['displayName'];?>
                                     </td>
                                     <td class="text-right">
-                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CATEGORY'] > 1): ?>
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:ADD'])): ?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'link_id' => $value['id'] )) ?>">
                                                 <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Child"></i>
                                             </a>
+                                        <?php endif;?>
+                                        
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:EDIT'])): ?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'id' => $value['id'] )) ?>">
                                                 <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                             </a>
                                         <?php endif;?>
 
-                                        <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CATEGORY'] > 2): ?>
+                                        <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'delete', 'id' => $value['id'] )) ?>" need-confirm>
                                                 <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete" ></i>
                                             </a>
@@ -68,13 +71,13 @@
                                             <?php echo $value1['displayName'];?>
                                         </td>
                                         <td class="text-right">
-                                            <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CATEGORY'] > 1): ?>
+                                            <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:EDIT'])): ?>
                                                 <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'id' => $value1['id'] )) ?>">
                                                     <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
                                                 </a>
                                             <?php endif;?>
 
-                                            <?php if($this->layout()->admin_issuper || $this->layout()->admin_role['CATEGORY'] > 2): ?>
+                                            <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
                                                 <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'delete', 'id' => $value1['id'] )) ?>" need-confirm>
                                                     <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
                                                 </a>
