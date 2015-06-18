@@ -56,3 +56,11 @@
 .active>a>.fa.plus-minus:before {
     content: "\f068"
 }
+
+#left #menu {
+    overflow-y: scroll;
+}
+
+#left .media.user-media.bg-dark.dker {
+    width: 238px;
+}

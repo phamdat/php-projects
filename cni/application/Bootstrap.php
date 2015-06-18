@@ -40,36 +40,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	}
     
     /*******************************************************************
-     *   Get all category 
+     *   Defined global variables
      *******************************************************************/
     protected function _initCustomConfig()
 	{
         $config = $this->getOptions();        
-                
-        
+                        
         defined('MENU_CONF') || define('MENU_CONF', 'MENU_CONF');
         
-
+        defined('SLIDE_CONF') || define('SLIDE_CONF', 'SLIDE_CONF');        
         
-        defined('SLIDE_CONF') || define('SLIDE_CONF', 'SLIDE_CONF');
-        
-        defined('MAIN_SLIDE_CONF') || define('MAIN_SLIDE_CONF', 'MAIN_' . SLIDE_CONF);
-        
-        defined('SIDEBAR_CONF') || define('SIDEBAR_CONF', 'SIDEBAR_CONF');
-        
-        defined('RIGHT_SIDEBAR_CONF') || define('RIGHT_SIDEBAR_CONF', 'RIGHT_' . SIDEBAR_CONF);
-        
-        defined('LEFT_SIDEBAR_CONF') || define('LEFT_SIDEBAR_CONF', 'LEFT_' . SIDEBAR_CONF);
-                
+        defined('SIDEBAR_CONF') || define('SIDEBAR_CONF', 'SIDEBAR_CONF');                                
         
         /*******************************************************************
          *   Post type
-         *******************************************************************/
+         *******************************************************************/        
         defined('PAGE') || define('PAGE', 'PAGE');
         
         defined('SIDEBAR') || define('SIDEBAR', 'SIDEBAR');
         
-                
+        defined('SLIDE') || define('SLIDE', 'SLIDE');
+        
+        /*******************************************************************
+         *   Other configuration
+         *******************************************************************/
 		Zend_Registry::set('ADMIN_MAIL_ADDRESS', $config['mail']['address']['admin']);
 
         defined('MEDIA_DIRECTORY') || define('MEDIA_DIRECTORY', $config['custom']['media']['directory']);
@@ -117,13 +111,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headLink()->appendStylesheet('/public/css/validationEngine.css');
             $view->headLink()->appendStylesheet('/public/css/tagsinput.css');
             $view->headLink()->appendStylesheet('/public/css/chosen.css');
+            $view->headLink()->appendStylesheet('/public/css/tokenize.css');
             $view->headLink()->appendStylesheet('/public/css/nestable.css');
             
             $view->headLink()->appendStylesheet('/public/css/metis-main.css');
-            $view->headLink()->appendStylesheet('/public/css/metis-menu.css');
-            $view->headLink()->appendStylesheet('/public/css/metis-style-switcher.css');                        
-            
-            $view->headScript()->appendFile('/public/js/less.js');
+            $view->headLink()->appendStylesheet('/public/css/metis-menu.css');            
             
             $view->headScript()->appendFile('/public/js/ckeditor/ckeditor.js');
             $view->headScript()->appendFile('/public/js/ckeditor/adapters/jquery.js');
@@ -141,13 +133,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $view->headScript()->appendFile('/public/js/jquery.tagsinput.js');
             $view->headScript()->appendFile('/public/js/jquery.chosen.js');
             $view->headScript()->appendFile('/public/js/jquery.chosen.order.js');
+            $view->headScript()->appendFile('/public/js/jquery.tokenize.js');
             $view->headScript()->appendFile('/public/js/jquery.nestable.js');
             
             $view->headScript()->appendFile('/public/js/bootstrap.datatables.js');
             
             $view->headScript()->appendFile('/public/js/metis-core.js');
             $view->headScript()->appendFile('/public/js/metis-menu.js');
-            $view->headScript()->appendFile('/public/js/metis-style-switcher.js');
             
             $view->headScript()->appendFile('/public/js/admin.js');
         }
@@ -190,8 +182,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         foreach($menus as $item)
         {            
             $post = $db->select()
-                ->from(array('p' => 'post'))
-                ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
+                ->from(array('p' => 'post'))                
                 ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
                 ->where('p.id = ?', $item['post_id'])
                 ->columns('*', 'p')
@@ -214,7 +205,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             {
                 $subpost = $db->select()
                     ->from(array('p' => 'post'))
-                    ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
                     ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
                     ->where('p.id = ?', $subitem['post_id'])
                     ->columns('*', 'p')
@@ -261,19 +251,40 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         foreach($slides as $item)
         {
             $post = $db->select()
-                ->from(array('p' => 'post'))
-                ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
+                ->from(array('p' => 'post'))                
                 ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
                 ->where('p.id = ?', $item['post_id'])
                 ->columns('*', 'p')
                 ->query()
                 ->fetchAll()[0];
             
+            $link = array();
+            
+            if($item['link_id'])
+            {
+                $link = $db->select()
+                    ->from(array('p' => 'post'))                    
+                    ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
+                    ->where('p.id = ?', $item['link_id'])
+                    ->columns('*', 'p')
+                    ->query()
+                    ->fetchAll();
+            }
+            
+            if(count($link) > 0)
+            {
+                $link = $link[0];
+            }
+            else
+            {
+                $link = array();
+            }
+            
             if(!isset($slide[$item['name']]))
             {
                 $slide[$item['name']] = array();
             }
-            array_push($slide[$item['name']], array('slide'=> $item, 'post'=> $post));
+            array_push($slide[$item['name']], array('slide' => $item, 'post' => $post, 'link' => $link));
         }
         
         Zend_Registry::set('slide', $slide);
@@ -306,8 +317,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         foreach($sidebars as $item)
         {
             $post = $db->select()
-                ->from(array('p' => 'post'))
-                ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
+                ->from(array('p' => 'post'))                
                 ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
                 ->where('p.id = ?', $item['post_id'])
                 ->columns('*', 'p')
@@ -335,63 +345,44 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	{
 		$db = Zend_Registry::get('db');
         
-        $category = $this->getCategory();
-        
-        $leafCategory = $db->select()
-            ->from(array('p' => 'post_category'))
-            ->columns('*', 'p')
-            ->joinLeft(array('c' => 'post_category'), 'p.id = c.link_id', array())
-            ->where('c.id is null')
-            ->query()
-            ->fetchAll();
-        
         $allCategory = $db->select()
             ->from(array('p' => 'post_category'))
             ->columns('*', 'p')
             ->query()
             ->fetchAll();
         
-        Zend_Registry::set('postCategory', $category);
-        Zend_Registry::set('leafCategory', $leafCategory);
+        foreach($allCategory as &$item)
+        {
+            if($item['link_id'])
+            {
+                $this->pushCategory($allCategory, $item);
+            }
+        }
+                
         Zend_Registry::set('allCategory', $allCategory);
         
         $this->bootstrap('layout');
         $layout = $this->getResource('layout');
-		$layout->assign('postCategory', $category);
-        $layout->assign('leafCategory', $leafCategory);
         $layout->assign('allCategory', $allCategory);
 	}
-        
-    private function getCategory($category = null)
-    {   
-        $db = Zend_Registry::get('db');
-        
-        $categories = $db->select()
-            ->from(array('p' => 'post_category'))
-            ->columns('*', 'p');
-        
-        if($category)
-        {
-            $categories = $categories->where('p.link_id = ?', $category['id']);
-        }
-        else
-        {
-            $categories = $categories->where('p.link_id is null or p.link_id = 0');
-        }
-        
-        $categories = $categories->query()
-            ->fetchAll();
-        
-        $res = array();
-            
-        foreach($categories as $item)
+    
+    private function pushCategory(&$allCategory, $category)
+    {                     
+        foreach($allCategory as &$item)
         {  
-            $re = array('id' => $item['id'], 'name' => $item['name'], 'displayName' => $item['display_name'], 'link_id' => $item['link_id']);
-            $re['subCategory'] = $this->getCategory($item);
-            array_push($res, $re);
+            if($item['id'] == $category['link_id'])
+            {
+                if(!isset($item['subCategory']))
+                {
+                    $item['subCategory'] = array();
+                }
+                array_push($item['subCategory'], $category);
+            }
+            if(isset($item['subCategory']))
+            {
+                $this->pushCategory($item['subCategory'], $category);
+            }
         }
-        
-        return $res;
     }  
 	
     /*******************************************************************

@@ -21,17 +21,25 @@
                 <?php if($value['category']['name'] == 'VIDEO_NOI_BAT'): ?>
                     <?php echo $this->render('post/custom/video-noi-bat-short.phtml');?>
                 <?php endif;?>
-
-                <?php if($value['category']['name'] == 'SU_KIEN_NOI_BAT'): ?>
-                    <?php echo $this->render('post/custom/su-kien-noi-bat-short.phtml');?>
+            
+                <?php if($value['category']['name'] == 'VIDEO'): ?>
+                    <?php echo $this->render('post/custom/video-full.phtml');?>
+                <?php endif;?>
+            
+                <?php if($value['category']['name'] == 'HUONG_DAN_DANG_KY_THANH_VIEN'): ?>
+                    <?php echo $this->render('post/custom/huongdandk-short.phtml');?>
                 <?php endif;?>
 
-                <?php if($value['category']['name'] == 'TIN_TUC'): ?>
+                <?php if($value['category']['name'] == 'TIN_TUC' || $value['category']['name'] == 'TIN_TUC_SU_KIEN' || $value['category']['name'] == 'TIN_TUC_NHA_PHAN_PHOI' || $value['category']['name'] == 'TIN_TUC_TRUYEN_THONG' || $value['category']['name'] == 'TIN_TUC_NOI_BO' || $value['category']['name'] == 'TIN_TUC_KHUYEN_MAI'): ?>
                     <?php if (count($this->categories) > 1):?>
                         <?php echo $this->render('post/custom/tin-tuc-short.phtml');?>
                     <?php else:?>
                         <?php echo $this->render('post/custom/tin-tuc-full.phtml');?>
                     <?php endif;?>
+                <?php endif;?>
+            
+                <?php if($value['category']['name'] == 'TAI_LIEU_HO_TRO'): ?>
+                    <?php echo $this->render('post/custom/tai-lieu-ho-tro-full.phtml');?>
                 <?php endif;?>
 
             <?php endforeach;?>
@@ -44,9 +52,9 @@
         <?php elseif(strpos($this->post['category'], 'TIN_TUC') != false): ?>
             <?php echo $this->render('post/custom/tin-tuc-detail.phtml');?>
         <?php elseif(strpos($this->post['category'], 'SU_KIEN') != false): ?>
-            <?php echo $this->render('post/custom/su-kien-detail.phtml');?>
+            <?php echo $this->render('post/custom/su-kien-detail.phtml');?>        
         <?php else: ?>
-            <?php echo $this->render('post/content.phtml');?>
+            <?php echo $this->render('post/custom/tin-tuc-detail.phtml');?>
         <?php endif;?>
     <?php endif;?>
 

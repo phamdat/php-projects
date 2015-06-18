@@ -29,6 +29,9 @@
                                     Display name
                                 </th>
                                 <th>
+                                    Parent
+                                </th>
+                                <th>
                                     Action
                                 </th>
                             </tr>
@@ -40,7 +43,14 @@
                                         <?php echo $value['name'];?>
                                     </td>
                                     <td>
-                                        <?php echo $value['displayName'];?>
+                                        <?php echo $value['display_name'];?>
+                                    </td>
+                                    <td>
+                                        <?php foreach($this->category as $pvalue):?>
+                                            <?php if($pvalue['id'] == $value['link_id']): ?>
+                                                <?php echo $pvalue['display_name'];?>
+                                            <?php endif;?>  
+                                        <?php endforeach;?>
                                     </td>
                                     <td class="text-right">
                                         <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:ADD'])): ?>
@@ -61,30 +71,7 @@
                                             </a>
                                         <?php endif;?>
                                     </td>
-                                </tr>
-                                <?php foreach($value['subCategory'] as $value1):?>
-                                    <tr>
-                                        <td>
-                                            -------<?php echo $value1['name'];?>
-                                        </td>
-                                        <td>
-                                            <?php echo $value1['displayName'];?>
-                                        </td>
-                                        <td class="text-right">
-                                            <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:EDIT'])): ?>
-                                                <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'detail', 'id' => $value1['id'] )) ?>">
-                                                    <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="Edit"></i>
-                                                </a>
-                                            <?php endif;?>
-
-                                            <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['CATEGORY:DELETE'])): ?>
-                                                <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'category', 'action'=> 'delete', 'id' => $value1['id'] )) ?>" need-confirm>
-                                                    <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="Delete"></i>
-                                                </a>
-                                            <?php endif;?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach;?>
+                                </tr>                                
                             <?php endforeach;?>
                         </tbody>
                     </table>

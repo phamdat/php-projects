@@ -406,7 +406,8 @@ body {
 }
 
 #menu>li:hover>a,
-#menu>li:focus>a {
+#menu>li:focus>a,
+#menu>li>a.active{
     background-color: rgba(0, 0, 0, 0.1);
     outline: none;
     -webkit-box-shadow: none;
@@ -424,8 +425,9 @@ body {
     font-size: 13px
 }
 
-#menu>li ul a:hover {
-    background-color: rgba(0, 0, 0, 0.1)
+#menu>li ul a:hover,
+#menu>li ul a.active{
+    background-color: rgba(0, 0, 0, 0.5)
 }
 
 #menu.affix {
@@ -2833,7 +2835,8 @@ div.uploader {
 
 .bg-light.lter,
 .bg-light>.lter {
-    background-color: #fff !important
+    background-color: #fff !important;
+    padding-right: 0px;
 }
 
 .bg-brillant {

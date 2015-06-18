@@ -10,9 +10,8 @@ class Admin_PostController extends Zend_Controller_Action
 	
 	public function preDispatch()
     {
-		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());		
-        Zend_Layout::getMvcInstance()->assign('icon', 'file-text');
-        Zend_Layout::getMvcInstance()->assign('title', 'Post');
+		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());        
+        Zend_Layout::getMvcInstance()->assign('inIframe', true);
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -23,27 +22,59 @@ class Admin_PostController extends Zend_Controller_Action
     public function indexAction()
     {
 		$db = Zend_Registry::get('db');
-						
-		$adapter = new Zend_Paginator_Adapter_DbSelect(
-			$db->select()
-				->from(array('p' => 'post'))
+
+        $query = $db->select()
+                ->from(array('p' => 'post'))
                 ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
-                ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
-                ->where('p.type = ?', PAGE)
-                ->where('p.category like ?', $this->_request->getParam('category')?'%,'.$this->_request->getParam('category').',%':'%')
+                ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))                
                 ->columns('*', 'p')                
-				->order(array('p.order_id DESC', 'p.id DESC'))
+                ->where('p.type = ?', PAGE);
+        if($this->_request->getParam('category'))
+        {            
+            foreach(Zend_Registry::get('allCategory') as $category)
+            {
+                if($this->_request->getParam('category') == $category['name'])
+                {
+                    $query->where('p.category like ?', '%,'.$category['name'].',%');
+                    if(isset($category['subCategory']))
+                    {
+                        foreach($category['subCategory'] as $icategory)
+                        {
+                            $query->orWhere('p.category like ?', '%,'.$icategory['name'].',%');
+                        }
+                    }
+                }
+            }
+        }
+		$adapter = new Zend_Paginator_Adapter_DbSelect(
+			$query->order(array('p.order_id DESC', 'p.id DESC'))
 		);
         
-		$adapter->setRowCount(
-			$db->select()
-				->from(array('p' => 'post'))
+        $query = $db->select()
+                ->from(array('p' => 'post'))
                 ->joinLeft(array('c' => 'post_category'), 'c.name = p.category', array('*', 'category_id'=>'c.id'))
-                ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))
-                ->where('p.type = ?', PAGE)
-                ->where('p.category like ?', $this->_request->getParam('category')?'%,'.$this->_request->getParam('category').',%':'%')
+                ->joinLeft(array('u' => 'user'), 'u.id = p.creator_id', array('*', 'creater_id'=>'u.id'))                
                 ->columns('*', 'p')                
-				->reset( Zend_Db_Select::COLUMNS )
+                ->where('p.type = ?', PAGE);
+        if($this->_request->getParam('category'))
+        {            
+            foreach(Zend_Registry::get('allCategory') as $category)
+            {
+                if($this->_request->getParam('category') == $category['name'])
+                {
+                    $query->where('p.category like ?', '%,'.$category['name'].',%');
+                    if(isset($category['subCategory']))
+                    {
+                        foreach($category['subCategory'] as $icategory)
+                        {
+                            $query->orWhere('p.category like ?', '%,'.$icategory['name'].',%');
+                        }
+                    }
+                }
+            }
+        }
+		$adapter->setRowCount(
+			$query->reset( Zend_Db_Select::COLUMNS )
 				->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
 		);
 		
@@ -99,10 +130,12 @@ class Admin_PostController extends Zend_Controller_Action
                     'seo_title'        => $postForm->getValue('seo_title'),
                     'seo_description'  => $postForm->getValue('seo_description'),
                     'seo_keyword'      => $postForm->getValue('seo_keyword'),
+                    'tag'              => $postForm->getValue('tag'),
                     'en_seo_url'       => $postForm->getValue('en_seo_url'),
                     'en_seo_title'     => $postForm->getValue('en_seo_title'),
                     'en_seo_description'    => $postForm->getValue('en_seo_description'),
                     'en_seo_keyword'        => $postForm->getValue('en_seo_keyword'),
+                    'en_tag'           => $postForm->getValue('en_tag'),
                     'has_slide'             => $postForm->getValue('has_slide'),
                     'has_left_sidebar'      => $postForm->getValue('has_left_sidebar'),
                     'has_right_sidebar'     => $postForm->getValue('has_right_sidebar'),
@@ -217,14 +250,13 @@ class Admin_PostController extends Zend_Controller_Action
         $db = Zend_Registry::get('db');
         
 		$id = new Zend_Form_Element_Hidden('id');
-		$id->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------
         
         $category = new Zend_Form_Element_Multiselect('category');
         $category->setLabel('Category')
 				->setRequired(true)
-                ->setAttrib('class', 'form-control input-multiple-select validate[required]')
+                ->setAttrib('class', 'form-control input-multiple-select')
 				->addValidator('NotEmpty', true)
 				->addErrorMessage('Please select category.')
                 ->setValue($this->_request->getParam('category'));
@@ -238,7 +270,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $file = new Zend_Form_Element_File('file');
         $file->setLabel('Thumbnail')
-					->setRequired(false)
                     ->addValidator('Count', false, 1)
 					->addValidator('Size', false, 2097152)
 					->addValidator('Extension', false, 'jpg,png,gif');
@@ -253,13 +284,11 @@ class Admin_PostController extends Zend_Controller_Action
 		}
 		
 		$thumbnail = new Zend_Form_Element_Hidden('thumbnail');
-		$thumbnail->setRequired(false);
         
         //-------------------------------------------------------------------------------------------------------------------------
                 
         $filemedia = new Zend_Form_Element_File('filemedia');
         $filemedia->setLabel('Product images')
-					->setRequired(false)
                     ->addValidator('Count', false, 1)
 					->addValidator('Size', false, 2097152)
 					->addValidator('Extension', false, 'jpg,png,gif');
@@ -269,7 +298,6 @@ class Admin_PostController extends Zend_Controller_Action
 		$filemedia->getValidator('Extension')->setMessage('Chỉ được up file có định dạng jpg, png, gif.');
 		
 		$media = new Zend_Form_Element_Hidden('media');
-		$media->setRequired(false);
                 
         //-------------------------------------------------------------------------------------------------------------------------
 		
@@ -290,14 +318,12 @@ class Admin_PostController extends Zend_Controller_Action
         
 		$content = new Zend_Form_Element_Textarea('content');
         $content->setLabel('Content')
-				->setRequired(false)
                 ->setAttrib('class', 'form-control input-editor');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $enTitle = new Zend_Form_Element_Text('en_title');
-        $enTitle->setLabel('English Title')
-				->setRequired(false);
+        $enTitle->setLabel('English Title');
         
         //-------------------------------------------------------------------------------------------------------------------------        
 				
@@ -309,76 +335,76 @@ class Admin_PostController extends Zend_Controller_Action
         
 		$enContent = new Zend_Form_Element_Textarea('en_content');
         $enContent->setLabel('English Content')
-				->setRequired(false)
                 ->setAttrib('class', 'form-control input-editor');
             
         //-------------------------------------------------------------------------------------------------------------------------
         
         $price = new Zend_Form_Element_Text('price');
-        $price->setLabel('Price')
-				->setRequired(false);
+        $price->setLabel('Price');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $oldPrice = new Zend_Form_Element_Text('old_price');
-        $oldPrice->setLabel('Old price')
-				->setRequired(false);
+        $oldPrice->setLabel('Old price');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $seoUrl = new Zend_Form_Element_Text('seo_url');
-        $seoUrl->setLabel('SEO url')
-				->setRequired(false);
+        $seoUrl->setLabel('SEO url');
         
         //-------------------------------------------------------------------------------------------------------------------------        
 
         $seoTitle = new Zend_Form_Element_Text('seo_title');
-        $seoTitle->setLabel('SEO title')
-				->setRequired(false);
-        
-        //-------------------------------------------------------------------------------------------------------------------------        
-
-        $seoKeyword = new Zend_Form_Element_Text('seo_keyword');
-        $seoKeyword->setLabel('SEO keyword')
-				->setRequired(false);
-        
+        $seoTitle->setLabel('SEO title');
+                
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $seoDescription = new Zend_Form_Element_Textarea('seo_description');
         $seoDescription->setLabel('SEO description')
-				->setRequired(false)
                 ->setAttrib('rows', '3');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+
+        $seoKeyword = new Zend_Form_Element_Text('seo_keyword');
+        $seoKeyword->setLabel('SEO keyword');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+
+        $tag = new Zend_Form_Element_Text('tag');
+        $tag->setLabel('Tag')
+            ->setAttrib('class', 'form-control input-tags');
         
         //-------------------------------------------------------------------------------------------------------------------------
         
         $enSeoUrl = new Zend_Form_Element_Text('en_seo_url');
-        $enSeoUrl->setLabel('English SEO url')
-				->setRequired(false);
+        $enSeoUrl->setLabel('English SEO url');
         
         //-------------------------------------------------------------------------------------------------------------------------        
 
         $enSeoTitle = new Zend_Form_Element_Text('en_seo_title');
-        $enSeoTitle->setLabel('English SEO title')
-				->setRequired(false);
-        
-        //-------------------------------------------------------------------------------------------------------------------------        
-
-        $enSeoKeyword = new Zend_Form_Element_Text('en_seo_keyword');
-        $enSeoKeyword->setLabel('English SEO keyword')
-				->setRequired(false);
+        $enSeoTitle->setLabel('English SEO title');        
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $enSeoDescription = new Zend_Form_Element_Textarea('en_seo_description');
         $enSeoDescription->setLabel('English SEO description')
-				->setRequired(false)
                 ->setAttrib('rows', '3');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+
+        $enSeoKeyword = new Zend_Form_Element_Text('en_seo_keyword');
+        $enSeoKeyword->setLabel('English SEO keyword');
+        
+        //-------------------------------------------------------------------------------------------------------------------------        
+
+        $enTag = new Zend_Form_Element_Text('en_tag');
+        $enTag->setLabel('English tag')
+            ->setAttrib('class', 'form-control input-tags');
         
         //-------------------------------------------------------------------------------------------------------------------------        
         
         $hasSlide = new Zend_Form_Element_Checkbox('has_slide');
         $hasSlide->setLabel('Show slide')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -387,7 +413,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasLeftSidebar = new Zend_Form_Element_Checkbox('has_left_sidebar');
         $hasLeftSidebar->setLabel('Show left sidebar')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -396,7 +421,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasRightSidebar = new Zend_Form_Element_Checkbox('has_right_sidebar');
         $hasRightSidebar->setLabel('Show right sidebar')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -405,7 +429,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasTopSidebar = new Zend_Form_Element_Checkbox('has_top_sidebar');
         $hasTopSidebar->setLabel('Show top sidebar')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -414,7 +437,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasBreadcrumb = new Zend_Form_Element_Checkbox('has_breadcrumb');
         $hasBreadcrumb->setLabel('Show breadcrumb')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(true);
@@ -423,7 +445,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasTitle = new Zend_Form_Element_Checkbox('has_title');
         $hasTitle->setLabel('Show title')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(true);
@@ -432,7 +453,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasCreatedDate = new Zend_Form_Element_Checkbox('has_created_date');
         $hasCreatedDate->setLabel('Show created date')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -441,7 +461,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasDescription = new Zend_Form_Element_Checkbox('has_description');
         $hasDescription->setLabel('Show description')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(true);
@@ -450,7 +469,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasContent = new Zend_Form_Element_Checkbox('has_content');
         $hasContent->setLabel('Show content')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(true);
@@ -459,7 +477,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasMedia = new Zend_Form_Element_Checkbox('has_media');
         $hasMedia->setLabel('Show images')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -468,7 +485,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasCreator = new Zend_Form_Element_Checkbox('has_creator');
         $hasCreator->setLabel('Show creator')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -477,7 +493,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasSimilarPost = new Zend_Form_Element_Checkbox('has_similar_post');
         $hasSimilarPost->setLabel('Show the same posts')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -486,7 +501,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasMostOfViewPost = new Zend_Form_Element_Checkbox('has_most_of_post');
         $hasMostOfViewPost->setLabel('Show high view posts')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -495,7 +509,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasComment = new Zend_Form_Element_Checkbox('has_comment');
         $hasComment->setLabel('Show comment')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -504,7 +517,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasLikeShare = new Zend_Form_Element_Checkbox('has_like_share');
         $hasLikeShare->setLabel('Show like share')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(true);
@@ -513,7 +525,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $hasAdvertisment = new Zend_Form_Element_Checkbox('has_advertisment');
         $hasAdvertisment->setLabel('Show advertisment')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -522,7 +533,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $isFrontPage = new Zend_Form_Element_Checkbox('is_front_page');
         $isFrontPage->setLabel('Make home page')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -531,7 +541,6 @@ class Admin_PostController extends Zend_Controller_Action
         
         $isFilterPage = new Zend_Form_Element_Checkbox('is_filter_page');
         $isFilterPage->setLabel('Make filter page')
-				->setRequired(false)
                 ->setCheckedValue(true)
                 ->setUncheckedValue(false)
                 ->setValue(false);
@@ -542,8 +551,19 @@ class Admin_PostController extends Zend_Controller_Action
         $category2List->setLabel('Select category to list')
                 ->setRequired(false);
         
+        if($post){
+            foreach(explode(',', $post['category_to_list']) as $vca){
+                foreach(Zend_Registry::get('allCategory') as $categoryItem){
+                    if($vca == $categoryItem['name']){
+                        $category2List->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
+                    }
+                }
+            }
+        }
         foreach(Zend_Registry::get('allCategory') as $categoryItem){
-			$category2List->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
+            if(!isset($post['category_to_list']) || strpos($post['category_to_list'], ','.$categoryItem[ 'name']. ',') == false){
+                $category2List->addMultiOption($categoryItem['name'], $categoryItem['display_name']);
+            }
 		}
         $category2List->setAttrib('size', count(Zend_Registry::get('allCategory')));
         $category2List->setAttrib('class', 'form-control input-multiple-select');
@@ -552,7 +572,7 @@ class Admin_PostController extends Zend_Controller_Action
         
         $linkId = new Zend_Form_Element_Select('link_id');
         $linkId->setLabel('Parent post')
-				->setRequired(false);
+;
         
         $linkId->addMultiOption(null, 'Root');
         
@@ -598,13 +618,15 @@ class Admin_PostController extends Zend_Controller_Action
             $price->setValue($post['price']);
             $oldPrice->setValue($post['old_price']);
             $seoUrl->setValue($post['seo_url']);
-            $seoTitle->setValue($post['seo_title']);
-            $seoKeyword->setValue($post['seo_keyword']);
+            $seoTitle->setValue($post['seo_title']);            
             $seoDescription->setValue($post['seo_description']);
+            $seoKeyword->setValue($post['seo_keyword']);
+            $tag->setValue($post['tag']);
             $enSeoUrl->setValue($post['en_seo_url']);
             $enSeoTitle->setValue($post['en_seo_title']);
-            $enSeoKeyword->setValue($post['en_seo_keyword']);
             $enSeoDescription->setValue($post['en_seo_description']);
+            $enSeoKeyword->setValue($post['en_seo_keyword']);
+            $enTag->setValue($post['en_tag']);
             $hasSlide->setValue($post['has_slide']);
             $hasLeftSidebar->setValue($post['has_left_sidebar']);
             $hasRightSidebar->setValue($post['has_right_sidebar']);
@@ -649,12 +671,14 @@ class Admin_PostController extends Zend_Controller_Action
                     ->addElement($oldPrice)
                     ->addElement($seoUrl)
                     ->addElement($seoTitle)
-                    ->addElement($seoKeyword)
                     ->addElement($seoDescription)
+                    ->addElement($seoKeyword)
+                    ->addElement($tag)
                     ->addElement($enSeoUrl)
                     ->addElement($enSeoTitle)
-                    ->addElement($enSeoKeyword)
                     ->addElement($enSeoDescription)
+                    ->addElement($enSeoKeyword)
+                    ->addElement($enTag)
                     ->addElement($hasSlide)
                     ->addElement($hasLeftSidebar)
                     ->addElement($hasRightSidebar)

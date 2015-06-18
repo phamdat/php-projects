@@ -11,8 +11,7 @@ class Admin_CategoryController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('icon', 'list-ol');
-        Zend_Layout::getMvcInstance()->assign('title', 'Post Category');
+		Zend_Layout::getMvcInstance()->assign('inIframe', true);
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -22,7 +21,7 @@ class Admin_CategoryController extends Zend_Controller_Action
 
     public function indexAction()
     {	
-        $this->view->category = Zend_Registry::get('postCategory');
+        $this->view->category = Zend_Registry::get('allCategory');
     }
 
 	public function detailAction()
@@ -58,8 +57,34 @@ class Admin_CategoryController extends Zend_Controller_Action
 				$db = Zend_Registry::get('db');
 				
 				if($categoryForm->getValue('id')){
+                    
+                    $oldCategory = $db->select()
+                            ->from(array('p' => 'post_category'))
+                            ->columns('*', 'p')
+                            ->where('p.id = ?', $categoryForm->getValue('id'))
+                            ->query()
+                            ->fetchAll()[0];                        
+                    
 					$n = $db->update('post_category', $data, array('id = ?' => $categoryForm->getValue('id')));
-				}else{
+                    
+                    $oldps = $db->select()
+							->from(array('p' => 'post'))
+							->columns('*', 'p')
+							->where('p.category like ?', '%'.$oldCategory['name'].'%')
+                            ->orWhere('p.category_to_list like ?', '%'.$oldCategory['name'].'%')
+							->query()
+							->fetchAll();
+                    
+                    foreach($oldps as $p)
+                    {
+                        $p['category'] = str_replace(','.$oldCategory['name'].',', ','.$categoryForm->getValue('name').',', $p['category']);
+                        $p['category_to_list'] = str_replace(','.$oldCategory['name'].',', ','.$categoryForm->getValue('name').',', $p['category_to_list']);
+                        
+                        $n = $db->update('post', $p, array('id = ?' => $p['id']));
+                    }                    
+				}
+                else
+                {
 					$n = $db->insert('post_category', $data);
 				}
 				
@@ -86,8 +111,9 @@ class Admin_CategoryController extends Zend_Controller_Action
         $db = Zend_Registry::get('db');
         
 		$id = new Zend_Form_Element_Hidden('id');
-		$id->setRequired(false);
 		
+        //-------------------------------------------------------------------------------------------------
+        
         $name = new Zend_Form_Element_Text('name');
         $name->setLabel('Name')
             ->setRequired(true)
@@ -95,8 +121,7 @@ class Admin_CategoryController extends Zend_Controller_Action
             ->addValidator('NotEmpty', true)
             ->addErrorMessage('Please input category name.');
         
-        
-        
+        //-------------------------------------------------------------------------------------------------        
         
         $displayName = new Zend_Form_Element_Text('display_name');
         $displayName->setLabel('Display')            
@@ -105,12 +130,10 @@ class Admin_CategoryController extends Zend_Controller_Action
             ->addValidator('NotEmpty', true)
             ->addErrorMessage('Please input display name.');
 
-        
-        
+        //-------------------------------------------------------------------------------------------------
         
         $linkId = new Zend_Form_Element_Select('link_id');
-        $linkId->setLabel('Parent category')
-				->setRequired(false);
+        $linkId->setLabel('Parent category');
 
         $categoryList = $db->select()
 					->from(array('p' => 'post_category'))
@@ -120,27 +143,30 @@ class Admin_CategoryController extends Zend_Controller_Action
         
         $linkId->addMultiOption(null, 'Root');
         foreach($categoryList as $item){
-			$linkId->addMultiOption($item['id'], $item['display_name']);
+			if(!$category || $category['id'] != $item['id'])
+            {
+                $linkId->addMultiOption($item['id'], $item['display_name']);
+            }
 		}
         
         $linkId->setValue($this->_request->getParam('link_id'));
         
-        
-        
+        //-------------------------------------------------------------------------------------------------        
         
         $submit = new Zend_Form_Element_Submit('submit');
         $submit->setLabel('Save')
                 ->setAttrib('class', 'btn btn-primary btn-sm');
 
-        
-        
-        
+        //-------------------------------------------------------------------------------------------------
+                
         if($category){
             $id->setValue($category['id']);
             $name->setValue($category['name']);
             $displayName->setValue($category['display_name']);
             $linkId->setValue($category['link_id']);
         }
+        
+        //-------------------------------------------------------------------------------------------------
         
         $categoryForm = new Zend_Form();
         $categoryForm->setAction($this->_request->getBaseUrl().'/admin/category/detail')

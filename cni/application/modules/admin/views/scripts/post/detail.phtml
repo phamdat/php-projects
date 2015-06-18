@@ -42,7 +42,7 @@
                         <div class="icons">
                             <i class="fa fa-pencil"></i>
                         </div>
-                        <h5></h5>
+                        <h5>Post</h5>
                         <div class="toolbar">
                             <div class="btn-group">
                                 <?php echo $this->postForm->getElement('submit'); ?>
@@ -66,6 +66,7 @@
                                             <?php echo $this->postForm->getElement('title'); ?>
                                             <?php echo $this->postForm->getElement('description'); ?>
                                             <?php echo $this->postForm->getElement('content'); ?>
+                                            <?php echo $this->postForm->getElement('caption'); ?>
 
                                             <?php echo $this->postForm->getElement('thumbnail'); ?>
                                             <?php echo $this->postForm->getElement('file'); ?>
@@ -143,6 +144,7 @@
                                             <?php echo $this->postForm->getElement('is_filter_page'); ?>
                                             <?php echo $this->postForm->getElement('redirect_url'); ?>
                                             <?php echo $this->postForm->getElement('category_to_list'); ?>
+                                            <?php echo $this->postForm->getElement('tag'); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -155,6 +157,7 @@
                                                     <?php echo $this->postForm->getElement('en_title'); ?>
                                                     <?php echo $this->postForm->getElement('en_description'); ?>
                                                     <?php echo $this->postForm->getElement('en_content'); ?>
+                                                    <?php echo $this->postForm->getElement('en_caption'); ?>
                                                 </div>
 
                                                 <div class="col-md-3">
@@ -162,6 +165,7 @@
                                                     <?php echo $this->postForm->getElement('en_seo_title'); ?>
                                                     <?php echo $this->postForm->getElement('en_seo_keyword'); ?>
                                                     <?php echo $this->postForm->getElement('en_seo_description'); ?>
+                                                    <?php echo $this->postForm->getElement('en_tag'); ?>
                                                 </div>
                                             </div>
                                         </div>

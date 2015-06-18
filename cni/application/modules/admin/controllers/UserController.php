@@ -11,8 +11,7 @@ class Admin_UserController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('icon', 'users');
-        Zend_Layout::getMvcInstance()->assign('title', 'User');
+		Zend_Layout::getMvcInstance()->assign('inIframe', true);
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {

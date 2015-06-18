@@ -1,11 +1,31 @@
 <style>
     .spdetail-container {
-        margin-top: 20px;
+        margin-top: 30px;
     }
     
-    .spdetail-container .post-media {
+    .spdetail-container .breadcrumb {
+        background-color: transparent;
+        padding-left: 0px;
+        margin-left: 210px;
+        font-size: 18px;
+    }
+    
+    .spdetail-container .breadcrumb > li + li:before {
+        content: "\003e";
+    }
+    
+    .spdetail-container .breadcrumb a{        
+        color: #777;
+        text-decoration: none;
+    }
+    
+    .spdetail-container .left-content {
+        width: 800px;
         float: left;
-        width: 490px;
+    }        
+    
+    .spdetail-container .post-media {        
+        width: 100%;
         margin-right: 100px;
         margin-top: 20px;
     }
@@ -14,7 +34,6 @@
         color: #1c87c5;
         font-size: 34px;
         text-transform: uppercase;
-        font-weight: bold;
     }
     
     .spdetail-container .post-like-share {
@@ -29,63 +48,185 @@
         margin-top: 20px;
     }
     
+    .spdetail-container .right-content {
+        width: 360px;
+        float: right;
+        padding-left: 10px;
+        border-left-width: 2px;
+        border-left-style: solid;
+        border-left-color: #ddd;
+    }
+    
+    .spdetail-container .htitle {
+        font-size: 18px;
+        color: #777;
+        margin-top: 8px;
+        margin-bottom: 29px;
+    }
+    
+    .spdetail-container .right-content .thumbnail {
+        width: 180px;
+        float: left;
+        border: none;
+        margin-right: 5px;
+        padding: 0px;
+    }
+    
+    .spdetail-container .right-content .title {
+        font-size: 14px;
+        color: #153242;
+        text-decoration: none;
+    }
+    
+    .spdetail-container .right-content .description {
+        font-size: 12px;
+        color: #777;
+    }
+    
+    .facebook-container {                
+        width: 100%;
+    }
+    
     @media (min-width: 992px) and (max-width: 1199px) {
-        .spdetail-container .post-media {
-            width: 400px;
+        .spdetail-container {
+            margin-top: 20px;
+        }
+        .spdetail-container .breadcrumb {
+            margin-left: 185px;
+        }
+        .spdetail-container .left-content {
+            width: 660px;
+        }
+        .spdetail-container .right-content {
+            width: 300px;
+        }
+        .spdetail-container .right-content .thumbnail {
+            width: 140px;
         }
     }
     
     @media (min-width: 768px) and (max-width: 991px) {
-        .spdetail-container .post-media {
-            width: 310px;
+        .spdetail-container {
+            margin-top: 20px;
+        }
+        .spdetail-container .breadcrumb {
+            margin-left: 210px;
+            font-size: 16px;
+        }
+        .spdetail-container .left-content {
+            width: 490px;
+        }
+        .spdetail-container .right-content {
+            width: 250px;
+        }
+        .spdetail-container .right-content .thumbnail {
+            width: 110px;
         }
     }
     
     @media (max-width: 767px) {
-        .spdetail-container .post-media {
+        .spdetail-container .breadcrumb {
+            margin-left: 0px;
+            font-size: 16px;
+            margin-top: 50px;
+        }
+        .spdetail-container .left-content {
             width: 100%;
+        }
+        .spdetail-container .right-content {
+            width: 100%;
+            border: none;
+        }
+        .spdetail-container .right-content .thumbnail {
+            width: 60%;
         }
     }
 </style>
-<?php echo $this->render('post/custom/san-pham-baner.phtml');?>
 <div class="spdetail-container">
-    <div class="post-title">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
-    </div>
-
-    <div id="preview-post" class="carousel post-media" data-ride="carousel">
-        <div class="carousel-inner">
-            <?php $ms=explode( ';', preg_replace( '/;+/', ';', trim($this->post['media'], ';'))); ?>
-            <?php foreach($ms as $key=> $media):?>
-            <div class="item <?php echo $key==0?'active':'' ?>">
-                <img src="<?php echo $media ?>" class="center-block img-responsive">
-            </div>
+    <div class="left-content">
+        <ol class="breadcrumb">
+            <?php foreach($this->breadcrumb as $item):?>
+                <li>
+                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($item) ?>"><?php echo Utils_StringUtils::getTextFromPost($item, 'title'); ?></a>
+                </li>
             <?php endforeach;?>
+        </ol>
+
+        <div id="preview-post" class="carousel post-media" data-ride="carousel">
+            <div class="carousel-inner">
+                <?php $ms=explode( ';', preg_replace( '/;+/', ';', trim($this->post['media'], ';'))); ?>
+                <?php foreach($ms as $key=> $media):?>
+                <div class="item <?php echo $key==0?'active':'' ?>">
+                    <img src="<?php echo $media ?>" class="center-block img-responsive">
+                </div>
+                <?php endforeach;?>
+            </div>
+            <a class="left carousel-control" href="#preview-post" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#preview-post" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>   
+
+        <div class="post-description">
+            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
         </div>
-        <a class="left carousel-control" href="#preview-post" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#preview-post" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>   
 
-    <div class="post-description">
-        <?php echo Utils_StringUtils::getTextFromPost($this->post, 'description');?>
+        <div class="clearfix"></div>
+
+        <?php if($this->post['has_like_share']): ?>
+        <div class="post-like-share">
+            <div class="fb-like" data-href="<?php echo $this->fullUrl; ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+        </div>
+        <?php endif;?>
+
+        <div class="post-content">
+            <?php echo $this->post['content'] ?>
+        </div>
     </div>
+    <div class="right-content pagination-container">
+        <div class="htitle">
+            Sản phẩm cùng loại
+        </div>
+        <?php $this->paramPageSize = 4; ?>
+        <?php $this->paramPosts = $this->similarPosts; ?>
+        <?php foreach($this->paramPosts as $index => $value):?>
+            <?php if($index % $this->paramPageSize == 0):?>
+                <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
+            <?php endif;?>
+                    <div class="item-content">                
+                        <a class="thumbnail" href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                            <img src="<?php echo $value['thumbnail'];?>" class="img-responsive">
+                        </a>
+                        <a class="title" href="<?php echo Utils_StringUtils::getUrlFromPost($value);?>">
+                            <?php echo Utils_StringUtils::getTextFromPost($value, 'title'); ?>
+                        </a>
+                        <p class="description">
+                            <?php echo Utils_StringUtils::getTextFromPost($value, 'description'); ?>
+                        </p>
+                    </div>
+                    <div class="clearfix"></div>
+            <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                </div>
+            <?php endif;?>
+        <?php endforeach;?>
+        <div class="clearfix"></div>
+        <?php echo $this->render('post/pagination.phtml');?>
+        
+        <div class="facebook-container">
+            <div id="fb-root">&nbsp;</div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=412419298912724&version=v2.0";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
 
-    <div class="clearfix"></div>
-
-    <?php if($this->post['has_like_share']): ?>
-    <div class="post-like-share">
-        <div class="fb-like" data-href="<?php echo $this->fullUrl; ?>" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+            <div class="fb-like-box" data-colorscheme="light" data-header="false" data-href="https://www.facebook.com/CNIVn?fref=ts&__mref=message_bubble" data-show-border="false" data-show-faces="true" data-stream="false">&nbsp;</div>
+        </div>
     </div>
-    <?php endif;?>
-
-    <div class="post-content">
-        <?php echo $this->post['content'] ?>
-    </div>
-
 </div>

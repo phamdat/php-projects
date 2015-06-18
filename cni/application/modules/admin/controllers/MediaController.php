@@ -11,8 +11,7 @@ class Admin_MediaController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName() . '-content');
-		Zend_Layout::getMvcInstance()->assign('icon', 'picture-o');
-        Zend_Layout::getMvcInstance()->assign('title', 'Media');
+		Zend_Layout::getMvcInstance()->assign('inIframe', true);
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -75,8 +74,62 @@ class Admin_MediaController extends Zend_Controller_Action
 	
 	
 	public function deleteAction()
-    {		
+    {	
+        unlink(MEDIA_DIRECTORY . $this->_request->getParam('file'));
 		$this->redirect('/admin/media');
+    }
+    
+    public function cleanAction()
+    {
+        $db = Zend_Registry::get('db');
+        
+        $files = scandir(MEDIA_DIRECTORY);
+        
+        foreach($files as $i => $f)
+        {
+            if($f != '.' && $f != '..')
+            {
+                $datas = $db->select()
+							->from(array('p' => 'post'))
+							->columns('*', 'p')
+							->where('p.description like ?', '%'.$f.'%')
+                            ->orWhere('p.en_description like ?', '%'.$f.'%')
+                            ->orWhere('p.title like ?', '%'.$f.'%')
+                            ->orWhere('p.en_title like ?', '%'.$f.'%')
+                            ->orWhere('p.content like ?', '%'.$f.'%')
+                            ->orWhere('p.en_content like ?', '%'.$f.'%')
+                            ->orWhere('p.thumbnail like ?', '%'.$f.'%')
+                            ->orWhere('p.media like ?', '%'.$f.'%')
+							->query()
+							->fetchAll();
+                
+                if(count($datas) == 0)
+                {
+                    $datas = $db->select()
+							->from(array('c' => 'configuration'))
+							->columns('*', 'c')
+							->where('c.value like ?', '%'.$f.'%')
+							->query()
+							->fetchAll();
+
+                    if(count($datas) == 0)
+                    {
+                        $datas = $db->select()
+                                ->from(array('c' => 'simple_configuration'))
+                                ->columns('*', 'c')
+                                ->where('c.value like ?', '%'.$f.'%')
+                                ->query()
+                                ->fetchAll();
+                        
+                        if(count($datas) == 0)
+                        {                            
+                            unlink(MEDIA_DIRECTORY . $f);
+                        }
+                    }
+                }
+            }
+        }
+		$this->redirect('/admin/media');        
     }
 }
 

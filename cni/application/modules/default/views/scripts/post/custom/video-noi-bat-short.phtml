@@ -4,14 +4,20 @@
             margin-top: 20px;
             width: 750px;
             float: left;
-        }
+            position: relative;
+        }        
 
-        .videonoibat-container .title {
+        .videonoibat-container .htitle {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            z-index: 1000;
             color: #ffffff;
-            font-size: 28px;
+            font-size: 20px;
             text-transform: uppercase;
-            background-color: #1c87c5;
+            background-color: rgba(55, 60, 67, 0.3);
             padding: 10px 15px;
+            border-radius: 20px 20px 0px 0px;
         }
 
         .videonoibat-container .content .item {
@@ -26,6 +32,7 @@
             border-radius: 0px;
             background-color: transparent;
             border: none;
+            border-radius: 20px;
         }
 
         .videonoibat-container .content .item .thumbnail img {
@@ -40,7 +47,7 @@
             bottom: 20px;
             width: 640px;
             font-size: 18px;
-            background-color: #1c87c5;
+            background-color: rgba(28, 135, 197, 0.5);
         }
         
         .videonoibat-container .content .item .cover {
@@ -56,6 +63,7 @@
             -moz-transition: background .5s ease-out, color .5s ease-out;
             -o-transition: background .5s ease-out, color .5s ease-out;
             transition: background .5s ease-out, color .5s ease-out;
+            border-radius: 20px;
         }
         
         .videonoibat-container .content .item .cover img{
@@ -63,7 +71,7 @@
         }
         
         .videonoibat-container .content .item:hover .cover {
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.3);
             color: rgba(255, 255, 255, 1.0);
         }
         
@@ -78,10 +86,30 @@
             color: red;
             font-size: 36px;
         }
+        
+        @media (min-width: 1199px) {
+            .videonoibat-container {
+                position: static;
+            }
+            .videonoibat-container .remove-width {
+                width: 635px;
+                float: right;
+                position: relative;
+            }
+            .videonoibat-container .content .item .title {
+                width: 540px;
+            }
+            .videonoibat-container .content .item .thumbnail img {
+                height: 390px;
+            }
+        }
 
         @media (min-width: 992px) and (max-width: 1199px) {
             .videonoibat-container {
                 width: 620px;
+            }
+            .videonoibat-container .title {
+                font-size: 16px;
             }
             .videonoibat-container .content .item .thumbnail img {
                 height: 350px;
@@ -90,6 +118,10 @@
                 width: 500px;
                 font-size: 16px;
             }
+            .videonoibat-container .content .item .cover img{
+                margin-top: 70px;
+                width: 110px;
+            }
         }
 
         @media (min-width: 768px) and (max-width: 991px) {
@@ -97,7 +129,7 @@
                 width: 480px;
             }
             .videonoibat-container .title {
-                font-size: 24px;
+                font-size: 12px;
             }
             .videonoibat-container .content .item .thumbnail img {
                 height: 275px;
@@ -105,6 +137,10 @@
             .videonoibat-container .content .item .title {
                 width: 400px;
                 font-size: 14px;
+            }
+            .videonoibat-container .content .item .cover img{
+                margin-top: 40px;
+                width: 90px;
             }
         }
 
@@ -122,39 +158,47 @@
                 width: 90%;
                 font-size: 14px;
             }
+            .videonoibat-container .content .item .cover img{
+                margin-top: 30px;
+                width: 50px;
+            }
         }
     </style>
     <div class="videonoibat-container">
-        <div class="title">
-            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
-        </div>
-        <div class="content">
-            <?php foreach($this->paramPosts as $index => $post):?>
-                <?php if($index == 0):?>
-                    <div class="item">
-                        <div class="thumbnail">
-                            <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
-                        </div>
-                        <div class="cover" data-toggle="modal" data-target="#video_<?php echo $post['id']?>">
-                            <img src="/public/images/play-icon.png">
-                        </div>
-                        <div class="title">
-                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
-                        </div>
-                        <div class="modal fade" id="video_<?php echo $post['id']?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <div class="modal-body">
-                                        <?php echo Utils_StringUtils::getTextFromPost($post, 'content');?>
-                                    </div>              
+        <div class="remove-width">
+            <a href="/tin-tuc/su-kien" style="text-decoration: none;">
+                <div class="htitle">
+                    <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+                </div>
+            </a>
+            <div class="content">
+                <?php foreach($this->paramPosts as $index => $post):?>
+                    <?php if($index == 0):?>
+                        <div class="item">
+                            <div class="thumbnail">
+                                <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                            </div>
+                            <div class="cover" data-toggle="modal" data-target="#video_<?php echo $post['id']?>">
+                                <img src="/public/images/play-icon.png">
+                            </div>                        
+                            <div class="title">
+                                <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            </div>                        
+                            <div class="modal fade" id="video_<?php echo $post['id']?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <div class="modal-body">
+                                            <?php echo Utils_StringUtils::getTextFromPost($post, 'content');?>
+                                        </div>              
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                <?php endif;?>
-            <?php endforeach;?>
+                    <?php endif;?>
+                <?php endforeach;?>
+            </div>
+            <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>        
     </div>
 <?php endif;?>

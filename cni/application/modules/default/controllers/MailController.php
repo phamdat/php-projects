@@ -23,7 +23,7 @@ class MailController extends Zend_Controller_Action
                                     $this->_request->getParam('email'),
                                     $this->_request->getParam('phone'),
                                     $this->_request->getParam('address'),
-                                    $this->_request->getParam('comment')
+                                    $this->_request->getParam('comment'),
                                     $this->_request->getParam('subject'));
         }
         exit();	
@@ -45,7 +45,7 @@ class MailController extends Zend_Controller_Action
 			$mail = new Zend_Mail('UTF-8');
 			$mail->setBodyText($content);
 			$mail->setBodyHtml($content);
-			$mail->setFrom('trarongvang@vnn.vn', '[Hộp mail tự động] Không trả lời');
+			$mail->setFrom('infovietnam@cni-global.com', '[Hộp mail tự động] Không trả lời');
 			foreach(Zend_Registry::get('ADMIN_MAIL_ADDRESS') as $item){
 				$mail->addTo($item);
 			}

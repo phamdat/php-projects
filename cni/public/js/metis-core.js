@@ -680,11 +680,22 @@
         /*----------- END inputlimiter CODE -------------------------*/
 
         /*----------- BEGIN tagsInput CODE -------------------------*/
-        $('.input-tags').tagsInput();
+        $('.input-tags').each(function () {
+            $(this).tagsInput({
+                width: $(this).parent().width()
+            });
+        });
         /*----------- END tagsInput CODE -------------------------*/
 
         /*----------- BEGIN chosen CODE -------------------------*/
-        $(".input-multiple-select").chosen();
+        $(".input-multiple-select").tokenize({
+            newElements: false, 
+            displayDropdownOnFocus: true,
+            sortable: true,
+            onAddToken: function(value, text, e){
+                e.updateOrder();
+            }
+        });      
         /*----------- END chosen CODE -------------------------*/
 
         /*----------- BEGIN ckeditor CODE -------------------------*/
@@ -1218,6 +1229,22 @@
     return Metis;
 })(jQuery, Metis);
 
+(function ($, Metis) {
+    Metis.menuIframe = function () {
+        var $menuItem = $('#left ul#menu li a'),
+            $contentIframe = $('#content-iframe');
+        
+        $menuItem.on('click', function(event){
+            event.preventDefault();
+            $menuItem.removeClass('active');
+            $(this).addClass('active');
+            $contentIframe[0].contentWindow.location.href = $(this).attr('href');
+            return false;
+        });
+    };
+    return Metis;
+})(jQuery, Metis);
+
 (function ($) {
     $(document).ready(function () {
 
@@ -1235,12 +1262,19 @@
         Metis.formValidation();
         Metis.formGeneral();
         Metis.nestable();
+        Metis.menuIframe();
     });
     
     $(window).load(function(){
         $(window).resize(function () {
-            $('#wrap').css('min-height', $('html').height() + 'px');
-            $('#content-container>.outer>.inner').css('min-height', $('html').height() - $('#content-container')[0].offsetTop - 20 + 'px');
+            try{
+                $('#wrap').css('min-height', $('html').height() + 'px');
+                var height = $('html').height() - $('#content-container')[0].offsetTop - 20;
+                $('#content-container>.outer>.inner').css('height', height + 'px');
+                $('#content-iframe').css('height', height - 30 + 'px');
+                $('#menu').css('height', $('html').height() - $('#menu')[0].offsetTop - 60 + 'px');
+            }catch(e){
+            }
         });
         $(window).resize();
     });

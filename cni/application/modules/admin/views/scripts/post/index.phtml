@@ -68,12 +68,14 @@
                                 <td>
                                     <?php echo $value[ 'title'];?>
                                 </td>
-                                <td>
-                                    <?php foreach($this->layout()->allCategory as $ca):?>
-                                        <?php if(strpos($value[ 'category_to_list'], ','.$ca[ 'name']. ',')> -1):?> |
-                                            <?php echo $ca[ 'display_name'];?> |
-                                            <br>
-                                        <?php endif;?>
+                                <td>                                    
+                                    <?php foreach(explode(',', $value[ 'category_to_list']) as $vca):?>
+                                        <?php foreach($this->layout()->allCategory as $ca):?>
+                                            <?php if($vca == $ca[ 'name']):?> |
+                                                <?php echo $ca[ 'display_name'];?> |
+                                                <br>
+                                            <?php endif;?>
+                                        <?php endforeach;?>
                                     <?php endforeach;?>
                                 </td>
                                 <td>

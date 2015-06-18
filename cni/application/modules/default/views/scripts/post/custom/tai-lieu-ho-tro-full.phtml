@@ -1,0 +1,209 @@
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .tailieuhotro-container {
+            margin-top: 20px;
+        }
+
+        .tailieuhotro-container .item-first {
+            width: 470px;
+            float: left;
+            padding-right: 20px;
+            border-right-style: solid;
+            border-right-width: 1px;
+            border-right-color: #717374;
+        }
+
+        .tailieuhotro-container .item-first .thumbnail{
+            margin-bottom: 10px;
+            padding: 0px;
+            border: none;
+        }
+        
+        .tailieuhotro-container .item-first .thumbnail img{
+            height: 326px;
+        }
+
+        .tailieuhotro-container .item-first .title {
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: bold;
+            padding-bottom: 10px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #717374;
+        }
+        
+        .tailieuhotro-container .title a{
+            color: #777;
+            text-decoration: none;
+        }
+        
+        .tailieuhotro-container .title a:hover{
+            color: #555;
+        }
+
+        .tailieuhotro-container .item-first .description {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .tailieuhotro-container .item {
+            width: 100%;
+            float: left;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom-style: solid;
+            border-bottom-width: 1px;
+            border-bottom-color: #777;
+        }
+
+        .tailieuhotro-container .item .thumbnail {
+            width: 170px;
+            float: left;
+            margin-bottom: 0px;
+            padding: 0px;
+            border: none;
+            margin-top: 5px;
+            margin-right: 10px;
+        }
+        
+        .tailieuhotro-container .item .thumbnail img{
+            height: 170px;
+        }
+
+        .tailieuhotro-container .item .title {
+            font-size: 21px;
+            line-height: 24px;
+            color: #4581A6;
+            font-weight: normal;
+        }
+        
+        .tailieuhotro-container .item .description {
+            padding-bottom: 10px;
+            margin-top: 5px;
+        }
+        
+        .tailieuhotro-container .date {
+            float: left;
+            width: 51px;
+            text-align: center;
+            background: url(/public/images/dropcap.png);
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 15px;
+            text-transform: lowercase;
+            margin-right: 20px;
+            padding: 11px 0 26px;
+        }
+        
+        .tailieuhotro-container .more {
+            float: left;
+            padding: 5px 15px;
+            color: #ffffff;
+            font-style: italic;
+            background: linear-gradient(#cfcbcb, #a4a4a5);
+            margin-right: 15px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .tailieuhotro-container .item-first {
+                width: 380px;            
+            }
+            .tailieuhotro-container .item-first .thumbnail img{
+                height: 300px;
+            }
+            .tailieuhotro-container .item {
+                width: 100%;
+            }            
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .tailieuhotro-container .item-first {
+                width: 270px;            
+            }
+            .tailieuhotro-container .item-first .thumbnail img{
+                height: 230px;
+            }
+            .tailieuhotro-container .item {
+                width: 100%;
+            }
+            .tailieuhotro-container .item .thumbnail img{
+                width: 120px;
+            }
+            .tailieuhotro-container .item .thumbnail img{
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tailieuhotro-container .item-first {
+                width: 100%;
+                padding-right: 0px;
+                border-right-color: transparent;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                border-bottom-style: solid;
+                border-bottom-width: 1px;
+                border-bottom-color: #717374;
+            }
+            .tailieuhotro-container .item {
+                width: 100%;
+                margin-left: 0px;
+            }
+            .tailieuhotro-container .item .thumbnail {
+                width: 100%;
+                float: none;
+                margin-bottom: 10px;
+            }
+            .tailieuhotro-container .item-first .title {
+                text-transform: none;
+                font-size: 16px;
+                border-bottom-color: transparent;
+            }
+            .tailieuhotro-container .item-first .description {
+                padding-top: 0px;
+            }
+        }
+    </style>
+    <?php echo $this->render('post/custom/tin-tuc-baner.phtml');?>
+    <div class="tailieuhotro-container">
+        <?php foreach($this->categories as $value):?>
+            <div id="tailieuhotro-content-<?php echo $value['category']['name']?>" class="pagination-container">
+                <?php $this->paramPageSize = 10; ?>
+                <?php $this->paramPosts = $value['posts']; ?>
+                <?php foreach($value['posts'] as $index => $post):?>
+                    <?php if($index % $this->paramPageSize == 0):?>
+                        <div class="page-wrapper" page="<?php echo intval($index/$this->paramPageSize) + 1 ?>" >
+                    <?php endif;?>
+                    <div class="item">
+                        <div class="date"><?php echo date('d M', strtotime($post['created_date']))?></div>                        
+                        <div class="title">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>" target="_blank">
+                                <?php echo $post['title']?>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="thumbnail">
+                            <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>" target="_blank">
+                                <img src="<?php echo $post['thumbnail']?>" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="description"><?php echo $post['description']?></div>
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>" target="_blank">
+                            <div class="more">
+                                Xem tiếp
+                            </div>
+                        </a>
+                    </div>
+                    <?php if($index % $this->paramPageSize == $this->paramPageSize - 1 || $index == $this->paramPosts->getTotalItemCount() - 1):?>
+                        </div>
+                    <?php endif;?>
+                <?php endforeach;?>
+                <div class="clearfix"></div>
+                <?php echo $this->render('post/pagination.phtml');?>                
+            </div>
+        <?php endforeach;?>
+    </div>
+<?php endif;?>

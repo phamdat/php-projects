@@ -44,7 +44,7 @@
                                     <?php if(!empty($value['submenu'])):?>
                                         <ol class="dd-list">
                                             <?php foreach($value['submenu'] as $subvalue):?>
-                                                <li class="dd-item" data-id="4">
+                                                <li class="dd-item" data-id="<?php echo $subvalue['menu']['id'];?>">
                                                     <div class="dd-handle">
                                                         <?php echo $subvalue['menu']['value'] ? $subvalue['menu']['value'] : $subvalue['post']['title'];?>
                                                         <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['MENU:DELETE'])): ?>

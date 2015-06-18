@@ -1,46 +1,64 @@
 <?php if($this->paramPosts->getTotalItemCount() > 0):?>
     <style>
         .spbanchay-container {
-            background-color: #e4e4e4;
             padding: 15px;
-            margin-top: 40px;
+            width: 970px;
+            margin: 20px auto 0px;
         }
 
-        .spbanchay-container .title {
+        .spbanchay-container > .title {
             color: #585a5c;
-            font-size: 34px;
+            font-size: 30px;
             text-transform: uppercase;
-            font-weight: bold;
+            font-weight: normal;
+            float: left;
+            padding: 0px 30px;
+            border: 2px solid #ddd;
+            border-radius: 60px;
         }
 
         .spbanchay-container .content .item {
             float: left;
-            margin-right: 30px;
-            margin-top: 10px;
-            width: 360px;
+            margin-right: 105px;
+            margin-top: 40px;
+            width: 243px;
             position: relative;
         }
 
         .spbanchay-container .content .item .thumbnail {
             border-style: solid;
-            border-width: 2px;
+            border-width: 5px;
             border-color: #ffffff;
             overflow: hidden;
             margin-bottom: 0px;
             padding: 0px;
-            border-radius: 0px;
             background-color: transparent;
+            box-shadow: 5px 5px 12px #888888;
+            border-radius: 1000px;
+            overflow: hidden;
+            position: relative;
         }
 
         .spbanchay-container .content .item .title {
             color: #fff;
-            padding: 5px 20px;
+            padding: 0px 20px;
             position: absolute;
-            bottom: 2px;
-            left: 2px;
-            font-size: 24px;
-            font-weight: bold;
-            background-color: #f69b0c;
+            top: -15px;
+            right: -15px;
+            font-size: 12px;
+            font-weight: normal;
+            width: 85px;
+            height: 85px;
+            background-color: #fb9006;
+            text-align: center;
+            border-radius: 1000px;
+        }
+        
+        .spbanchay-container .content .item .title .text{
+            display: table-cell;
+            vertical-align: middle;
+            width: 85px;
+            height: 85px;
         }
 
         .spbanchay-container .content .item .description {
@@ -50,16 +68,27 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.0);
             color: rgba(255, 255, 255, 0.0);
-            padding: 25px;
+            padding: 0px 25px;
             -webkit-transition: background .5s ease-out, color .5s ease-out;
             -moz-transition: background .5s ease-out, color .5s ease-out;
             -o-transition: background .5s ease-out, color .5s ease-out;
             transition: background .5s ease-out, color .5s ease-out;
+            overflow: hidden;
+            border-radius: 1000px !important;
+            text-align: center;
+        }
+        
+        .spbanchay-container .content .item .description .text{
+            display: table-cell;
+            vertical-align: middle;
+            width: 100%;
+            height: 233px;
         }
         
         .spbanchay-container .content .item:hover .description {
             background-color: rgba(0, 0, 0, 0.8);
             color: rgba(255, 255, 255, 1.0);
+            border-radius: 60px;
         }
         
         .spbanchay-container .content .item:nth-child(3n+3) {
@@ -68,7 +97,22 @@
 
         @media (min-width: 992px) and (max-width: 1199px) {
             .spbanchay-container .content .item {
-                width: 293px;
+                width: 243px;
+            }
+            .spbanchay-container .content .item .title {                
+                font-size: 14px;
+                height: 95px;
+                width: 95px;
+            }
+            .spbanchay-container .content .item .title .text {
+                height: 95px;
+                width: 95px;
+            }
+            .spbanchay-container .content .item .description {
+                padding: 0px 10px;
+            }
+            .spbanchay-container .content .item .description .text{
+                height: 243px;
             }
         }
 
@@ -81,7 +125,19 @@
                 margin-right: 20px;
             }
             .spbanchay-container .content .item .title {
-                font-size: 20px;
+                font-size: 12px;
+                height: 80px;
+                width: 80px;
+            }
+            .spbanchay-container .content .item .title .text {
+                height: 80px;
+                width: 80px;
+            }
+            .spbanchay-container .content .item .description {
+                padding: 0px 10px;
+            }
+            .spbanchay-container .content .item .description .text{
+                height: 216px;
             }
         }
 
@@ -97,31 +153,37 @@
                 margin-right: 5px;
                 width: 100%;
             }
-            .spbanchay-container .content .item .title {
-                font-size: 18px;
+            .spbanchay-container .content .item .description {
+                padding: 0px 10px;
+            }
+            .spbanchay-container .content .item .description .text{
+                height: 250px;
             }
         }
     </style>
     <div class="spbanchay-container">
         <div class="title">
-            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+            <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>      
         </div>
+        <div class="clearfix"></div>
         <div class="content">
             <?php foreach($this->paramPosts as $index => $post):?>
                 <div class="item">
                     <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                         <div class="thumbnail">
                             <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
-                        </div>
-                    </a>
-                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
-                        <div class="description">
-                            <?php echo Utils_StringUtils::getTextFromPost($post, 'description');?>
+                            <div class="description">
+                                <div class="text">
+                                    <?php echo Utils_StringUtils::getTextFromPost($post, 'description');?>
+                                </div>
+                            </div>
                         </div>
                     </a>
                     <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
                         <div class="title">
-                            <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            <div class="text">
+                                <?php echo Utils_StringUtils::getTextFromPost($post, 'title');?>
+                            </div>
                         </div>
                     </a>
                 </div>

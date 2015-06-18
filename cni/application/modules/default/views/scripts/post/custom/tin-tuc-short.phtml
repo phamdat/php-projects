@@ -95,6 +95,40 @@
             float: left;
             width: 300px;
         }
+        
+        .facebook-banner {
+            float: left;
+            width: 300px;
+            margin-top: 10px;
+        }
+        
+        @media (min-width: 1199px) {
+            .tintuc-container {
+                width: 635px;
+                margin-left: 115px;
+                margin-right: 20px;
+            }    
+            .tintuc-container .item-first {
+                width: 380px;
+            }
+            .tintuc-container .item-first .thumbnail {
+                width: 380px;
+                height: 310px;
+            }
+            .tintuc-container .item {
+                width: 240px;
+            }
+            .tintuc-container .item .thumbnail {
+                width: 120px;
+                height: 93px;
+            }
+            .facebook-container {                
+                width: 278px;
+            }
+            .facebook-banner {                
+                width: 278px;
+            }
+        }
 
         @media (min-width: 992px) and (max-width: 1199px) {
             .tintuc-container {
@@ -115,6 +149,9 @@
                 height: 103px;
             }
             .facebook-container {                
+                width: 250px;
+            }
+            .facebook-banner {                
                 width: 250px;
             }
         }
@@ -149,6 +186,9 @@
             .facebook-container {                
                 width: 190px;
             }
+            .facebook-banner {                
+                width: 190px;
+            }
         }
 
         @media (max-width: 767px) {
@@ -174,6 +214,9 @@
                 height: 83px;
             }
             .facebook-container {                
+                width: 100%;
+            }
+            .facebook-banner {                
                 width: 100%;
             }
         }
@@ -233,5 +276,10 @@
         }(document, 'script', 'facebook-jssdk'));</script>
 
         <div class="fb-like-box" data-colorscheme="light" data-header="false" data-href="https://www.facebook.com/CNIVn?fref=ts&__mref=message_bubble" data-show-border="false" data-show-faces="true" data-stream="false">&nbsp;</div>
+    </div>
+    <div class="facebook-banner">
+        <a href="https://www.facebook.com/CNIVn">
+            <img class="img-responsive" src="/public/images/facebook-banner.jpg">
+        </a>
     </div>
 <?php endif;?>

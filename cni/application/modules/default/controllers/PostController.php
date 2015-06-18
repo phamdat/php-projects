@@ -53,31 +53,26 @@ class PostController extends Zend_Controller_Action
         }
         
         //-------------------------------------------------------------------------------similar post
-        $adapter = new Zend_Paginator_Adapter_DbSelect(
-            $db->select()
-                    ->from(array('p' => 'post'))
-                    ->columns('*', 'p')
-                    ->where('p.category = ?', $post['category'])
-                    ->where('p.is_filter_page != true')
-                    ->where('p.id != ?', $this->_request->getParam('id'))
-                    ->order(new Zend_Db_Expr('RAND()'))
-        );
+        $sql = '';
+        $params = array();
+        
+        foreach(explode(',', $post['category']) as $ca)
+        {
+            if(!empty($ca))
+            {
+                $sql .= 'p.category like ? OR ';
+                array_push($params, '%'.$ca.'%');
+            }
+        }
+        
+        $sql = 'SELECT p.* ' 
+             . 'FROM post AS p '
+             . 'WHERE ('. $sql . '1!=1) AND (p.is_filter_page != ?) AND (p.id != ?) AND (p.link_id = ?)'
+             . 'ORDER BY RAND()';        
+        array_push($params, true, $this->_request->getParam('id'), $post['link_id']);
 
-        $adapter->setRowCount(
-            $db->select()
-                    ->from(array('p' => 'post'))
-                    ->columns('*', 'p')
-                    ->where('p.category = ?', $post['category'])
-                    ->where('p.is_filter_page != true')
-                    ->where('p.id != ?', $this->_request->getParam('id'))
-                ->reset( Zend_Db_Select::COLUMNS )
-                ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
-        );
-
-        $similarPosts = new Zend_Paginator($adapter);
-
+        $similarPosts = Zend_Paginator::factory($db->query($sql, $params)->fetchAll());
         $similarPosts->setItemCountPerPage(9999);
-
         $similarPosts->setCurrentPageNumber($this->_request->getParam('page'));
         
         //-------------------------------------------------------------------------------most of view post
@@ -116,22 +111,34 @@ class PostController extends Zend_Controller_Action
             {
                 if($ca == $category['name'])
                 {
-                    $adapter = new Zend_Paginator_Adapter_DbSelect(
-                        $db->select()
+                    $query = $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
-                            ->where('p.category like ?', '%,'.$ca.',%')
-                            //->where('p.category not like ?', '%,MAIN_PAGE,%')
-                            ->order('p.order_id DESC')
+                            ->where('p.category like ?', '%,'.$category['name'].',%');
+                    if(isset($category['subCategory']))
+                    {
+                        foreach($category['subCategory'] as $icategory)
+                        {
+                            $query->orWhere('p.category like ?', '%,'.$icategory['name'].',%');
+                        }
+                    }                    
+                    $adapter = new Zend_Paginator_Adapter_DbSelect(
+                        $query->order('p.order_id DESC')
                     );
                     
-                    $adapter->setRowCount(
-                        $db->select()
+                    $query = $db->select()
                             ->from(array('p' => 'post'))
                             ->columns('*', 'p')
-                            ->where('p.category like ?', '%,'.$ca.',%')
-                            //->where('p.category not like ?', '%,MAIN_PAGE,%')
-                            ->reset( Zend_Db_Select::COLUMNS )
+                            ->where('p.category like ?', '%,'.$category['name'].',%');
+                    if(isset($category['subCategory']))
+                    {
+                        foreach($category['subCategory'] as $icategory)
+                        {
+                            $query->orWhere('p.category like ?', '%,'.$icategory['name'].',%');
+                        }
+                    }
+                    $adapter->setRowCount(
+                       $query->reset( Zend_Db_Select::COLUMNS )
                             ->columns(array(Zend_Paginator_Adapter_DbSelect::ROW_COUNT_COLUMN =>'count(*)'))
                     );
                     

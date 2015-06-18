@@ -17,15 +17,17 @@
         <?php echo $this->layout()->seoh2 ?>
     </h2>
     <header>
-        <div class="top-header">
-            <div class="container">
+        <div class="top-header">            
+            <div class="container">                
                 <div class="search hidden-xs">
-                    <div class="icon"><img src="/public/images/search.png"></div>
-                    <input type="text">
+                    <form action="/post/search">
+                        <div class="icon"><img src="/public/images/search.png"></div>
+                        <input type="text" name="keyword">
+                    </form>
                 </div>
                 <div class="language hidden-xs">
-                    <a class="en"><img src="/public/images/en.png"></a>
-                    <a class="vi"><img src="/public/images/vi.png"></a>
+                    <!--<a class="en"><img src="/public/images/en.png"></a>
+                    <a class="vi"><img src="/public/images/vi.png"></a>-->
                 </div>
                 <?php foreach($this->layout()->menu['TOP_MENU_CONF'] as $menu):?>
                     <div class="item hidden-xs">
@@ -62,7 +64,7 @@
                                             <?php foreach($menu['submenu'] as $submenu):?>
                                                 <li role="presentation">
                                                     <a href="<?php echo Utils_StringUtils::getUrlFromPost($submenu['post']) ?>">
-                                                        <?php echo mb_strtolower($submenu['menu']['value'] ? $submenu['menu']['value'] : $submenu['post'][ 'title'], 'utf8') ?>
+                                                        <?php echo $submenu['menu']['value'] ? $submenu['menu']['value'] : Utils_StringUtils::getTextFromPost($submenu['post'], 'title') ?>
                                                     </a>
                                                 </li>
                                             <?php endforeach;?>
@@ -92,11 +94,11 @@
                     <div class="collapse navbar-collapse navbar-ex1-collapse">
                         <ul class="nav navbar-nav">
                             <?php foreach($this->layout()->menu['GLOBAL_MENU_CONF'] as $menu):?>
-                                <li class="dropdown" role="presentation">
-                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($menu['post']) ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        <?php echo $menu['menu']['value'] ? $menu['menu']['value'] : Utils_StringUtils::getTextFromPost($menu['post'], 'title') ?> <span class="caret"></span>
+                                <li role="presentation">
+                                    <a href="<?php echo Utils_StringUtils::getUrlFromPost($menu['post']) ?>" >
+                                        <?php echo $menu['menu']['value'] ? $menu['menu']['value'] : Utils_StringUtils::getTextFromPost($menu['post'], 'title') ?> <i class="fa fa-arrow-right" style="float:right;margin-top: 2px;"></i><!-- <span class="caret"></span>-->
                                     </a>
-                                    <ul class="dropdown-menu" role="menu">
+                                    <!--<ul class="dropdown-menu" role="menu">
                                         <?php foreach($menu['submenu'] as $submenu):?>
                                             <li role="presentation">
                                                 <a href="<?php echo Utils_StringUtils::getUrlFromPost($submenu['post']) ?>">
@@ -104,7 +106,7 @@
                                                 </a>
                                             </li>
                                         <?php endforeach;?>
-                                    </ul>
+                                    </ul>-->
                                 </li>
                             <?php endforeach;?>
                         </ul>                            
@@ -115,27 +117,28 @@
     </header>
     
     <?php if($this->layout()->hasSlide):?>
-        <section id="main-slide">
-            <div class="container">
-                <div class="row">                
-                    <div class="slide">
-                        <div class="carousel" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <?php foreach($this->layout()->slide[MAIN_SLIDE_CONF] as $key => $slide):?>
-                                    <div class="item <?php echo $key==0?'active':'' ?>">
-                                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($slide['post']) ?>">
-                                            <img src="<?php echo $slide['slide']['value'] ?>" class="center-block img-responsive">
-                                        </a>
+        <section id="main-slide" style="background: url('<?php echo $this->layout()->configurations['SLIDE_BACKGROUND_CONF']['value'] ?>') no-repeat; background-size: 100%;">                            
+            <div class="">
+                <div class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php foreach($this->layout()->slide['MAIN_SLIDE_CONF'] as $key => $slide):?>
+                            <div class="item <?php echo $key==0?'active':'' ?>">
+                                <a href="<?php echo $slide['post']['redirect_url'] ? $slide['post']['redirect_url'] : Utils_StringUtils::getUrlFromPost($slide['link']) ?>">
+                                    <img src="<?php echo $slide['post']['thumbnail'] ?>" class="center-block img-responsive">
+                                </a>
+                                <?php if(Utils_StringUtils::getTextFromPost($slide['post'], 'description')):?>
+                                    <div class="caption" style="left:<?php echo $slide['post']['price']?>;bottom:<?php echo $slide['post']['old_price']?>">
+                                        <?php echo Utils_StringUtils::getTextFromPost($slide['post'], 'description'); ?>
                                     </div>
-                                <?php endforeach;?>
+                                <?php endif;?>
                             </div>
-                            <ol class="carousel-indicators">
-                                <?php foreach($this->layout()->slide[MAIN_SLIDE_CONF] as $key => $slide):?>
-                                    <li data-target="#main-slide .carousel" data-slide-to="<?php echo $key?>" class="<?php echo $key==0?'active':'' ?>"></li>
-                                <?php endforeach;?>
-                            </ol>
-                        </div>
+                        <?php endforeach;?>
                     </div>
+                    <ol class="carousel-indicators">
+                        <?php foreach($this->layout()->slide['MAIN_SLIDE_CONF'] as $key => $slide):?>
+                            <li data-target="#main-slide .carousel" data-slide-to="<?php echo $key?>" class="<?php echo $key==0?'active':'' ?>"></li>
+                        <?php endforeach;?>
+                    </ol>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -145,10 +148,10 @@
     <section id="main-content">
         <div class="container">
             <div class="row">
-                <?php if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar[LEFT_SIDEBAR_CONF])):?>
+                <?php if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar['LEFT_SIDEBAR_CONF'])):?>
                     <div class="col-sm-2 hidden-xs">
                         <div class="row">
-                            <?php foreach($this->layout()->sidebar[LEFT_SIDEBAR_CONF] as $i => $sidebar):?>
+                            <?php foreach($this->layout()->sidebar['LEFT_SIDEBAR_CONF'] as $i => $sidebar):?>
                                 <div class="col-sm-12">
                                     <?php echo $sidebar['post']['content'] ?>
                                 </div>
@@ -159,11 +162,11 @@
                 
                 <?php 
                     $size = 12;
-                    if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF]))
+                    if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar['RIGHT_SIDEBAR_CONF']))
                     {
                         $size -= 2;
                     }
-                    if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar[LEFT_SIDEBAR_CONF]))
+                    if($this->layout()->hasLeftSidebar && isset($this->layout()->sidebar['LEFT_SIDEBAR_CONF']))
                     {
                         $size -= 2;
                     }
@@ -175,10 +178,10 @@
                     </div>
                 </div>
                 
-                <?php if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar[RIGHT_SIDEBAR_CONF])):?>
+                <?php if($this->layout()->hasRightSidebar && isset($this->layout()->sidebar['RIGHT_SIDEBAR_CONF'])):?>
                     <div class="col-sm-2 hidden-xs">
                         <div class="row">
-                            <?php foreach($this->layout()->sidebar[RIGHT_SIDEBAR_CONF] as $i => $sidebar):?>
+                            <?php foreach($this->layout()->sidebar['RIGHT_SIDEBAR_CONF'] as $i => $sidebar):?>
                                 <div class="col-sm-12">
                                     <?php echo $sidebar['post']['content'] ?>
                                 </div>
@@ -188,29 +191,42 @@
                 <?php endif;?>
             </div>
         </div>
+        <div style="background: url('<?php echo $this->layout()->configurations['BACKGROUND_IMG_CONF']['value'] ?>') no-repeat 100%; height: 100%; top: 0px; left: 0px; position: absolute; width: 100%; z-index: -1;"></div>
     </section>
     <footer>
         <!--<div style="background-color: #373c43;background-size: auto 100%;color: #ffffff;">
             <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
                 <div class="row">
                     <div class="col-sm-6 no-padding-left hidden-xs" style="font-size: 18px;">
-                        <div class="col-sm-4 no-padding-left text-center" style="font-size: 12px;">
-                            <a href="#"><img src="/public/images/question.png" style="width: 70px;"></a> 
-                            <div>
-                                CÂU HỎI THƯỜNG GẶP
-                            </div>
+                        <div class="col-sm-2 no-padding-left text-center" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/question.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="CÂU HỎI THƯỜNG GẶP">
+                            </a> 
                         </div>
-                        <div class="col-sm-4 no-padding-left text-center hidden-xs" style="font-size: 12px;">
-                            <a href="#"><img src="/public/images/blog.png" style="width: 70px;"></a>
-                            <div>
-                                KỶ NGUYÊN ENZYME
-                            </div>
+                        <div class="col-sm-2 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="http://kynguyenenzyme.blogspot.com/">
+                                <img src="/public/images/blog.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="KỶ NGUYÊN ENZYME">
+                            </a>
                         </div>
-                        <div class="col-sm-4 no-padding-left text-center hidden-xs" style="font-size: 12px;">
-                            <a href="#"><img src="/public/images/link.png" style="width: 70px;"></a>
-                            <div>
-                                WEBSITE NPP
-                            </div>
+                        <div class="col-sm-2 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/link.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="WEBSITE NPP">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="https://www.facebook.com/CNIVn">
+                                <img src="/public/images/facebook.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="Facebook">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/google-plus.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="Google+">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/twitter.png" style="width: 50px;" data-toggle="tooltip" data-placement="top" title="Twitter">
+                            </a>
                         </div>
                     </div>
                     <div class="col-sm-6 no-padding-right" style="font-size: 16px;text-align: right;">
@@ -227,6 +243,74 @@
                 <div class="row">
                     <div class="text-center">
                         Copyright by Bappro 2015
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #373c43;background-size: auto 100%;color: #ffffff;">
+            <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
+                <div class="row">
+                    <div class="col-sm-4 no-padding-left hidden-xs" style="font-size: 12px;">
+                        <div style="border-top-width: 1px; border-top-style: solid;border-top-color: rgb(103, 103, 103);padding: 10px 0px; margin-right: 75px;">
+                            Điều khoản & Điều kiện
+                        </div>
+                        <div style="border-top-width: 1px; border-top-style: solid;border-top-color: rgb(103, 103, 103);padding: 10px 0px; margin-right: 75px;">
+                            Chính sách bảo mật
+                        </div>
+                        <div style="border-top-width: 1px; border-top-style: solid;border-top-color: rgb(103, 103, 103); border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(103, 103, 103); padding: 10px 0px; margin-right: 75px;">
+                            Sitemap
+                        </div>
+                    </div>
+                    <div class="col-sm-4 no-padding hidden-xs" style="font-size: 12px; margin-top: 45px;">
+                        <div class="col-sm-0 col-md-3 no-padding-left text-center">
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/question.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="CÂU HỎI THƯỜNG GẶP">
+                            </a> 
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="http://kynguyenenzyme.blogspot.com/">
+                                <img src="/public/images/blog.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="KỶ NGUYÊN ENZYME">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/link.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="WEBSITE NPP">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="https://www.facebook.com/CNIVn">
+                                <img src="/public/images/facebook.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="Facebook">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/google-plus.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="Google+">
+                            </a>
+                        </div>
+                        <div class="col-sm-2 col-md-1 no-padding-left text-center hidden-xs" style="font-size: 12px;">
+                            <a href="#">
+                                <img src="/public/images/twitter.png" style="width: 25px;" data-toggle="tooltip" data-placement="top" title="Twitter">
+                            </a>
+                        </div>
+                        <div class="col-sm-0 col-md-3 no-padding-left text-center">
+                        </div>
+                    </div>
+                    <div class="col-sm-4 no-padding-right" style="font-size: 12px; text-align: right; margin-top: 20px;">
+                        <strong style="font-size: 14px;">BẢN QUYỀN THUỘC VỀ CNI VIỆT NAM</strong><br>
+                        39 Trần Đình Xu, Phường Cầu Kho, Quận 1, TP.HCM<br>
+                        Điện thoại: (+848) 3920 4535 | Fax: (+848) 3920 4536<br>
+                        Email: infovietnam@cni-global.com<br>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="background-color: #000106;color: #fff;">
+            <div class="container" style="padding-bottom: 15px;padding-top: 15px;">
+                <div class="row">
+                    <div class="text-center">
+                        Design by
                     </div>                    
                 </div>
             </div>

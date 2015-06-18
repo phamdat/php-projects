@@ -25,10 +25,10 @@
                                 <li class="dd-item" data-id="<?php echo $value['slide']['id'];?>">
                                     <div class="dd-handle">
                                         <div class="col-sm-3">
-                                            <img src="<?php echo $value['slide']['value'];?>" class="img-responsive"/>
+                                            <img src="<?php echo $value['post']['thumbnail'];?>" class="img-responsive"/>
                                         </div>
                                         <div class="col-sm-3">
-                                            <?php echo $value['post']['title'];?>
+                                            
                                         </div>
                                         <?php if($this->layout()->admin_issuper || isset($this->layout()->admin_role['SLIDE:DELETE'])): ?>
                                             <a href="<?php echo $this->url(array ('module'=> 'admin', 'controller'=> 'slide', 'action'=> 'delete', 'id' => $value['slide']['id'] )) ?>" need-confirm>

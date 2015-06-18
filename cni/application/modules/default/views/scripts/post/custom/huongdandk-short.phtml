@@ -1,0 +1,123 @@
+<?php if($this->paramPosts->getTotalItemCount() > 0):?>
+    <style>
+        .huongdandk-container {
+            margin-top: 20px;
+            width: 400px;
+            float: left;
+            margin-left: 20px;
+            position: relative;
+        }
+
+        .huongdandk-container .htitle {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            z-index: 1000;
+            color: #ffffff;
+            font-size: 20px;
+            text-transform: uppercase;
+            background-color: rgba(55, 60, 67, 0.3);
+            padding: 10px 15px;
+            border-radius: 20px 20px 0px 0px;
+        }
+
+        .huongdandk-container .content .item {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .huongdandk-container .content .item .thumbnail {
+            overflow: hidden;
+            margin-bottom: 0px;
+            padding: 0px;
+            border-radius: 0px;
+            background-color: transparent;
+            border-radius: 20px;
+        }
+
+        .huongdandk-container .content .item .thumbnail img {
+            width: 100%;
+            height: 430px;
+        }
+
+        .huongdandk-container .content .item .title {
+            color: #fff;
+            padding: 5px 20px;
+            position: absolute;
+            bottom: 20px;
+            width: 640px;
+            font-size: 18px;
+            background-color: #1c87c5;
+        }
+        
+        @media (min-width: 1199px) {
+            .huongdandk-container {
+                position: static;
+            }
+            .huongdandk-container .remove-width {
+                width: 280px;
+                float: left;
+                position: relative;
+            }
+            .huongdandk-container .content .item .thumbnail img {
+                height: 390px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            .huongdandk-container {
+                width: 330px;
+            }
+            .huongdandk-container .title {
+                font-size: 16px;
+            }
+            .huongdandk-container .content .item .thumbnail img {
+                height: 350px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            .huongdandk-container {
+                width: 250px;
+            }
+            .huongdandk-container .title {
+                font-size: 12px;
+            }
+            .huongdandk-container .content .item .thumbnail img {
+                height: 275px;
+            }            
+        }
+
+        @media (max-width: 767px) {
+            .huongdandk-container {
+                width: 100%;
+                margin-left: 0px;
+            }
+            .huongdandk-container .title {
+                font-size: 18px;
+            }
+            .huongdandk-container .content .item .thumbnail img {
+                height: auto;
+            }  
+        }
+    </style>
+    <div class="huongdandk-container">
+        <div class="remove-width">
+            <div class="htitle">
+                <?php echo Utils_StringUtils::getTextFromPost($this->paramCategory, 'display_name')?>
+            </div>
+            <div class="content">
+                <?php foreach($this->paramPosts as $index => $post):?>
+                    <div class="item">
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($post) ?>">
+                            <div class="thumbnail">
+                                <img src="<?php echo $post['thumbnail'];?>" class="img-responsive">
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach;?>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+<?php endif;?>

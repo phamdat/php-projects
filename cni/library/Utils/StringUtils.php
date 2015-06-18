@@ -13,9 +13,16 @@ class Utils_StringUtils
     
     public static function getUrlFromPost($post, $language = 'vi')
     {
-		$res = $post['is_front_page'] ? '/' : 
+        if(count($post) > 0)
+        {
+            $res = $post['is_front_page'] ? '/' : 
                     ($post['redirect_url'] ? $post['redirect_url'] : 
                         ($post[Utils_StringUtils::getFieldName('seo_url', $language)] ? ('/' . $post[Utils_StringUtils::getFieldName('seo_url', $language)]) : ('/post/index/id/' . $post['id'])));
+        }
+        else
+        {
+            $res = '#';
+        }
 		return $res;
 	}
     

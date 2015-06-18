@@ -11,8 +11,7 @@ class Admin_SlideController extends Zend_Controller_Action
 	public function preDispatch()
     {
 		Zend_Layout::getMvcInstance()->assign('mainClassesOfPage', $this->getRequest()->getControllerName());
-		Zend_Layout::getMvcInstance()->assign('icon', 'indent');
-        Zend_Layout::getMvcInstance()->assign('title', 'Slide');
+		Zend_Layout::getMvcInstance()->assign('inIframe', true);
         
 		if(!Zend_AdminAuth::getInstance()->hasIdentity())
         {
@@ -91,10 +90,30 @@ class Admin_SlideController extends Zend_Controller_Action
         {
             if($slideForm->isValid($this->_request->getPost()))
 			{
+                $data = array(
+					'type'             => SLIDE,
+                    'description'      => $slideForm->getValue('description'),
+                    'en_description'   => $slideForm->getValue('en_description'),
+                    'thumbnail'        => $this->uploadFile($slideForm->getValue('thumbnail')),
+                    'redirect_url'     => $slideForm->getValue('redirect_url'),
+                    'price'            => $slideForm->getValue('price'),
+                    'old_price'        => $slideForm->getValue('old_price'),
+                    'creator_id'       => Zend_AdminAuth::getInstance()->getStorage()->read()->id
+				);
+				
+				$db = Zend_Registry::get('db');
+                
+                if($slideForm->getValue('post_id')){
+					$n = $db->update('post', $data, array('id = ?' => $slideForm->getValue('post_id')));
+				}else{
+					$n = $db->insert('post', $data);
+                    $slideForm->getElement('post_id')->setValue($db->lastInsertId());
+				}
+                
 				$data = array(
 					'name'             => $slideForm->getValue('name'),
-                    'value'            => $this->uploadFile($slideForm->getValue('value')),
-                    'post_id'          => $slideForm->getValue('post_id')
+                    'post_id'          => $slideForm->getValue('post_id'),
+                    'link_id'          => $slideForm->getValue('link_id')
 				);
 				
 				$db = Zend_Registry::get('db');
@@ -156,20 +175,21 @@ class Admin_SlideController extends Zend_Controller_Action
         $db = Zend_Registry::get('db');
         
 		$id = new Zend_Form_Element_Hidden('id');
-		$id->setRequired(false);
+        
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $postId = new Zend_Form_Element_Hidden('post_id');
 		
         //---------------------------------------------------------------------------------------------------------------------------
         
         $name = new Zend_Form_Element_Hidden('name');
-        $name->setRequired(false)
-			->setValue($this->_request->getParam('name'));
+        $name->setValue($this->_request->getParam('name'));
         
         //---------------------------------------------------------------------------------------------------------------------------
                 
         $file = new Zend_Form_Element_File('file');
         $file->setLabel('Image')
-					->setRequired(false)
-                    ->addValidator('Count', false, 1)
+					->addValidator('Count', false, 1)
 					->addValidator('Size', false, 2097152)
 					->addValidator('Extension', false, 'jpg,png,gif');
 					
@@ -177,23 +197,46 @@ class Admin_SlideController extends Zend_Controller_Action
 		$file->getValidator('Size')->setMessage('Kích thước tối đa là 2MB.');
 		$file->getValidator('Extension')->setMessage('Chỉ được up file có định dạng jpg, png, gif.');
 		
-		if(!$this->_request->getParam('value')){
+		if(!$this->_request->getParam('thumbnail')){
 			$file->setRequired(true)->addValidator('Upload', true);
 						
 			$file->getValidator('Upload')->setMessage('Kích thước tối đa là 2MB.', Zend_Validate_File_Upload::INI_SIZE);
 			$file->getValidator('Upload')->setMessage('Vui lòng up hình đại diện.', Zend_Validate_File_Upload::NO_FILE);			
 		}
 		
-		$value = new Zend_Form_Element_Hidden('value');
-		$value->setRequired(false);
+		$thumbnail = new Zend_Form_Element_Hidden('thumbnail');
 
         //---------------------------------------------------------------------------------------------------------------------------
         
-        $postId = new Zend_Form_Element_Select('post_id');
-        $postId->setLabel('Linked post')
-				->setRequired(true)
-				->addValidator('NotEmpty', true)
-				->addErrorMessage('Please select linked post.');
+        $redirectUrl = new Zend_Form_Element_Text('redirect_url');
+        $redirectUrl->setLabel('Redirect url');
+
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $description = new Zend_Form_Element_Textarea('description');
+        $description->setLabel('Description')
+                    ->setAttrib('rows', '3');
+        
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $enDescription = new Zend_Form_Element_Textarea('en_description');
+        $enDescription->setLabel('English description')
+                        ->setAttrib('rows', '3');
+        
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $price = new Zend_Form_Element_Text('price');
+        $price->setLabel('Position x');
+        
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $oldPrice = new Zend_Form_Element_Text('old_price');
+        $oldPrice->setLabel('Position y');
+        
+        //---------------------------------------------------------------------------------------------------------------------------
+        
+        $linkId = new Zend_Form_Element_Select('link_id');
+        $linkId->setLabel('Linked post');
 
         $postList = $db->select()
 					->from(array('p' => 'post'))
@@ -201,8 +244,9 @@ class Admin_SlideController extends Zend_Controller_Action
 					->query()
 					->fetchAll();
         
+        $linkId->addMultiOption(null, 'None');
         foreach($postList as $post){
-			$postId->addMultiOption($post['id'], $post['title']);
+			$linkId->addMultiOption($post['id'], $post['title']);
 		}
         
         //---------------------------------------------------------------------------------------------------------------------------
@@ -215,9 +259,15 @@ class Admin_SlideController extends Zend_Controller_Action
         
         if($slide){
             $id->setValue($slide['slide']['id']);
-            $name->setValue($slide['slide']['name']);
-            $value->setValue($slide['slide']['value']);
+            $name->setValue($slide['slide']['name']);            
             $postId->setValue($slide['slide']['post_id']);
+            $linkId->setValue($slide['slide']['link_id']);
+            $thumbnail->setValue($slide['post']['thumbnail']);
+            $redirectUrl->setValue($slide['post']['redirect_url']);
+            $description->setValue($slide['post']['description']);
+            $enDescription->setValue($slide['post']['en_description']);
+            $price->setValue($slide['post']['price']);
+            $oldPrice->setValue($slide['post']['old_price']);
         }
         
         $slideForm = new Zend_Form();
@@ -225,9 +275,15 @@ class Admin_SlideController extends Zend_Controller_Action
 					->setMethod('post')
 					->addElement($id)
 					->addElement($name)
-                    ->addElement($value)
+                    ->addElement($postId)
+                    ->addElement($linkId)
+                    ->addElement($thumbnail)
                     ->addElement($file)
-                    ->addElement($postId)					
+                    ->addElement($redirectUrl)
+                    ->addElement($description)
+                    ->addElement($enDescription)
+                    ->addElement($price)
+                    ->addElement($oldPrice)
 					->addElement($submit);
 
         return $slideForm;

@@ -10,7 +10,7 @@
                         <div class="icons">
                             <i class="fa fa-pencil"></i>
                         </div>
-                        <h5></h5>
+                        <h5>Slide Item</h5>
                         <div class="toolbar">
                             <div class="btn-group">
                                 <?php echo $this->slideForm->getElement('submit'); ?>
@@ -26,10 +26,16 @@
 
                             <?php echo $this->slideForm->getElement('id'); ?>
                             <?php echo $this->slideForm->getElement('name'); ?>
-                            <?php echo $this->slideForm->getElement('value'); ?>
+                            <?php echo $this->slideForm->getElement('thumbnail'); ?>
                             <?php echo $this->slideForm->getElement('file'); ?>
-                            <img class="img-responsive" src="<?php echo $this->slideForm->getElement('value')->getValue(); ?>">
-                            <?php echo $this->slideForm->getElement('post_id'); ?>       
+                            <img class="img-responsive" src="<?php echo $this->slideForm->getElement('thumbnail')->getValue(); ?>">
+                            <?php echo $this->slideForm->getElement('post_id'); ?> 
+                            <?php echo $this->slideForm->getElement('redirect_url'); ?> 
+                            <?php echo $this->slideForm->getElement('description'); ?> 
+                            <?php echo $this->slideForm->getElement('en_description'); ?>
+                            <?php echo $this->slideForm->getElement('price'); ?>
+                            <?php echo $this->slideForm->getElement('old_price'); ?>
+                            <?php echo $this->slideForm->getElement('link_id'); ?> 
                         </div>
                     </div>
                 </div>

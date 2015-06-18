@@ -5,10 +5,25 @@
         }
         
         .sp-container .title {
-            color: #1c87c5;
-            font-size: 34px;
+            color: #1a71aa;
+            font-size: 18px;
             text-transform: uppercase;
             font-weight: bold;
+        }
+        
+        .sp-container .breadcrumb {
+            background-color: transparent;
+            padding-left: 0px;
+            margin-bottom: 0px;
+        }
+
+        .sp-container .breadcrumb > li + li:before {
+            content: "\003e";
+        }
+
+        .sp-container .breadcrumb a{        
+            color: #1a71aa;
+            text-decoration: none;
         }
 
         .sp-container .content .item {
@@ -56,6 +71,9 @@
         }
 
         @media (min-width: 992px) and (max-width: 1199px) {
+            .sp-container .title {
+                font-size: 18px;
+            }
             .sp-container .content .item {
                 width: 303px;
             }
@@ -66,7 +84,7 @@
 
         @media (min-width: 768px) and (max-width: 991px) {
             .sp-container .title {
-                font-size: 30px;
+                font-size: 16px;
             }
             .sp-container .content .item {
                 width: 236px;
@@ -86,7 +104,7 @@
                 margin-top: 20px;
             }
             .sp-container .title {
-                font-size: 18px;
+                font-size: 16px;
             }
             .sp-container .content .item {
                 margin-right: 5px;
@@ -103,7 +121,13 @@
     <?php echo $this->render('post/custom/san-pham-baner.phtml');?>
     <div class="sp-container">
         <div class="title">
-            <?php echo Utils_StringUtils::getTextFromPost($this->post, 'title');?>
+            <ol class="breadcrumb">
+                <?php foreach($this->breadcrumb as $item):?>
+                    <li>
+                        <a href="<?php echo Utils_StringUtils::getUrlFromPost($item) ?>"><?php echo Utils_StringUtils::getTextFromPost($item, 'title'); ?></a>
+                    </li>
+                <?php endforeach;?>
+            </ol>
         </div>
         <div class="content pagination-container">
             <?php $this->paramPageSize = 3; ?>

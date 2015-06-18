@@ -12,6 +12,9 @@
   font-family: 'Bahamas';
   src: url(font/Bahamas.ttf);
 }
+.main-page header {
+  padding-bottom: 20px;
+}
 .main-page header .top-header {
   background-color: #373c43;
   padding: 14px 0px;
@@ -56,30 +59,32 @@
 .main-page header .main-header {
   background-size: 100% auto;
   padding: 0px 30px;
-  height: 216px;
+  height: 50px;
 }
 .main-page header .main-header .logo-container {
   float: left;
-  margin-top: 20px;
-  width: 200px;
+  width: 150px;
   position: absolute;
   z-index: 1000;
 }
 .main-page header .main-header .menu-container {
   float: left;
-  width: 610px;
-  margin-top: 95px;
-  margin-left: 170px;
-  font-size: 18px;
+  width: 780px;
+  margin-top: 19px;
+  margin-left: 150px;
+  font-size: 16px;
   position: absolute;
 }
 .main-page header .main-header .menu-container .navbar-nav i.fa {
   font-size: 32px;
   margin-top: -12px;
 }
+.main-page header .main-header .menu-container .navbar-nav > li > .dropdown-menu {
+  font-size: 14px;
+}
 .main-page header .main-header .global-menu {
   float: left;
-  margin-top: 105px;
+  margin-top: 29px;
   margin-left: 906px;
   position: absolute;
   width: 250px;
@@ -90,10 +95,18 @@
   width: 100%;
 }
 .main-page header .main-header .global-menu .navbar-nav > li > a {
-  background-color: #9b9ea1;
-  padding: 5px 25px;
+  background-color: #fb9006;
+  padding: 5px 15px;
   height: 30px;
   border-radius: 15px;
+  color: #777;
+}
+.main-page header .main-header .global-menu .navbar-nav > li > a .caret {
+  float: right;
+  margin-top: 7px;
+  border-top: 10px solid;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
 }
 .main-page header .main-header .global-menu .dropdown-menu {
   background-color: transparent;
@@ -102,21 +115,69 @@
   box-shadow: none;
 }
 .main-page header .main-header .global-menu .dropdown-menu > li > a {
-  background-color: #9b9ea1;
+  background-color: #fb9006;
   padding: 5px 25px;
   height: 30px;
   border-radius: 15px;
   margin-bottom: 5px;
 }
 .main-page #main-slide {
-  margin-top: -55px;
+  box-shadow: 0px 5px 12px #888888;
+}
+.main-page #main-slide .slide {
+  position: relative;
 }
 .main-page #main-slide .slide img {
   width: 100%;
-  height: 470px;
 }
-.main-page footer {
-  margin-top: 20px;
+.main-page #main-slide .slide .carousel-inner > .item {
+  display: block;
+  visibility: hidden;
+  height: 0px;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+}
+.main-page #main-slide .slide .carousel-inner > .item.active {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+}
+.main-page #main-slide .slide .caption {
+  padding: 4px 0px;
+  background: none repeat scroll 0 0 rgba(0,0,0,0.5);
+  box-shadow: 10px 0 0 rgba(0,0,0,0.5), -10px 0 0 rgba(0,0,0,0.5);
+  -moz-box-shadow: 10px 0 0 rgba(0,0,0,0.5), -10px 0 0 rgba(0,0,0,0.5);
+  -webkit-box-shadow: 10px 0 0 rgba(0,0,0,0.5), -10px 0 0 rgba(0,0,0,0.5);
+  -o-box-shadow: 10px 0 0 rgba(0,0,0,0.5), -10px 0 0 rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 20px;
+  line-height: 38px !important;
+  position: absolute;
+  width: 400px;
+  right: 30px;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  opacity: 0;
+  text-align: center;
+}
+.main-page #main-slide .slide .item:not(.active) .caption {
+  bottom: 10px !important;
+}
+.main-page #main-slide .slide .active .caption {
+  bottom: 100px;
+  opacity: 1;
+}
+.main-page #main-slide .slide .carousel-indicators li {
+  background-color: rgba(251,161,2,0.7);
+}
+.main-page #main-content {
+  padding-bottom: 20px;
+  position: relative;
 }
 .main-page .img-responsive,
 .main-page .thumbnail > img,
@@ -125,11 +186,20 @@
 .main-page .carousel-inner > .item > a > img {
   width: 100%;
 }
+.main-page .navbar-default .navbar-nav > li > a:hover,
 .main-page .navbar-default .navbar-nav > .active > a,
 .main-page .navbar-default .navbar-nav > .active > a:hover,
-.main-page .navbar-default .navbar-nav > .active > a:focus {
+.main-page .navbar-default .navbar-nav > .active > a:focus,
+.main-page .navbar-default .navbar-nav > .open > a,
+.main-page .navbar-default .navbar-nav > .open > a:hover,
+.main-page .navbar-default .navbar-nav > .open > a:focus,
+.main-page .dropdown-menu > .active > a,
+.main-page .dropdown-menu > .active > a:hover,
+.main-page .dropdown-menu > .active > a:focus,
+.main-page .dropdown-menu > li > a:hover,
+.main-page .dropdown-menu > li > a:focus {
   background-color: transparent;
-  font-weight: bold;
+  color: #fb9006;
 }
 .main-page .navbar-default {
   background-color: transparent;
@@ -156,32 +226,37 @@
   width: 100% !important;
   height: 100% !important;
 }
+.no-padding-left {
+  padding-left: 0px;
+}
 @media (min-width: 992px) and (max-width: 1199px) {
   .main-page header .main-header {
-    height: 190px;
+    height: 40px;
     padding: 0px 30px;
   }
   .main-page header .main-header .logo-container {
-    margin-top: 20px;
-    width: 160px;
-    z-index: 1000;
+    width: 130px;
   }
   .main-page header .main-header .menu-container {
     width: 600px;
-    margin-top: 75px;
-    margin-left: 150px;
-    font-size: 16px;
+    margin-top: 9px;
+    margin-left: 130px;
+    font-size: 14px;
   }
   .main-page header .main-header .menu-container .navbar-nav > li > a {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 7px;
+    padding-right: 7px;
+  }
+  .main-page header .main-header .menu-container .navbar-nav > li > .dropdown-menu {
+    font-size: 12px;
   }
   .main-page header .main-header .global-menu {
-    margin-top: 85px;
+    margin-top: 19px;
     margin-left: 707px;
   }
-  .main-page #main-slide .slide img {
-    height: 390px;
+  .main-page #main-slide .slide .caption {
+    width: 300px;
+    font-size: 18px;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -189,49 +264,50 @@
     margin-right: 30px;
   }
   .main-page header .main-header {
-    height: 160px;
+    height: 30px;
     padding: 0px 20px;
   }
   .main-page header .main-header .logo-container {
-    margin-top: 20px;
-    width: 120px;
+    width: 110px;
     z-index: 1000;
   }
   .main-page header .main-header .menu-container {
     width: 600px;
-    margin-top: 55px;
-    margin-left: 105px;
-    font-size: 14px;
+    margin-top: 0px;
+    margin-left: 100px;
+    font-size: 12px;
   }
   .main-page header .main-header .menu-container .navbar-nav > li > a {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  .main-page header .main-header .menu-container .navbar-nav > li > .dropdown-menu {
+    font-size: 12px;
   }
   .main-page header .main-header .global-menu {
-    margin-top: 66px;
-    margin-left: 531px;
-    width: 215px;
+    margin-top: 10px;
+    margin-left: 570px;
+    width: 175px;
   }
-  .main-page #main-slide .slide img {
-    height: 300px;
+  .main-page #main-slide .slide .caption {
+    width: 250px;
+    font-size: 16px;
   }
 }
 @media (max-width: 767px) {
   .main-page header {
     position: relative;
+    padding-bottom: 0px;
   }
   .main-page header .top-header .container .search {
     margin-right: 0px;
   }
   .main-page header .main-header {
-    height: auto;
+    height: 60px;
     padding: 0px 20px;
   }
   .main-page header .main-header .logo-container {
-    margin-top: 0px;
-    width: 30%;
-    max-width: 170px;
-    min-width: 100px;
+    width: 130px;
     z-index: 1000;
     float: none;
     margin-left: auto;
@@ -275,13 +351,16 @@
     font-size: 32px;
     margin-top: 0px;
   }
+  .main-page header .main-header .menu-container .navbar-nav > li > .dropdown-menu {
+    background: transparent;
+  }
+  .main-page header .main-header .menu-container img {
+    margin-right: 10px;
+  }
   .main-page header .main-header .global-menu {
     display: none;
   }
-  .main-page #main-slide {
-    margin-top: -30px;
-  }
-  .main-page #main-slide .slide img {
-    height: auto;
+  .main-page #main-slide .slide .caption {
+    display: none;
   }
 }
